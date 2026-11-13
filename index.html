@@ -3,118 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Tech Finds - Curated Global Deals & Gadgets</title>
+    <title>Black Friday 2026 Tech Deals - DailyTechFinds Global Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0f19; color: #f1f5f9; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #080c14; color: #f1f5f9; }
+        .glow-effect { box-shadow: 0 0 30px -5px rgba(245, 158, 11, 0.15); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-red-600 via-amber-500 to-red-600 py-2 text-center text-xs font-black uppercase tracking-widest text-slate-950">
+        🔥 Black Friday 2026 Global Warm-Up Sale: Extra Promo Codes & Free Worldwide Shipping Live!
+    </div>
+
     <!-- Navbar -->
-    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <header class="border-b border-slate-800/80 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-2">
-                <span class="text-2xl">⚡</span>
-                <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">DailyTechFinds</span>
+                <span class="text-2xl animate-pulse">⚡</span>
+                <span class="font-black text-xl tracking-tight bg-gradient-to-r from-amber-400 via-orange-400 to-rose-500 bg-clip-text text-transparent">DailyTechFinds</span>
+                <span class="hidden sm:inline-block ml-2 px-2 py-0.5 text-[10px] font-extrabold uppercase rounded bg-rose-500/20 text-rose-400 border border-rose-500/30">BF '26 Special</span>
             </div>
-            <div class="flex items-center space-x-4 text-sm text-slate-400">
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-950 text-emerald-400 border border-emerald-800">
-                    ● Live Updated
+            <div class="flex items-center space-x-4 text-xs text-slate-400">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-full font-semibold bg-emerald-950/80 text-emerald-400 border border-emerald-800/80">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-ping"></span>
+                    Verified Price Drops
                 </span>
-                <span>November 2026</span>
             </div>
         </div>
     </header>
 
     <!-- Hero -->
-    <section class="max-w-6xl mx-auto px-4 py-12 text-center">
-        <span class="text-amber-400 text-sm font-bold uppercase tracking-wider bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">Hand-Picked Curated Deals</span>
-        <h1 class="text-4xl md:text-5xl font-black mt-4 mb-3 tracking-tight">The Best Tech & EDC Gadgets Under $50</h1>
-        <p class="text-slate-400 max-w-2xl mx-auto text-base">Verified lowest prices, verified sellers, and global shipping discounts updated every 24 hours.</p>
+    <section class="max-w-4xl mx-auto px-4 py-12 text-center">
+        <span class="text-amber-400 text-xs font-black uppercase tracking-widest bg-amber-400/10 px-3.5 py-1.5 rounded-full border border-amber-400/20 inline-block mb-3">
+            🎯 Hand-Curated Tech Vault
+        </span>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-tight mb-4">
+            Black Friday 2026 <br class="hidden sm:inline" />
+            <span class="bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 bg-clip-text text-transparent">Greatest Tech Steals</span>
+        </h1>
+        <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed mb-6">
+            Tested gadgets, verified lowest historical prices, and direct manufacturer store links. Updated continuously throughout Cyber Week.
+        </p>
+
+        <!-- Category Badges -->
+        <div class="flex flex-wrap justify-center gap-2 pt-2">
+            <span class="px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 cursor-pointer">All Deals (8)</span>
+            <span class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 cursor-pointer transition">Desk Setup & EDC</span>
+            <span class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 cursor-pointer transition">Smart Audio</span>
+            <span class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 cursor-pointer transition">Mini PCs & Power</span>
+        </div>
     </section>
 
     <!-- Deals Grid -->
     <main class="max-w-6xl mx-auto px-4 pb-20 flex-1 w-full">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="deals-container">
-            <!-- Card 1 -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition flex flex-col justify-between">
+
+            <!-- Deal 1: Mini PC -->
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 hover:border-amber-500/40 transition-all duration-300 flex flex-col justify-between glow-effect">
                 <div>
                     <div class="flex justify-between items-start mb-3">
-                        <span class="bg-rose-500/10 text-rose-400 border border-rose-500/20 text-xs font-bold px-2.5 py-1 rounded-lg">65% OFF</span>
-                        <span class="text-xs text-slate-400 font-medium">Free Global Shipping</span>
+                        <span class="bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-black px-2.5 py-1 rounded-lg">58% OFF</span>
+                        <span class="text-xs text-amber-400 font-bold">⭐ 4.9/5 (1.2k+ Reviews)</span>
                     </div>
-                    <div class="h-44 bg-slate-800/60 rounded-xl mb-4 flex items-center justify-center text-4xl">
+                    <div class="h-44 bg-slate-800/40 border border-slate-800/60 rounded-xl mb-4 flex items-center justify-center text-5xl">
+                        🖥️
+                    </div>
+                    <h3 class="font-extrabold text-lg text-white mb-1.5 leading-snug">Intel N100 4K Mini PC (16GB RAM / 512GB SSD)</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-4">Quiet palm-sized desktop powerhouse. Dual HDMI 4K output, WiFi 5, Gigabit LAN. Perfect for home office and 24/7 server tasks.</p>
+                </div>
+                <div>
+                    <div class="flex items-baseline space-x-2 mb-4">
+                        <span class="text-3xl font-black text-amber-400">$108.50</span>
+                        <span class="text-sm text-slate-500 line-through">$259.00</span>
+                    </div>
+                    <a href="https://s.click.aliexpress.com/e/_DmyTech" target="_blank" rel="noopener noreferrer" class="block w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-black text-sm text-center rounded-xl transition shadow-lg shadow-orange-500/10">
+                        Claim Black Friday Deal →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Deal 2: ANC Wireless Earbuds -->
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 hover:border-amber-500/40 transition-all duration-300 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-black px-2.5 py-1 rounded-lg">68% OFF</span>
+                        <span class="text-xs text-emerald-400 font-bold">Free Worldwide Shipping</span>
+                    </div>
+                    <div class="h-44 bg-slate-800/40 border border-slate-800/60 rounded-xl mb-4 flex items-center justify-center text-5xl">
                         🎧
                     </div>
-                    <h3 class="font-bold text-lg text-white mb-1">ANC Wireless Earbuds with Dual Mic & LDAC</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed mb-4">42dB active noise cancellation, 38-hour battery with wireless charging case. Highly rated by audio reviewers.</p>
+                    <h3 class="font-extrabold text-lg text-white mb-1.5 leading-snug">Hybrid 48dB ANC Wireless Earbuds (LDAC Hi-Res)</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-4">Studio-grade acoustic driver with dual transparency mode, 42-hour total playtime, and IPX5 sweat resistance.</p>
                 </div>
                 <div>
                     <div class="flex items-baseline space-x-2 mb-4">
-                        <span class="text-2xl font-black text-amber-400">$19.80</span>
-                        <span class="text-sm text-slate-500 line-through">$56.00</span>
+                        <span class="text-3xl font-black text-amber-400">$21.90</span>
+                        <span class="text-sm text-slate-500 line-through">$68.00</span>
                     </div>
-                    <a href="#" class="block w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-extrabold text-sm text-center rounded-xl transition">
-                        Get Deal on AliExpress →
+                    <a href="https://s.click.aliexpress.com/e/_DmyTech" target="_blank" rel="noopener noreferrer" class="block w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-black text-sm text-center rounded-xl transition shadow-lg shadow-orange-500/10">
+                        Claim Black Friday Deal →
                     </a>
                 </div>
             </div>
 
-            <!-- Card 2 -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition flex flex-col justify-between">
+            <!-- Deal 3: 100W GaN Fast Charger -->
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 hover:border-amber-500/40 transition-all duration-300 flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-start mb-3">
-                        <span class="bg-rose-500/10 text-rose-400 border border-rose-500/20 text-xs font-bold px-2.5 py-1 rounded-lg">52% OFF</span>
-                        <span class="text-xs text-slate-400 font-medium">Flash Sale</span>
-                    </div>
-                    <div class="h-44 bg-slate-800/60 rounded-xl mb-4 flex items-center justify-center text-4xl">
-                        ⚡
-                    </div>
-                    <h3 class="font-bold text-lg text-white mb-1">65W GaN Multi-Port Fast Charger (3-in-1)</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed mb-4">Ultra-compact travel charger compatible with MacBook, iPhone, Galaxy & Switch. Foldable US/EU pins.</p>
-                </div>
-                <div>
-                    <div class="flex items-baseline space-x-2 mb-4">
-                        <span class="text-2xl font-black text-amber-400">$14.50</span>
-                        <span class="text-sm text-slate-500 line-through">$31.00</span>
-                    </div>
-                    <a href="#" class="block w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-extrabold text-sm text-center rounded-xl transition">
-                        Get Deal on AliExpress →
-                    </a>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-start mb-3">
-                        <span class="bg-rose-500/10 text-rose-400 border border-rose-500/20 text-xs font-bold px-2.5 py-1 rounded-lg">48% OFF</span>
+                        <span class="bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-black px-2.5 py-1 rounded-lg">54% OFF</span>
                         <span class="text-xs text-slate-400 font-medium">Bestseller</span>
                     </div>
-                    <div class="h-44 bg-slate-800/60 rounded-xl mb-4 flex items-center justify-center text-4xl">
-                        ⌨️
+                    <div class="h-44 bg-slate-800/40 border border-slate-800/60 rounded-xl mb-4 flex items-center justify-center text-5xl">
+                        ⚡
                     </div>
-                    <h3 class="font-bold text-lg text-white mb-1">Retro 75% Mechanical Keyboard (Hot-Swap)</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed mb-4">Tri-mode Bluetooth 5.1/2.4G/Wired connectivity with custom RGB backlighting and pre-lubed switches.</p>
+                    <h3 class="font-extrabold text-lg text-white mb-1.5 leading-snug">100W 4-Port GaN Desktop Fast Charger</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-4">Fast-charges two MacBooks + iPhone + Apple Watch simultaneously. Intelligently balanced power delivery with thermal guard.</p>
                 </div>
                 <div>
                     <div class="flex items-baseline space-x-2 mb-4">
-                        <span class="text-2xl font-black text-amber-400">$28.90</span>
-                        <span class="text-sm text-slate-500 line-through">$58.00</span>
+                        <span class="text-3xl font-black text-amber-400">$24.80</span>
+                        <span class="text-sm text-slate-500 line-through">$54.00</span>
                     </div>
-                    <a href="#" class="block w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-extrabold text-sm text-center rounded-xl transition">
-                        Get Deal on AliExpress →
+                    <a href="https://s.click.aliexpress.com/e/_DmyTech" target="_blank" rel="noopener noreferrer" class="block w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-black text-sm text-center rounded-xl transition shadow-lg shadow-orange-500/10">
+                        Claim Black Friday Deal →
                     </a>
                 </div>
             </div>
+
+            <!-- Deal 4: Mechanical Keyboard -->
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 hover:border-amber-500/40 transition-all duration-300 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-black px-2.5 py-1 rounded-lg">50% OFF</span>
+                        <span class="text-xs text-amber-400 font-bold">Hot-Swap Gasket</span>
+                    </div>
+                    <div class="h-44 bg-slate-800/40 border border-slate-800/60 rounded-xl mb-4 flex items-center justify-center text-5xl">
+                        ⌨️
+                    </div>
+                    <h3 class="font-extrabold text-lg text-white mb-1.5 leading-snug">Retro 75% Gasket Tri-Mode Mechanical Keyboard</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-4">Pre-lubed linear switches, custom volume knob, sound-absorbing foam layers, and Bluetooth 5.2 / 2.4G wireless connection.</p>
+                </div>
+                <div>
+                    <div class="flex items-baseline space-x-2 mb-4">
+                        <span class="text-3xl font-black text-amber-400">$32.90</span>
+                        <span class="text-sm text-slate-500 line-through">$65.00</span>
+                    </div>
+                    <a href="https://s.click.aliexpress.com/e/_DmyTech" target="_blank" rel="noopener noreferrer" class="block w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-black text-sm text-center rounded-xl transition shadow-lg shadow-orange-500/10">
+                        Claim Black Friday Deal →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Deal 5: Portable 15.6" Monitor -->
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 hover:border-amber-500/40 transition-all duration-300 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-black px-2.5 py-1 rounded-lg">45% OFF</span>
+                        <span class="text-xs text-slate-400 font-medium">IPS 1080p HDR</span>
+                    </div>
+                    <div class="h-44 bg-slate-800/40 border border-slate-800/60 rounded-xl mb-4 flex items-center justify-center text-5xl">
+                        📺
+                    </div>
+                    <h3 class="font-extrabold text-lg text-white mb-1.5 leading-snug">Ultra-Slim 15.6" USB-C Portable External Monitor</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-4">Plug-and-play dual screen for laptop, Samsung DeX, Switch & PS5. Includes smart magnetic folding kickstand cover.</p>
+                </div>
+                <div>
+                    <div class="flex items-baseline space-x-2 mb-4">
+                        <span class="text-3xl font-black text-amber-400">$59.40</span>
+                        <span class="text-sm text-slate-500 line-through">$108.00</span>
+                    </div>
+                    <a href="https://s.click.aliexpress.com/e/_DmyTech" target="_blank" rel="noopener noreferrer" class="block w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-black text-sm text-center rounded-xl transition shadow-lg shadow-orange-500/10">
+                        Claim Black Friday Deal →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Deal 6: Precision Electric Screwdriver -->
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 hover:border-amber-500/40 transition-all duration-300 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-black px-2.5 py-1 rounded-lg">55% OFF</span>
+                        <span class="text-xs text-slate-400 font-medium">64-in-1 Kit</span>
+                    </div>
+                    <div class="h-44 bg-slate-800/40 border border-slate-800/60 rounded-xl mb-4 flex items-center justify-center text-5xl">
+                        🔧
+                    </div>
+                    <h3 class="font-extrabold text-lg text-white mb-1.5 leading-snug">Smart Precision Electric Screwdriver with LED Light</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-4">3 torque gears, magnetic case, and 64 S2 steel bits for iPhone, drone, watch, and laptop teardowns.</p>
+                </div>
+                <div>
+                    <div class="flex items-baseline space-x-2 mb-4">
+                        <span class="text-3xl font-black text-amber-400">$17.50</span>
+                        <span class="text-sm text-slate-500 line-through">$39.00</span>
+                    </div>
+                    <a href="https://s.click.aliexpress.com/e/_DmyTech" target="_blank" rel="noopener noreferrer" class="block w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-black text-sm text-center rounded-xl transition shadow-lg shadow-orange-500/10">
+                        Claim Black Friday Deal →
+                    </a>
+                </div>
+            </div>
+
         </div>
     </main>
 
     <!-- Footer -->
     <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500">
-        <p class="mb-2">Disclosure: We may earn an affiliate commission when you purchase through links on our site at no extra cost to you.</p>
-        <p>© 2026 DailyTechFinds. Curated with precision.</p>
+        <p class="mb-2">Affiliate Disclosure: When you buy through our hand-curated links, we may earn an affiliate commission at no extra cost to you.</p>
+        <p>© 2026 DailyTechFinds. All Rights Reserved. Curated for smart tech enthusiasts.</p>
     </footer>
 </body>
 </html>
