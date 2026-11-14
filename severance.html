@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 퇴직금 계산기 | 퇴직소득세·지방소득세 뺀 실수령액 계산</title>
+<meta name="description" content="입사일·퇴사일과 최근 3개월 임금·상여금·연차수당으로 1일 평균임금과 법정 퇴직금을 계산하고, 근속연수공제·환산급여공제·기본세율을 적용한 퇴직소득세와 세후 실수령액을 바로 확인하세요. 무료, 설치 없음.">
+<meta name="keywords" content="퇴직금 계산기, 퇴직소득세 계산기, 2026 퇴직금, 평균임금 계산, 근속연수공제, 환산급여공제, 퇴직금 실수령액, 퇴직소득세 지방소득세, IRP 과세이연">
+<link rel="canonical" href="https://lemilea87.github.io/severance.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DailyTechFinds">
+<meta property="og:title" content="2026 퇴직금 계산기 — 퇴직소득세 뺀 실수령액까지">
+<meta property="og:description" content="평균임금 → 법정 퇴직금 → 근속연수공제 → 환산급여 → 퇴직소득세 → 지방소득세까지 한 번에. 2026년 기준 세율표 적용.">
+<meta property="og:url" content="https://lemilea87.github.io/severance.html">
+<meta property="og:locale" content="ko_KR">
+<meta name="robots" content="index,follow">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+    body { font-family: 'Plus Jakarta Sans', 'Noto Sans KR', system-ui, -apple-system, 'Malgun Gothic', sans-serif; background-color: #080c14; color: #f1f5f9; }
+    .glow-effect { box-shadow: 0 0 30px -5px rgba(245, 158, 11, 0.15); }
+    .neon-line { background: linear-gradient(90deg, rgba(245,158,11,0), rgba(245,158,11,.55), rgba(244,63,94,.45), rgba(245,158,11,0)); }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type="number"] { -moz-appearance: textfield; }
+    input[type="date"] { color-scheme: dark; }
+    .fld { width: 100%; background: rgba(2,6,23,.75); border: 1px solid #1e293b; border-radius: .85rem; padding: .7rem .9rem; font-weight: 700; font-size: .95rem; color: #f8fafc; outline: none; transition: border-color .15s, box-shadow .15s; }
+    .fld:focus { border-color: rgba(245,158,11,.7); box-shadow: 0 0 0 3px rgba(245,158,11,.15); }
+    .fld::placeholder { color: #475569; font-weight: 500; }
+    .chip { transition: all .15s ease; }
+    .chip:hover { border-color: rgba(245,158,11,.5); color: #fbbf24; }
+    .bar-track { background: rgba(30,41,59,.9); border-radius: 9999px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 9999px; transition: width .35s ease; }
+    .num { font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+    .fade-in { animation: fadeIn .28s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    .prose-kr h2 { font-size: 1.35rem; font-weight: 900; color: #fff; margin-bottom: .6rem; letter-spacing: -.01em; }
+    .prose-kr h3 { font-size: 1rem; font-weight: 800; color: #fbbf24; margin: 1.4rem 0 .5rem; }
+    .prose-kr p { color: #94a3b8; font-size: .9rem; line-height: 1.85; margin-bottom: .9rem; }
+    .prose-kr li { color: #94a3b8; font-size: .875rem; line-height: 1.8; margin-left: 1.1rem; list-style: disc; margin-bottom: .35rem; }
+    .prose-kr strong { color: #e2e8f0; font-weight: 800; }
+    .tbl { width: 100%; border-collapse: collapse; font-size: .8rem; }
+    .tbl th { background: rgba(30,41,59,.7); color: #fbbf24; font-weight: 800; padding: .55rem .5rem; text-align: left; border-bottom: 1px solid #1e293b; }
+    .tbl td { padding: .5rem .5rem; color: #cbd5e1; border-bottom: 1px solid rgba(30,41,59,.6); }
+    .tbl tr.hl td { background: rgba(245,158,11,.12); color: #fde68a; font-weight: 800; }
+    details.faq { border: 1px solid #1e293b; border-radius: .9rem; background: rgba(15,23,42,.6); }
+    details.faq summary { cursor: pointer; padding: .9rem 1rem; font-weight: 800; font-size: .875rem; color: #e2e8f0; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+    details.faq summary::-webkit-details-marker { display: none; }
+    details.faq summary::after { content: '+'; color: #f59e0b; font-weight: 900; }
+    details.faq[open] summary::after { content: '−'; }
+    details.faq .a { padding: 0 1rem 1rem; color: #94a3b8; font-size: .85rem; line-height: 1.8; }
+</style>
+<script type="application/ld+json">
+[{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "2026 퇴직금 & 퇴직소득세 실수령액 계산기",
+  "url": "https://lemilea87.github.io/severance.html",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any (웹 브라우저)",
+  "inLanguage": "ko",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" },
+  "description": "입사일·퇴사일과 최근 3개월 임금으로 1일 평균임금과 법정 퇴직금을 계산하고, 근속연수공제·환산급여공제·기본세율을 적용해 퇴직소득세와 세후 실수령액을 산출합니다.",
+  "featureList": [
+    "재직일수·근속연수 자동 계산",
+    "최근 3개월 임금·상여금·연차수당 기반 1일 평균임금 산출",
+    "근속연수공제 · 환산급여공제 · 기본세율(6~45%) 적용 퇴직소득세",
+    "지방소득세 10% 포함 세후 실수령액"
+  ]
+},
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "퇴직소득세는 왜 이렇게 적게 나오나요?", "acceptedAnswer": {"@type": "Answer", "text": "근속연수공제와 환산급여공제가 두 번 들어가고, 환산급여를 12로 나눠 한 해 소득처럼 만든 뒤 낮은 세율을 적용하기 때문입니다. 환산급여가 800만원 이하면 세금이 0원이 되기도 합니다."}},
+    {"@type": "Question", "name": "1년 미만으로 일하고 그만두면 퇴직금이 없나요?", "acceptedAnswer": {"@type": "Answer", "text": "계속근로기간 1년 미만이면 법정 퇴직금은 발생하지 않습니다. 취업규칙이나 근로계약이 더 유리한 조건을 정했다면 그에 따릅니다."}},
+    {"@type": "Question", "name": "상여금과 연차수당은 어떻게 넣어야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "연간 상여금 총액의 3/12, 연간 연차수당 총액의 3/12를 3개월 임금 총액에 더합니다."}},
+    {"@type": "Question", "name": "퇴직금을 IRP로 받으면 세금이 없어지나요?", "acceptedAnswer": {"@type": "Answer", "text": "없어지는 것이 아니라 미뤄집니다. IRP로 이전하면 과세가 이연되고 연금으로 나눠 받을 때 세 부담이 줄어듭니다."}}
+  ]
+}]
+</script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-rose-600 py-2 text-center text-[11px] sm:text-xs font-black uppercase tracking-widest text-slate-950">
+        🧮 2026 생활 계산기 4종 · 실업급여 · 퇴직금 · 전세 vs 월세 · 연말정산
+    </div>
+
+    <!-- Navbar -->
+    <header class="border-b border-slate-800/80 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
+            <a href="index.html" class="flex items-center space-x-2 shrink-0">
+                <span class="text-2xl">⚡</span>
+                <span class="font-black text-lg sm:text-xl tracking-tight bg-gradient-to-r from-amber-400 via-orange-400 to-rose-500 bg-clip-text text-transparent">DailyTechFinds</span>
+            </a>
+            <nav class="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-bold">
+                <a href="index.html" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">🔥 핫딜 허브</a>
+                <a href="calc.html" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">🧮 계산기 모음</a>
+                <a href="https://cshop.naver.com/lemilea" target="_blank" rel="noopener noreferrer" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">🛍️ 못산템</a>
+            </nav>
+        </div>
+        <div class="max-w-6xl mx-auto px-4 pb-2.5 flex items-center gap-1.5 overflow-x-auto text-[11px] sm:text-xs">
+            <a href="calc.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">💰 연말정산·100g 단가</a>
+            <a href="unemployment.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">🧾 실업급여</a>
+            <a href="severance.html" aria-current="page" class="chip shrink-0 px-2.5 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-black">📄 퇴직금·퇴직소득세</a>
+            <a href="jeonse.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">🏠 전세 vs 월세</a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="max-w-3xl mx-auto px-4 pt-10 pb-6 text-center w-full">
+        <span class="text-amber-400 text-[11px] font-black uppercase tracking-widest bg-amber-400/10 px-3.5 py-1.5 rounded-full border border-amber-400/20 inline-block mb-3">
+            📄 2026년 퇴직 기준 · 평균임금 → 퇴직금 → 퇴직소득세 → 실수령액
+        </span>
+        <h1 class="text-3xl sm:text-4xl md:text-[2.7rem] font-black tracking-tight leading-tight mb-3">
+            퇴직금, 세금 떼고 <span class="bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 bg-clip-text text-transparent">얼마</span> 받나?
+        </h1>
+        <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
+            입사일·퇴사일과 최근 3개월 임금만 넣으면 법정 퇴직금과 퇴직소득세·지방소득세를 반영한 실수령액까지 한 번에 계산합니다.
+        </p>
+    </section>
+
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-1 w-full">
+
+        <section class="grid grid-cols-1 lg:grid-cols-5 gap-5">
+
+            <!-- Inputs -->
+            <div class="lg:col-span-2 bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                <h2 class="font-black text-base text-white mb-1">재직·임금 정보 입력</h2>
+                <p class="text-[11px] text-slate-500 mb-4">고치면 결과가 바로 다시 계산됩니다.</p>
+
+                <div class="grid grid-cols-2 gap-2 mb-4">
+                    <div>
+                        <label for="start" class="block text-xs font-bold text-slate-300 mb-1.5">입사일</label>
+                        <input id="start" type="date" value="2016-03-02" class="fld num text-sm">
+                    </div>
+                    <div>
+                        <label for="end" class="block text-xs font-bold text-slate-300 mb-1.5">퇴사일(마지막 근무일)</label>
+                        <input id="end" type="date" value="2026-11-30" class="fld num text-sm">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="wage3" class="block text-xs font-bold text-slate-300 mb-1.5">최근 3개월 임금 총액</label>
+                    <div class="flex items-center gap-2">
+                        <input id="wage3" type="number" min="0" step="100000" value="9000000" class="fld num">
+                        <span class="text-xs text-slate-500 shrink-0">원</span>
+                    </div>
+                    <p class="text-[11px] text-slate-500 mt-1.5">기본급 + 연장·야간·휴일수당 + 정기 식대. 월 300만원이면 900만원.</p>
+                </div>
+
+                <div class="mb-4">
+                    <label for="bonus3" class="block text-xs font-bold text-slate-300 mb-1.5">최근 3개월 상여금</label>
+                    <div class="flex items-center gap-2">
+                        <input id="bonus3" type="number" min="0" step="100000" value="0" class="fld num">
+                        <span class="text-xs text-slate-500 shrink-0">원</span>
+                    </div>
+                    <p class="text-[11px] text-slate-500 mt-1.5">연간 상여 400만원이면 400만 × 3/12 = 100만원.</p>
+                </div>
+
+                <div class="mb-4">
+                    <label for="leave3" class="block text-xs font-bold text-slate-300 mb-1.5">최근 3개월 연차수당</label>
+                    <div class="flex items-center gap-2">
+                        <input id="leave3" type="number" min="0" step="10000" value="0" class="fld num">
+                        <span class="text-xs text-slate-500 shrink-0">원</span>
+                    </div>
+                    <p class="text-[11px] text-slate-500 mt-1.5">퇴직 직전에 정산받은 연차수당 중 3개월분.</p>
+                </div>
+
+                <div class="mb-2">
+                    <label for="days3" class="block text-xs font-bold text-slate-300 mb-1.5">최근 3개월 총일수</label>
+                    <div class="flex items-center gap-2">
+                        <input id="days3" type="number" min="80" max="95" step="1" value="92" class="fld num">
+                        <span class="text-xs text-slate-500 shrink-0">일</span>
+                    </div>
+                    <p class="text-[11px] text-slate-500 mt-1.5">퇴사일을 넣으면 자동 계산됩니다(직접 수정 가능).</p>
+                </div>
+
+                <div class="mt-5 pt-4 border-t border-slate-800 text-[11px] text-slate-500 leading-relaxed">
+                    · 계속근로기간 1년 이상, 4주 평균 주 15시간 이상이면 퇴직금이 발생합니다.<br>
+                    · 퇴직금은 원칙적으로 퇴직일부터 14일 이내에 지급되어야 합니다.
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="lg:col-span-3 space-y-4">
+
+                <div class="bg-gradient-to-br from-amber-950/60 via-slate-900 to-slate-900 border border-amber-700/40 rounded-2xl p-5 glow-effect">
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span class="text-[11px] font-black uppercase tracking-widest text-amber-400">예상 실수령액</span>
+                        <span id="r-years" class="text-[10px] font-black px-2 py-1 rounded-lg bg-slate-800 text-slate-300">근속 –</span>
+                    </div>
+                    <div id="r-net" class="text-3xl sm:text-4xl font-black text-amber-300 num mb-1">0원</div>
+                    <p class="text-[11px] text-slate-400 mb-4">퇴직소득세와 지방소득세를 뺀 금액입니다.</p>
+
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[10px] text-slate-500 mb-0.5">퇴직금(세전)</div>
+                            <div id="r-pay" class="text-sm font-black text-slate-100 num">-</div>
+                        </div>
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[10px] text-slate-500 mb-0.5">퇴직소득세</div>
+                            <div id="r-tax" class="text-sm font-black text-slate-100 num">-</div>
+                        </div>
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[10px] text-slate-500 mb-0.5">지방소득세</div>
+                            <div id="r-local" class="text-sm font-black text-slate-100 num">-</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 flex items-center justify-between text-[11px] text-slate-400">
+                        <span>실효세율 <strong id="r-eff" class="text-amber-300 num">-</strong></span>
+                        <span>1일 평균임금 <strong id="r-avg" class="text-slate-200 num">-</strong></span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h3 class="font-black text-sm text-white mb-3">계산 내역</h3>
+                    <table class="tbl">
+                        <tbody>
+                            <tr><td class="w-3/5">재직일수</td><td class="text-right num" id="b-days">-</td></tr>
+                            <tr><td>근속연수</td><td class="text-right num" id="b-years">-</td></tr>
+                            <tr><td>최근 3개월 임금 총액(상여·연차 포함)</td><td class="text-right num" id="b-total3">-</td></tr>
+                            <tr><td>3개월 총일수</td><td class="text-right num" id="b-days3">-</td></tr>
+                            <tr class="hl"><td>1일 평균임금</td><td class="text-right num" id="b-avg">-</td></tr>
+                            <tr><td>× 30일 × (재직일수 ÷ 365)</td><td class="text-right num" id="b-pay">-</td></tr>
+                            <tr><td>근속연수공제</td><td class="text-right num" id="b-sded">-</td></tr>
+                            <tr><td>환산급여</td><td class="text-right num" id="b-conv">-</td></tr>
+                            <tr><td>환산급여공제</td><td class="text-right num" id="b-cded">-</td></tr>
+                            <tr><td>과세표준</td><td class="text-right num" id="b-base">-</td></tr>
+                            <tr><td>환산산출세액(기본세율)</td><td class="text-right num" id="b-convtax">-</td></tr>
+                            <tr><td>산출세액(÷12 × 근속연수)</td><td class="text-right num" id="b-tax">-</td></tr>
+                            <tr><td>지방소득세(10%)</td><td class="text-right num" id="b-local">-</td></tr>
+                            <tr class="hl"><td>세후 실수령액</td><td class="text-right num" id="b-net">-</td></tr>
+                        </tbody>
+                    </table>
+                    <p id="b-note" class="text-[11px] text-slate-500 mt-3 leading-relaxed"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <a href="unemployment.html" class="group bg-gradient-to-br from-emerald-950/60 to-slate-900 border border-emerald-800/60 rounded-2xl p-5 hover:border-emerald-500/70 transition">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-2xl">🧾</span>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-emerald-400">Next Step</span>
+                </div>
+                <h3 class="font-black text-white text-base mb-1">퇴직 후 실업급여는?</h3>
+                <p class="text-xs text-slate-400 leading-relaxed mb-3">2026년 상한 68,100원·하한 66,048원으로 월 수령액을 계산해 보세요.</p>
+                <span class="inline-block text-xs font-black text-emerald-400 group-hover:translate-x-0.5 transition">실업급여 계산하기 →</span>
+            </a>
+            <a href="jeonse.html" class="group bg-gradient-to-br from-sky-950/60 to-slate-900 border border-sky-800/60 rounded-2xl p-5 hover:border-sky-500/70 transition">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-2xl">🏠</span>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-sky-400">Housing</span>
+                </div>
+                <h3 class="font-black text-white text-base mb-1">퇴직금으로 전세? 월세?</h3>
+                <p class="text-xs text-slate-400 leading-relaxed mb-3">전세 대출이자와 월세를 같은 기준으로 놓고 주거비를 비교합니다.</p>
+                <span class="inline-block text-xs font-black text-sky-400 group-hover:translate-x-0.5 transition">주거비 비교하기 →</span>
+            </a>
+        </section>
+
+        <!-- 해설 -->
+        <article class="mt-10 prose-kr bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8">
+            <h2>퇴직금은 '평균임금'에서 시작합니다</h2>
+            <p>퇴직금은 회사가 정한 금액이 아니라 근로기준법이 정한 산식으로 계산됩니다. 핵심은 <strong>1일 평균임금</strong>입니다. 근로기준법 제2조는 평균임금을 "산정 사유가 발생한 날 이전 3개월 동안 지급된 임금의 총액을 그 기간의 총일수로 나눈 금액"으로 정의합니다. 여기서 '임금 총액'에는 기본급뿐 아니라 연장·야간·휴일 근로수당, 상여금, 연차수당, 매월 정기적으로 지급하는 식대까지 들어갑니다.</p>
+            <p>상여금처럼 1년에 한두 번 나오는 돈은 그대로 넣지 않습니다. 근로기준법 시행령 제2조에 따라 <strong>연간 상여금 총액의 3/12</strong>, <strong>연간 연차수당의 3/12</strong>만 3개월 임금 총액에 더합니다. 이 계산은 직접 하기 번거롭고 틀리기 쉬워서, 회사도 실무에서 자주 다툼이 생깁니다. 이 계산기에서는 상여금·연차수당을 따로 입력받아 합산합니다.</p>
+
+            <h2>법정 퇴직금 산식</h2>
+            <p><strong>퇴직금 = 1일 평균임금 × 30일 × (재직일수 ÷ 365)</strong></p>
+            <p>계속근로기간 1년 이상, 4주를 평균해 1주 소정근로시간이 15시간 이상인 근로자에게 발생합니다. 1년 미만이면 퇴직금은 0원입니다. 재직일수는 입사일부터 퇴사일(마지막 근무일)까지이며, 수습기간과 육아휴직 기간도 계속근로기간에 포함됩니다. 지급 시한은 퇴직일부터 14일 이내이고, 당사자 합의로 연장할 수 있습니다. 이를 어기면 지연이자가 붙습니다.</p>
+            <p>확정급여형(DB)은 회사가 운용 책임을 지고 위 산식대로 받지만, 확정기여형(DC)은 회사가 매년 연봉의 1/12 이상을 근로자 계좌에 넣고 그 운용 성과에 따라 금액이 달라집니다. DC형은 산식이 아니라 적립금과 운용수익으로 정해지므로 이 계산기의 결과와 차이가 날 수 있습니다.</p>
+
+            <h3>예시: 월 300만원 · 10년 근속</h3>
+            <p>최근 3개월 임금 총액이 900만원(총일수 92일)이라면 1일 평균임금은 97,826원, 퇴직금은 97,826 × 30 × (3,650 ÷ 365) = 약 <strong>2,934만원</strong>입니다. 여기에 퇴직소득세와 지방소득세를 합쳐 약 20만원이 붙어 실수령액은 약 <strong>2,914만원</strong>이 됩니다. 10년 동안 모은 돈인데 세금이 1%도 안 되는 이유는 아래 공제 구조 때문입니다.</p>
+
+            <h2>퇴직소득세, 6단계로 계산합니다</h2>
+            <ol class="mb-3">
+                <li><strong>퇴직소득금액</strong> = 퇴직급여 − 비과세 소득</li>
+                <li><strong>근속연수공제</strong> = 5년 이하 연 100만원, 5~10년 500만원 + (연수−5)×200만원, 10~20년 1,500만원 + (연수−10)×250만원, 20년 초과 4,000만원 + (연수−20)×300만원</li>
+                <li><strong>환산급여</strong> = (퇴직소득금액 − 근속연수공제) ÷ 근속연수 × 12</li>
+                <li><strong>환산급여공제</strong> = 800만원 이하 전액, 7,000만원 이하 800만원 + 초과분 60%, 1억원 이하 4,520만원 + 초과분 55%, 3억원 이하 6,170만원 + 초과분 45%, 3억 초과 1억5,170만원 + 초과분 35%</li>
+                <li><strong>과세표준</strong> = 환산급여 − 환산급여공제 → 기본세율(6~45%) 적용</li>
+                <li><strong>산출세액</strong> = 환산산출세액 ÷ 12 × 근속연수, 여기에 <strong>지방소득세 10%</strong> 추가</li>
+            </ol>
+            <p>3단계에서 30년 치 목돈을 '한 해 소득' 크기로 줄이고, 6단계에서 다시 원래 크기로 되돌리는 이 왕복을 <strong>연분연승</strong>이라고 합니다. 이 장치 덕분에 퇴직금에는 6~45%의 누진세율이 한꺼번에 적용되지 않습니다. 근속연수공제가 퇴직금보다 크면 공제는 퇴직금까지만 인정되어 세금이 0원이 됩니다.</p>
+
+            <h2>IRP로 옮기면 세금을 미룰 수 있습니다</h2>
+            <p>퇴직금을 개인형 IRP 계좌로 이전하면 당장 퇴직소득세를 내지 않고 과세가 이연됩니다. 이후 연금으로 나눠 받으면 세 부담이 줄어드는 구조라, 당장 목돈이 필요하지 않다면 IRP 이전이 유리한 경우가 많습니다. 다만 중도에 해지하면 이연받은 세금이 다시 붙고 기타소득세가 더해질 수 있으니, 자금 계획을 먼저 세워야 합니다. 퇴직금이 300만원 이하이거나 근로자가 IRP 계좌 개설을 거부하는 예외적인 경우에는 현금으로 받을 수 있습니다.</p>
+
+            <h2>중간정산을 했다면 기간을 다시 세세요</h2>
+            <p>주택 구입, 전세보증금, 6개월 이상 요양 등 법정 사유로 퇴직금을 중간정산한 적이 있다면, 세법상 근속연수와 퇴직금 계산은 <strong>마지막 정산일부터</strong> 새로 시작합니다. 입사일을 그대로 넣으면 근속연수도 퇴직금도 실제보다 크게 나옵니다. 정산 내역이 있으면 입사일 칸에 정산일을 넣어 계산하세요.</p>
+
+            <h2>계산 결과를 볼 때 주의할 점</h2>
+            <ul>
+                <li>이 계산기는 근속연수를 재직일수 ÷ 365로 단순 환산합니다. 실무에서는 근속월수를 12로 나누고 1개월 미만은 1개월, 1년 미만은 1년으로 올림 처리하므로 1년 안팎에서 차이가 날 수 있습니다.</li>
+                <li>비과세 퇴직소득(장해보상금 등), 임원의 임원퇴직금 한도 초과분, DC형 운용손익은 반영하지 않습니다.</li>
+                <li>퇴직소득세는 회사가 원천징수하고, 다음 연도 5월 종합소득세 신고 때 다른 소득과 합산되지 않습니다(분류과세).</li>
+                <li>퇴직금을 받지 못했다면 퇴직일부터 3년 안에 노동청에 진정을 넣을 수 있습니다. 체불 퇴직금은 형사처벌 대상입니다.</li>
+            </ul>
+        </article>
+
+        <!-- FAQ -->
+        <section class="mt-8">
+            <h2 class="text-lg font-black text-white mb-3">자주 묻는 질문</h2>
+            <div class="space-y-2.5">
+                <details class="faq" open>
+                    <summary>퇴직소득세는 왜 이렇게 적게 나오나요?</summary>
+                    <div class="a">근속연수공제와 환산급여공제가 두 번 들어가고, 환산급여를 12로 나눠 한 해 소득처럼 만든 뒤 낮은 세율을 적용하기 때문입니다. 근속이 길고 퇴직금이 크지 않으면 환산급여가 800만원 이하로 떨어져 세금이 0원이 되기도 합니다.</div>
+                </details>
+                <details class="faq">
+                    <summary>1년 미만으로 일하고 그만두면 퇴직금이 없나요?</summary>
+                    <div class="a">네, 계속근로기간 1년 미만이면 법정 퇴직금은 발생하지 않습니다. 다만 취업규칙이나 근로계약에서 더 유리한 조건을 정했다면 그에 따릅니다.</div>
+                </details>
+                <details class="faq">
+                    <summary>상여금과 연차수당은 어떻게 넣어야 하나요?</summary>
+                    <div class="a">연간 상여금 총액의 3/12, 연간 연차수당 총액의 3/12를 3개월 임금 총액에 더합니다. 퇴직 직전에 연차수당을 한꺼번에 정산받았다면 그중 3개월분을 반영합니다.</div>
+                </details>
+                <details class="faq">
+                    <summary>퇴직금을 IRP로 받으면 세금이 없어지나요?</summary>
+                    <div class="a">없어지는 것이 아니라 미뤄집니다. IRP로 이전하면 과세가 이연되고, 나중에 연금으로 나눠 받을 때 세 부담이 줄어듭니다. 중도 해지하면 이연 세금과 기타소득세가 붙을 수 있습니다.</div>
+                </details>
+                <details class="faq">
+                    <summary>DC형인데 이 계산기를 써도 되나요?</summary>
+                    <div class="a">DC형은 회사가 매년 연봉의 1/12 이상을 적립하고 운용 성과에 따라 금액이 정해지므로, 법정 산식과 다를 수 있습니다. 참고용으로만 쓰고 정확한 금액은 회사 또는 퇴직연금 사업자에 확인하세요.</div>
+                </details>
+                <details class="faq">
+                    <summary>퇴직금 지급이 늦어지면 어떻게 되나요?</summary>
+                    <div class="a">퇴직일부터 14일 이내에 지급해야 하며, 늦어지면 지연이자가 붙습니다. 지급하지 않으면 노동청에 진정을 넣을 수 있고, 3년의 소멸시효가 있습니다.</div>
+                </details>
+            </div>
+        </section>
+
+<script>
+(function () {
+    "use strict";
+
+    /*__CORE_START__*/
+    function serviceDeduction(y) {            // 근속연수공제 (2023.1.1 이후 퇴직분)
+        if (y <= 5) { return y * 1000000; }
+        if (y <= 10) { return 5000000 + (y - 5) * 2000000; }
+        if (y <= 20) { return 15000000 + (y - 10) * 2500000; }
+        return 40000000 + (y - 20) * 3000000;
+    }
+
+    function convertedDeduction(c) {          // 환산급여공제
+        if (c <= 8000000) { return c; }
+        if (c <= 70000000) { return 8000000 + (c - 8000000) * 0.6; }
+        if (c <= 100000000) { return 45200000 + (c - 70000000) * 0.55; }
+        if (c <= 300000000) { return 61700000 + (c - 100000000) * 0.45; }
+        return 151700000 + (c - 300000000) * 0.35;
+    }
+
+    function basicTax(base) {                 // 기본세율 8단계
+        var t = [[14000000, 0.06, 0], [50000000, 0.15, 1260000], [88000000, 0.24, 5760000],
+                 [150000000, 0.35, 15440000], [300000000, 0.38, 19940000],
+                 [500000000, 0.40, 25940000], [1000000000, 0.42, 35940000],
+                 [Infinity, 0.45, 65940000]];
+        for (var i = 0; i < t.length; i++) {
+            if (base <= t[i][0]) { return Math.max(0, base * t[i][1] - t[i][2]); }
+        }
+        return 0;
+    }
+
+    function severanceCore(o) {
+        var days = o.days > 0 ? o.days : 1;
+        var years = Math.max(days / 365, 1 / 12);
+        var total3 = o.wage3 + o.bonus3 + o.leave3;
+        var avg = o.days3 > 0 ? total3 / o.days3 : 0;
+        var pay = avg * 30 * days / 365;
+        var sded = Math.min(serviceDeduction(years), pay);
+        var conv = Math.max(0, (pay - sded) / years * 12);
+        var cded = convertedDeduction(conv);
+        var base = Math.max(0, conv - cded);
+        var convTax = basicTax(base);
+        var tax = convTax / 12 * years;
+        var local = tax * 0.1;
+        return {
+            days: days, years: years, total3: total3, avg: avg, pay: pay,
+            sded: sded, conv: conv, cded: cded, base: base, convTax: convTax,
+            tax: tax, local: local, net: pay - tax - local,
+            effRate: pay > 0 ? (tax + local) / pay : 0
+        };
+    }
+    /*__CORE_END__*/
+
+    var $ = function (id) { return document.getElementById(id); };
+    function won(n) { return Math.round(n).toLocaleString("ko-KR") + "원"; }
+    function numv(id, dflt) {
+        var el = $(id);
+        if (!el) { return dflt; }
+        var v = parseFloat(String(el.value).replace(/,/g, ""));
+        return isFinite(v) ? v : dflt;
+    }
+    function parseDate(s) {
+        if (!s) { return null; }
+        var p = s.split("-");
+        if (p.length !== 3) { return null; }
+        var d = new Date(Date.UTC(+p[0], +p[1] - 1, +p[2]));
+        return isNaN(d.getTime()) ? null : d;
+    }
+    var DAY = 86400000;
+
+    function autoDays3() {
+        var end = parseDate($("end").value);
+        if (!end) { return; }
+        var from = new Date(Date.UTC(end.getUTCFullYear(), end.getUTCMonth() - 3, end.getUTCDate() + 1));
+        var d = Math.round((end - from) / DAY) + 1;
+        if (d >= 80 && d <= 95) { $("days3").value = d; }
+    }
+
+    function render() {
+        var s = parseDate($("start").value);
+        var e = parseDate($("end").value);
+        var days = (s && e) ? (Math.round((e - s) / DAY) + 1) : 0;
+
+        var r = severanceCore({
+            days: days,
+            wage3: Math.max(0, numv("wage3", 0)),
+            bonus3: Math.max(0, numv("bonus3", 0)),
+            leave3: Math.max(0, numv("leave3", 0)),
+            days3: Math.max(1, numv("days3", 92))
+        });
+
+        var yearsTxt = (Math.round(r.years * 100) / 100).toLocaleString("ko-KR") + "년";
+        $("r-years").textContent = "근속 " + yearsTxt;
+        $("r-net").textContent = won(r.net);
+        $("r-pay").textContent = won(r.pay);
+        $("r-tax").textContent = won(r.tax);
+        $("r-local").textContent = won(r.local);
+        $("r-eff").textContent = (Math.round(r.effRate * 1000) / 10) + "%";
+        $("r-avg").textContent = won(r.avg);
+
+        $("b-days").textContent = r.days > 0 ? r.days.toLocaleString("ko-KR") + "일" : "-";
+        $("b-years").textContent = yearsTxt;
+        $("b-total3").textContent = won(r.total3);
+        $("b-days3").textContent = numv("days3", 92) + "일";
+        $("b-avg").textContent = won(r.avg);
+        $("b-pay").textContent = won(r.pay);
+        $("b-sded").textContent = "−" + won(r.sded);
+        $("b-conv").textContent = won(r.conv);
+        $("b-cded").textContent = "−" + won(r.cded);
+        $("b-base").textContent = won(r.base);
+        $("b-convtax").textContent = won(r.convTax);
+        $("b-tax").textContent = won(r.tax);
+        $("b-local").textContent = won(r.local);
+        $("b-net").textContent = won(r.net);
+
+        var note = "";
+        if (r.days > 0 && r.days < 365) { note += "계속근로기간이 1년 미만이면 법정 퇴직금은 발생하지 않습니다. "; }
+        if (r.base <= 0) { note += "과세표준이 0이라 퇴직소득세가 부과되지 않습니다. "; }
+        note += "근속연수는 재직일수 ÷ 365로 계산했습니다. 실제 원천징수는 회사의 근속월수 산정과 비과세 소득에 따라 달라집니다.";
+        $("b-note").textContent = note;
+    }
+
+    var ids = ["wage3", "bonus3", "leave3", "days3"];
+    for (var i = 0; i < ids.length; i++) {
+        var el = $(ids[i]);
+        if (el) { el.addEventListener("input", render); }
+    }
+    var s1 = $("start"), s2 = $("end");
+    if (s1) { s1.addEventListener("change", function () { render(); }); }
+    if (s2) { s2.addEventListener("change", function () { autoDays3(); render(); }); }
+    autoDays3();
+    render();
+})();
+</script>
+    </main>
+
+    <section class="max-w-5xl mx-auto px-4 pb-10 w-full">
+        <h2 class="text-xs font-black uppercase tracking-widest text-slate-500 mb-3">다른 계산기도 함께</h2>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            <a href="calc.html" class="group bg-slate-900/80 border border-slate-800 rounded-xl p-3 hover:border-amber-500/50 transition">
+                <div class="text-xl mb-1">💰</div>
+                <div class="text-[11px] font-black text-slate-200 leading-tight">연말정산·100g 단가</div>
+                <div class="text-[10px] text-slate-500 mt-1 leading-tight">연말정산 환급 계산기 · 100g당 단가 비교기</div>
+            </a>
+            <a href="unemployment.html" class="group bg-slate-900/80 border border-slate-800 rounded-xl p-3 hover:border-amber-500/50 transition">
+                <div class="text-xl mb-1">🧾</div>
+                <div class="text-[11px] font-black text-slate-200 leading-tight">실업급여</div>
+                <div class="text-[10px] text-slate-500 mt-1 leading-tight">2026 실업급여(구직급여) 모의 계산기</div>
+            </a>
+            <a href="severance.html" class="group bg-slate-900/80 border border-slate-800 rounded-xl p-3 hover:border-amber-500/50 transition">
+                <div class="text-xl mb-1">📄</div>
+                <div class="text-[11px] font-black text-slate-200 leading-tight">퇴직금·퇴직소득세</div>
+                <div class="text-[10px] text-slate-500 mt-1 leading-tight">2026 퇴직금 & 퇴직소득세 실수령액 계산기</div>
+            </a>
+            <a href="jeonse.html" class="group bg-slate-900/80 border border-slate-800 rounded-xl p-3 hover:border-amber-500/50 transition">
+                <div class="text-xl mb-1">🏠</div>
+                <div class="text-[11px] font-black text-slate-200 leading-tight">전세 vs 월세</div>
+                <div class="text-[10px] text-slate-500 mt-1 leading-tight">2026 전세 vs 월세 주거비 비교 계산기</div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500 px-4">
+        <p class="mb-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+            <a href="calc.html" class="font-bold text-amber-400/90 hover:text-amber-300">🧮 연말정산·단가</a>
+            <a href="unemployment.html" class="font-bold text-amber-400/90 hover:text-amber-300">🧾 실업급여</a>
+            <a href="severance.html" class="font-bold text-amber-400/90 hover:text-amber-300">📄 퇴직금</a>
+            <a href="jeonse.html" class="font-bold text-amber-400/90 hover:text-amber-300">🏠 전세 vs 월세</a>
+        </p>
+        <p class="mb-2">계산 결과는 참고용입니다. 실제 퇴직금과 원천징수 세액은 회사의 평균임금 산정, 비과세 소득, 근속월수 처리에 따라 달라질 수 있습니다.</p>
+        <p class="mb-2">Affiliate Disclosure: When you buy through our hand-curated links, we may earn an affiliate commission at no extra cost to you.</p>
+        <p>© 2026 DailyTechFinds. All Rights Reserved. Curated for smart tech enthusiasts.</p>
+    </footer>
+</body>
+</html>

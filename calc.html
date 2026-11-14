@@ -61,7 +61,7 @@
 
     <!-- Top Announcement Bar -->
     <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-rose-600 py-2 text-center text-[11px] sm:text-xs font-black uppercase tracking-widest text-slate-950">
-        🧮 무료 생활 계산기 2종 · 연말정산 환급액 + 장바구니 단가 비교
+        🧮 무료 생활 계산기 4종 · 연말정산 · 실업급여 · 퇴직금 · 전세 vs 월세
     </div>
 
     <!-- Navbar -->
@@ -76,6 +76,12 @@
                 <a href="calc.html" aria-current="page" class="px-2.5 sm:px-3 py-2 rounded-xl bg-amber-500 text-slate-950">🧮 계산기</a>
                 <a href="https://cshop.naver.com/lemilea" target="_blank" rel="noopener noreferrer" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">🛍️ 못산템</a>
             </nav>
+        </div>
+        <div class="max-w-6xl mx-auto px-4 pb-2.5 flex items-center gap-1.5 overflow-x-auto text-[11px] sm:text-xs">
+            <a href="calc.html" aria-current="page" class="chip shrink-0 px-2.5 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-black">💰 연말정산·100g 단가</a>
+            <a href="unemployment.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">🧾 실업급여</a>
+            <a href="severance.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">📄 퇴직금·퇴직소득세</a>
+            <a href="jeonse.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">🏠 전세 vs 월세</a>
         </div>
     </header>
 
@@ -362,6 +368,41 @@
             </div>
         </section>
 
+        <!-- ===== 2026 NEW CALCULATORS ===== -->
+        <section class="mt-10">
+            <h2 class="text-lg font-black text-white mb-1">2026년에 새로 추가한 계산기</h2>
+            <p class="text-xs text-slate-500 mb-4">실업급여·퇴직금·주거비는 숫자가 매년 바뀝니다. 2026년 기준 고시·법령으로 계산합니다.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <a href="unemployment.html" class="group bg-slate-900/90 border border-slate-800 rounded-2xl p-5 hover:border-amber-500/60 transition">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-2xl">🧾</span>
+                        <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">2026</span>
+                    </div>
+                    <h3 class="font-black text-white text-sm mb-1">실업급여(구직급여)</h3>
+                    <p class="text-[11px] text-slate-400 leading-relaxed mb-3">상한 68,100원 · 하한 66,048원, 가입기간별 120~270일 소정급여일수까지.</p>
+                    <span class="text-[11px] font-black text-amber-400">1일·월·총액 계산 →</span>
+                </a>
+                <a href="severance.html" class="group bg-slate-900/90 border border-slate-800 rounded-2xl p-5 hover:border-amber-500/60 transition">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-2xl">📄</span>
+                        <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">2026</span>
+                    </div>
+                    <h3 class="font-black text-white text-sm mb-1">퇴직금 · 퇴직소득세</h3>
+                    <p class="text-[11px] text-slate-400 leading-relaxed mb-3">평균임금 → 법정 퇴직금 → 근속연수·환산급여공제 → 세후 실수령액.</p>
+                    <span class="text-[11px] font-black text-amber-400">실수령액 계산 →</span>
+                </a>
+                <a href="jeonse.html" class="group bg-slate-900/90 border border-slate-800 rounded-2xl p-5 hover:border-amber-500/60 transition">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-2xl">🏠</span>
+                        <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">2026</span>
+                    </div>
+                    <h3 class="font-black text-white text-sm mb-1">전세 vs 월세</h3>
+                    <p class="text-[11px] text-slate-400 leading-relaxed mb-3">전세 이자·기회비용과 월세를 같은 저울에. 전환율 상한 5% 점검까지.</p>
+                    <span class="text-[11px] font-black text-amber-400">주거비 비교 →</span>
+                </a>
+            </div>
+        </section>
+
         <!-- ===== CTA ===== -->
         <section class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <a href="https://cshop.naver.com/lemilea" target="_blank" rel="noopener noreferrer" class="group bg-gradient-to-br from-emerald-950/60 to-slate-900 border border-emerald-800/60 rounded-2xl p-5 hover:border-emerald-500/70 transition">
@@ -388,6 +429,12 @@
     <!-- Footer -->
     <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500 px-4">
         <p class="mb-2">Affiliate Disclosure: When you buy through our hand-curated links, we may earn an affiliate commission at no extra cost to you.</p>
+        <p class="mb-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+            <a href="calc.html" class="font-bold text-amber-400/90 hover:text-amber-300">🧮 연말정산·단가</a>
+            <a href="unemployment.html" class="font-bold text-amber-400/90 hover:text-amber-300">🧾 실업급여</a>
+            <a href="severance.html" class="font-bold text-amber-400/90 hover:text-amber-300">📄 퇴직금</a>
+            <a href="jeonse.html" class="font-bold text-amber-400/90 hover:text-amber-300">🏠 전세 vs 월세</a>
+        </p>
         <p class="mb-2">계산 결과는 참고용이며 투자·세무 조언이 아닙니다. 세법과 상품 조건은 바뀔 수 있습니다.</p>
         <p>© 2026 DailyTechFinds. All Rights Reserved. Curated for smart tech enthusiasts.</p>
     </footer>
