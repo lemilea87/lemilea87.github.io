@@ -653,7 +653,7 @@
         var refVol = Math.min(numVal(fieldsA.vol), numVal(fieldsB.vol));
         var saving = (gap * refVol) / per;
 
-        $("verdict").textContent = cheaperName + "이(가) " + uname + "당 " + fmtUnitCost(gap) + " 더 쌉니다.";
+        $("verdict").textContent = cheaperName + " 쪽이 " + uname + "당 " + fmtUnitCost(gap) + " 더 쌉니다.";
         $("verdict-sub").textContent = cheaperName + " " + fmtUnitCost(cheaper.unitCost) + " · " +
             (diff < 0 ? nameB : nameA) + " " + fmtUnitCost(dearer.unitCost) +
             " → 단가 차이 " + pct.toFixed(1) + "%" +
@@ -667,7 +667,7 @@
             $("bar-a").style.opacity = "0.4";
         }
 
-        lastUnitSummary = cheaperName + "이(가) " + uname + "당 " + fmtUnitCost(gap) + " 더 쌈 (" +
+        lastUnitSummary = cheaperName + " 쪽이 " + uname + "당 " + fmtUnitCost(gap) + " 더 쌈 (" +
             pct.toFixed(1) + "% 차이). " + nameA + " " + fmtUnitCost(a.unitCost) + " / " + nameB + " " + fmtUnitCost(b.unitCost);
     }
 
