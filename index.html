@@ -25,8 +25,11 @@
                 <span class="font-black text-xl tracking-tight bg-gradient-to-r from-amber-400 via-orange-400 to-rose-500 bg-clip-text text-transparent">DailyTechFinds</span>
                 <span class="hidden sm:inline-block ml-2 px-2 py-0.5 text-[10px] font-extrabold uppercase rounded bg-rose-500/20 text-rose-400 border border-rose-500/30">BF '26 Special</span>
             </div>
-            <div class="flex items-center space-x-4 text-xs text-slate-400">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full font-semibold bg-emerald-950/80 text-emerald-400 border border-emerald-800/80">
+            <div class="flex items-center gap-2 sm:gap-3 text-xs text-slate-400">
+                <a href="calc.html" class="inline-flex items-center px-2.5 py-1.5 rounded-xl font-bold text-amber-300 bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 hover:text-amber-200 transition">
+                    🧮 절세·단가 계산기
+                </a>
+                <span class="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full font-semibold bg-emerald-950/80 text-emerald-400 border border-emerald-800/80">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-ping"></span>
                     Verified Price Drops
                 </span>
@@ -49,11 +52,25 @@
 
         <!-- Category Badges -->
         <div class="flex flex-wrap justify-center gap-2 pt-2">
-            <span class="px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 cursor-pointer">All Deals (8)</span>
+            <span class="px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950">All Deals (6)</span>
             <span class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 cursor-pointer transition">Desk Setup & EDC</span>
             <span class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 cursor-pointer transition">Smart Audio</span>
             <span class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 cursor-pointer transition">Mini PCs & Power</span>
         </div>
+    </section>
+
+    <!-- Calculator Promo Strip -->
+    <section class="max-w-6xl mx-auto px-4 pb-2 w-full">
+        <a href="calc.html" class="flex items-center justify-between gap-3 bg-gradient-to-r from-amber-500/10 via-slate-900 to-slate-900 border border-amber-500/30 rounded-2xl p-4 hover:border-amber-500/60 transition">
+            <div class="flex items-center gap-3 min-w-0">
+                <span class="text-2xl shrink-0">🧮</span>
+                <div class="min-w-0">
+                    <p class="font-black text-sm text-white truncate">2026 연말정산, 얼마나 돌려받을까?</p>
+                    <p class="text-[11px] text-slate-400 leading-snug">연금저축·IRP 세액공제 환급액 + 장바구니 100g당 단가 비교 — 3초 계산</p>
+                </div>
+            </div>
+            <span class="shrink-0 text-xs font-black text-amber-400">열기 →</span>
+        </a>
     </section>
 
     <!-- Deals Grid -->
@@ -209,6 +226,9 @@
 
     <!-- Footer -->
     <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500">
+        <p class="mb-2">
+            <a href="calc.html" class="font-bold text-amber-400/90 hover:text-amber-300">🧮 연말정산 환급 계산기 · 100g당 단가 비교기</a>
+        </p>
         <p class="mb-2">Affiliate Disclosure: When you buy through our hand-curated links, we may earn an affiliate commission at no extra cost to you.</p>
         <p>© 2026 DailyTechFinds. All Rights Reserved. Curated for smart tech enthusiasts.</p>
     </footer>
