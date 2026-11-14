@@ -405,7 +405,7 @@
 
     function autoDays3() {
         var end = parseDate($("end").value);
-        if (!end) { return; }
+        if (!end || end.getUTCFullYear() < 1950) { return; }
         var from = new Date(Date.UTC(end.getUTCFullYear(), end.getUTCMonth() - 3, end.getUTCDate() + 1));
         var d = Math.round((end - from) / DAY) + 1;
         if (d >= 80 && d <= 95) { $("days3").value = d; }
@@ -414,7 +414,19 @@
     function render() {
         var s = parseDate($("start").value);
         var e = parseDate($("end").value);
-        var days = (s && e) ? (Math.round((e - s) / DAY) + 1) : 0;
+        var valid = !!(s && e && e >= s && s.getUTCFullYear() >= 1950 && e.getUTCFullYear() <= 2100);
+        var days = valid ? (Math.round((e - s) / DAY) + 1) : 0;
+
+        if (!valid) {
+            var blank = ["r-net", "r-pay", "r-tax", "r-local", "r-eff", "r-avg",
+                         "b-days", "b-years", "b-total3", "b-avg", "b-pay", "b-sded",
+                         "b-conv", "b-cded", "b-base", "b-convtax", "b-tax", "b-local", "b-net"];
+            for (var k = 0; k < blank.length; k++) { if ($(blank[k])) { $(blank[k]).textContent = "-"; } }
+            $("b-days3").textContent = numv("days3", 92) + "일";
+            $("r-years").textContent = "근속 –";
+            $("b-note").textContent = "입사일과 퇴사일을 확인해 주세요. 퇴사일(마지막 근무일)이 입사일보다 빠르면 계산할 수 없습니다.";
+            return;
+        }
 
         var r = severanceCore({
             days: days,
