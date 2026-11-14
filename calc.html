@@ -481,6 +481,10 @@
 
     tabTax.addEventListener("click", function () { showTab("tax", true); });
     tabUnit.addEventListener("click", function () { showTab("unit", true); });
+    window.addEventListener("hashchange", function () {
+        var h = (window.location.hash || "").replace("#", "");
+        showTab(h === "unit" ? "unit" : "tax", false);
+    });
 
     /* ---------------- Tax calculator ---------------- */
     var incomeEl = $("income");
