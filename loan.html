@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 대출 이자 계산기 &amp; DSR 계산 | 원리금균등·원금균등·만기일시 비교</title>
+<meta name="description" content="대출금액·금리·기간을 넣으면 원리금균등·원금균등·만기일시 세 가지 상환방식의 월 상환액과 총이자를 나란히 비교합니다. 2026년 스트레스 DSR 3단계(수도권 주담대 3.0%, 신용대출 1.5%)를 반영한 DSR과 최대 대출 가능액까지 계산. 무료.">
+<meta name="keywords" content="대출 이자 계산기, DSR 계산기, 2026 DSR, 스트레스 DSR, 원리금균등, 원금균등, 만기일시, 총이자 비교, 주담대 한도, 신용대출 한도, 2026 대출 규제">
+<link rel="canonical" href="https://lemilea87.github.io/loan.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DailyTechFinds">
+<meta property="og:title" content="2026 대출 이자 &amp; DSR 계산기 — 상환방식 3종 비교">
+<meta property="og:description" content="원리금균등·원금균등·만기일시의 월 상환액과 총이자를 비교하고, 스트레스 금리를 반영한 DSR과 대출 한도를 확인하세요.">
+<meta property="og:url" content="https://lemilea87.github.io/loan.html">
+<meta property="og:locale" content="ko_KR">
+<meta name="robots" content="index,follow">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+    body { font-family: 'Plus Jakarta Sans', 'Noto Sans KR', system-ui, -apple-system, 'Malgun Gothic', sans-serif; background-color: #080c14; color: #f1f5f9; }
+    .glow-effect { box-shadow: 0 0 30px -5px rgba(245, 158, 11, 0.15); }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type="number"] { -moz-appearance: textfield; }
+    .fld { width: 100%; background: rgba(2,6,23,.75); border: 1px solid #1e293b; border-radius: .85rem; padding: .7rem .9rem; font-weight: 700; font-size: .95rem; color: #f8fafc; outline: none; transition: border-color .15s, box-shadow .15s; }
+    .fld:focus { border-color: rgba(245,158,11,.7); box-shadow: 0 0 0 3px rgba(245,158,11,.15); }
+    .fld::placeholder { color: #475569; font-weight: 500; }
+    .chip { transition: all .15s ease; }
+    .chip:hover { border-color: rgba(245,158,11,.5); color: #fbbf24; }
+    .tab-btn { transition: all .18s ease; }
+    .tab-btn[aria-selected="true"] { background-image: linear-gradient(90deg, #f59e0b, #f97316); color: #020617; box-shadow: 0 8px 24px -10px rgba(245,158,11,.7); }
+    .bar-track { background: rgba(30,41,59,.9); border-radius: 9999px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 9999px; transition: width .35s ease; }
+    .num { font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+    .fade-in { animation: fadeIn .28s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    .prose-kr h2 { font-size: 1.35rem; font-weight: 900; color: #fff; margin-bottom: .6rem; letter-spacing: -.01em; }
+    .prose-kr h3 { font-size: 1rem; font-weight: 800; color: #fbbf24; margin: 1.4rem 0 .5rem; }
+    .prose-kr p { color: #94a3b8; font-size: .9rem; line-height: 1.85; margin-bottom: .9rem; }
+    .prose-kr li { color: #94a3b8; font-size: .875rem; line-height: 1.8; margin-left: 1.1rem; list-style: disc; margin-bottom: .35rem; }
+    .prose-kr strong { color: #e2e8f0; font-weight: 800; }
+    .tbl { width: 100%; border-collapse: collapse; font-size: .8rem; }
+    .tbl th { background: rgba(30,41,59,.7); color: #fbbf24; font-weight: 800; padding: .55rem .5rem; text-align: left; border-bottom: 1px solid #1e293b; }
+    .tbl td { padding: .5rem .5rem; color: #cbd5e1; border-bottom: 1px solid rgba(30,41,59,.6); }
+    .tbl tr.hl td { background: rgba(245,158,11,.12); color: #fde68a; font-weight: 800; }
+    details.faq { border: 1px solid #1e293b; border-radius: .9rem; background: rgba(15,23,42,.6); }
+    details.faq summary { cursor: pointer; padding: .9rem 1rem; font-weight: 800; font-size: .875rem; color: #e2e8f0; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+    details.faq summary::-webkit-details-marker { display: none; }
+    details.faq summary::after { content: '+'; color: #f59e0b; font-weight: 900; }
+    details.faq[open] summary::after { content: '−'; }
+    details.faq .a { padding: 0 1rem 1rem; color: #94a3b8; font-size: .85rem; line-height: 1.8; }
+</style>
+<script type="application/ld+json">
+[{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "2026년 대출 이자 및 DSR 계산기",
+  "url": "https://lemilea87.github.io/loan.html",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any (웹 브라우저)",
+  "inLanguage": "ko",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" },
+  "description": "대출금액·금리·기간을 입력하면 원리금균등·원금균등·만기일시 상환방식의 월 상환액과 총이자를 비교하고, 2026년 스트레스 DSR 기준으로 DSR 비율과 최대 대출 가능액을 계산합니다.",
+  "featureList": [
+    "원리금균등·원금균등·만기일시 월 상환액 및 총이자 비교",
+    "2026년 스트레스 DSR 3단계 금리 반영 DSR 산출",
+    "DSR 한도 내 최대 대출 가능액 역산",
+    "1년·5년 후 원금 잔액 확인"
+  ]
+},
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "원리금균등과 원금균등은 뭐가 다른가요?", "acceptedAnswer": {"@type": "Answer", "text": "원리금균등은 매달 갚는 총액(원금+이자)이 같은 방식이고, 원금균등은 매달 갚는 원금이 일정해 처음에는 많이 내고 갈수록 줄어드는 방식입니다. 같은 조건이면 원금균등의 총이자가 적지만 초기 상환 부담이 큽니다."}},
+    {"@type": "Question", "name": "DSR 40%가 무슨 뜻인가요?", "acceptedAnswer": {"@type": "Answer", "text": "연소득에서 모든 대출의 연간 원리금 상환액이 차지하는 비율을 40% 이내로 제한한다는 뜻입니다. 연소득 5,000만원이면 연 2,000만원까지 원리금 상환에 쓸 수 있다는 계산입니다. 은행권 40%, 2금융권 50%가 적용됩니다."}},
+    {"@type": "Question", "name": "스트레스 DSR은 왜 실제 금리보다 높은 금리로 계산하나요?", "acceptedAnswer": {"@type": "Answer", "text": "금리가 오르면 상환 부담이 커지므로, 미래 금리 상승분을 미리 얹어 상환 능력을 보수적으로 보는 제도입니다. 2026년 하반기 기준 수도권·규제지역 주담대는 3.0%, 그 밖의 대출은 1.5%를 더하며, 지방 주담대는 1.5%의 50%만 반영합니다."}},
+    {"@type": "Question", "name": "만기일시 상환은 DSR에서 어떻게 계산되나요?", "acceptedAnswer": {"@type": "Answer", "text": "만기일시는 매달 이자만 내고 만기에 원금을 한 번에 갚습니다. DSR 산정에서는 연간 이자 부담을 기준으로 잡는 경우가 많아, 이 계산기도 연 이자로 계산합니다. 다만 실제 심사에서는 만기 원금까지 포함해 더 보수적으로 보는 경우가 있으니 은행 기준을 확인하세요."}},
+    {"@type": "Question", "name": "중도상환하면 이자가 얼마나 줄어드나요?", "acceptedAnswer": {"@type": "Answer", "text": "원리금균등 30년 대출에서 5년 뒤 절반을 중도상환하면 남은 기간 이자가 크게 줄어듭니다. 다만 중도상환수수료(통상 상환금액의 0.7~1.4%, 3년 경과 시 면제)가 붙을 수 있어, 줄어드는 이자와 수수료를 비교해야 합니다."}}
+  ]
+}]
+</script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-rose-600 py-2 text-center text-[11px] sm:text-xs font-black uppercase tracking-widest text-slate-950">
+        🏦 2026년 스트레스 DSR 3단계 반영 · 수도권 주담대 3.0% · 신용대출 1.5%
+    </div>
+
+    <!-- Navbar -->
+    <header class="border-b border-slate-800/80 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
+            <a href="index.html" class="flex items-center space-x-2 shrink-0">
+                <span class="text-2xl">⚡</span>
+                <span class="font-black text-lg sm:text-xl tracking-tight bg-gradient-to-r from-amber-400 via-orange-400 to-rose-500 bg-clip-text text-transparent">DailyTechFinds</span>
+            </a>
+            <nav class="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-bold">
+                <a href="index.html" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">🔥 핫딜 허브</a>
+                <a href="calc.html" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">🧮 계산기</a>
+                <a href="https://cshop.naver.com/lemilea" target="_blank" rel="noopener noreferrer" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">🛍️ 못산템</a>
+            </nav>
+        </div>
+        <div class="max-w-6xl mx-auto px-4 pb-2.5 flex items-center gap-1.5 overflow-x-auto text-[11px] sm:text-xs">
+            <a href="loan.html" aria-current="page" class="chip shrink-0 px-2.5 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-black">🏦 대출이자·DSR</a>
+            <a href="salary.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">💰 연봉 실수령액</a>
+            <a href="calc.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">🧾 연말정산·단가</a>
+            <a href="unemployment.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">📋 실업급여</a>
+            <a href="severance.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">📄 퇴직금</a>
+            <a href="jeonse.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">🏠 전세 vs 월세</a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="max-w-3xl mx-auto px-4 pt-10 pb-6 text-center w-full">
+        <span class="text-amber-400 text-[11px] font-black uppercase tracking-widest bg-amber-400/10 px-3.5 py-1.5 rounded-full border border-amber-400/20 inline-block mb-3">
+            🏦 원리금균등 · 원금균등 · 만기일시 + 스트레스 DSR
+        </span>
+        <h1 class="text-3xl sm:text-4xl md:text-[2.7rem] font-black tracking-tight leading-tight mb-3">
+            3억 대출, 매달 <span class="bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 bg-clip-text text-transparent">얼마</span> 갚고 이자는?
+        </h1>
+        <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
+            상환방식 세 가지를 같은 조건으로 나란히 비교하고, 2026년 스트레스 금리를 반영한 DSR과 대출 한도까지 한 번에 확인합니다.
+        </p>
+    </section>
+
+    <!-- Calculator -->
+    <main class="max-w-6xl mx-auto px-4 pb-16 w-full flex-1">
+        <div class="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] gap-5 items-start">
+
+            <!-- Inputs -->
+            <section class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 glow-effect">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="font-black text-base text-white">대출 조건</h2>
+                    <span class="text-[10px] font-bold text-slate-500">금액 단위: 만원</span>
+                </div>
+
+                <label class="block mb-4">
+                    <span class="block text-xs font-bold text-slate-400 mb-1.5">대출금액</span>
+                    <div class="relative">
+                        <input id="principal" class="fld pr-14 num" type="number" inputmode="numeric" value="30000" min="1" step="100">
+                        <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-500">만원</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mt-2">
+                        <button type="button" class="chip px-2.5 py-1 rounded-lg text-[11px] font-bold text-slate-300 bg-slate-800/60 border border-slate-700/60" data-principal="10000">1억</button>
+                        <button type="button" class="chip px-2.5 py-1 rounded-lg text-[11px] font-bold text-slate-300 bg-slate-800/60 border border-slate-700/60" data-principal="20000">2억</button>
+                        <button type="button" class="chip px-2.5 py-1 rounded-lg text-[11px] font-bold text-slate-300 bg-slate-800/60 border border-slate-700/60" data-principal="30000">3억</button>
+                        <button type="button" class="chip px-2.5 py-1 rounded-lg text-[11px] font-bold text-slate-300 bg-slate-800/60 border border-slate-700/60" data-principal="50000">5억</button>
+                    </div>
+                </label>
+
+                <div class="grid grid-cols-2 gap-3 mb-4">
+                    <label class="block">
+                        <span class="block text-xs font-bold text-slate-400 mb-1.5">연 금리</span>
+                        <div class="relative">
+                            <input id="rate" class="fld pr-8 num" type="number" inputmode="decimal" value="4.2" min="0" max="30" step="0.1">
+                            <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-500">%</span>
+                        </div>
+                    </label>
+                    <label class="block">
+                        <span class="block text-xs font-bold text-slate-400 mb-1.5">기간 (년)</span>
+                        <select id="years" class="fld">
+                            <option value="5">5년</option>
+                            <option value="10">10년</option>
+                            <option value="15">15년</option>
+                            <option value="20">20년</option>
+                            <option value="30" selected>30년</option>
+                            <option value="35">35년</option>
+                            <option value="40">40년</option>
+                        </select>
+                    </label>
+                </div>
+
+                <span class="block text-xs font-bold text-slate-400 mb-1.5">상환방식</span>
+                <div class="grid grid-cols-3 gap-1.5 mb-4" role="tablist" aria-label="상환방식">
+                    <button type="button" role="tab" aria-selected="true" data-method="equal" class="tab-btn px-2 py-2 rounded-xl text-[11px] font-black bg-slate-800 text-slate-300">원리금균등</button>
+                    <button type="button" role="tab" aria-selected="false" data-method="principal" class="tab-btn px-2 py-2 rounded-xl text-[11px] font-black bg-slate-800 text-slate-300">원금균등</button>
+                    <button type="button" role="tab" aria-selected="false" data-method="bullet" class="tab-btn px-2 py-2 rounded-xl text-[11px] font-black bg-slate-800 text-slate-300">만기일시</button>
+                </div>
+
+                <div class="border-t border-slate-800 pt-4">
+                    <p class="text-xs font-black text-amber-300 mb-3">DSR (총부채원리금상환비율)</p>
+                    <div class="grid grid-cols-2 gap-3 mb-3">
+                        <label class="block">
+                            <span class="block text-xs font-bold text-slate-400 mb-1.5">연소득</span>
+                            <div class="relative">
+                                <input id="income" class="fld pr-14 num" type="number" inputmode="numeric" value="6000" min="0" step="100">
+                                <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-500">만원</span>
+                            </div>
+                        </label>
+                        <label class="block">
+                            <span class="block text-xs font-bold text-slate-400 mb-1.5">기존 대출 연 원리금</span>
+                            <div class="relative">
+                                <input id="existing" class="fld pr-14 num" type="number" inputmode="numeric" value="0" min="0" step="10">
+                                <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-500">만원</span>
+                            </div>
+                        </label>
+                        <label class="block">
+                            <span class="block text-xs font-bold text-slate-400 mb-1.5">대출 유형</span>
+                            <select id="loanType" class="fld">
+                                <option value="metro" selected>주담대 · 수도권·규제지역</option>
+                                <option value="local">주담대 · 지방(비규제)</option>
+                                <option value="credit">신용대출</option>
+                                <option value="etc">기타대출</option>
+                            </select>
+                        </label>
+                        <label class="block">
+                            <span class="block text-xs font-bold text-slate-400 mb-1.5">금리 유형</span>
+                            <select id="rateType" class="fld">
+                                <option value="var" selected>변동형·고정 5년 미만</option>
+                                <option value="mixed">혼합형·주기형</option>
+                                <option value="fixed">고정 5년 이상</option>
+                            </select>
+                        </label>
+                        <label class="col-span-2 block">
+                            <span class="block text-xs font-bold text-slate-400 mb-1.5">DSR 한도</span>
+                            <select id="dsrLimit" class="fld">
+                                <option value="40" selected>40% (은행권)</option>
+                                <option value="50">50% (2금융권)</option>
+                            </select>
+                        </label>
+                    </div>
+                    <p class="text-[11px] leading-relaxed text-slate-500 bg-slate-950/60 border border-slate-800 rounded-xl p-3">
+                        ℹ️ <span id="stressNote">수도권·규제지역 주담대 변동형은 스트레스 금리 3.0%가 더해져 DSR이 계산됩니다.</span> 2026년 하반기 금융위원회 행정지도 기준입니다.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Results -->
+            <section class="space-y-4">
+                <div class="bg-slate-900/90 border border-amber-500/30 rounded-2xl p-5 glow-effect">
+                    <div class="flex items-center justify-between mb-3">
+                        <h2 class="font-black text-base text-white" id="methodTitle">원리금균등 상환</h2>
+                        <span class="text-[10px] font-bold text-amber-400/90">2026년 기준</span>
+                    </div>
+
+                    <div class="rounded-2xl bg-gradient-to-br from-amber-500/15 via-slate-900 to-slate-900 border border-amber-500/30 p-4 mb-4">
+                        <p class="text-[11px] font-bold text-amber-300/80 mb-1" id="monthlyLabel">매달 갚는 금액</p>
+                        <p class="text-4xl font-black text-white num" id="monthly">0<span class="text-lg text-slate-400 font-bold ml-1">원</span></p>
+                        <div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-[11px] text-slate-400 font-bold">
+                            <span>총 상환 <span class="text-slate-200 num" id="totalPay">0</span>원</span>
+                            <span>총이자 <span class="text-rose-300 num" id="totalInterest">0</span>원</span>
+                            <span>이자 비중 <span class="text-amber-400 num" id="interestRatio">0</span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="bar-track h-2.5 mb-2 flex" aria-hidden="true">
+                        <div id="barPrincipal" class="bar-fill bg-gradient-to-r from-emerald-500 to-emerald-400" style="width:70%"></div>
+                        <div id="barInterest" class="bar-fill bg-gradient-to-r from-rose-500 to-rose-400" style="width:30%"></div>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mb-4">초록 = 원금, 빨강 = 이자</p>
+
+                    <table class="tbl">
+                        <tbody id="milestones"></tbody>
+                    </table>
+                </div>
+
+                <!-- Comparison -->
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h2 class="font-black text-base text-white mb-1">상환방식 3종 비교</h2>
+                    <p class="text-[11px] text-slate-500 mb-3" id="compareSub">같은 금액·금리·기간 기준</p>
+                    <table class="tbl">
+                        <thead>
+                            <tr><th>방식</th><th class="text-right">월 상환액</th><th class="text-right">총이자</th><th class="text-right">총 상환</th></tr>
+                        </thead>
+                        <tbody id="compareTable"></tbody>
+                    </table>
+                    <p class="text-[10px] text-slate-600 mt-3 leading-relaxed">원금균등의 월 상환액은 첫 달 기준이며 매달 조금씩 줄어듭니다. 만기일시는 매달 이자만 내고 만기에 원금을 갚는 방식입니다.</p>
+                </div>
+
+                <!-- DSR -->
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <h2 class="font-black text-base text-white">DSR 판정</h2>
+                        <span class="text-[10px] font-bold text-slate-500" id="stressBadge">스트레스 +0.00%p</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2.5 mb-4">
+                        <div class="rounded-xl bg-slate-950/70 border border-slate-800 p-3">
+                            <p class="text-[10px] font-bold text-slate-500 mb-1">DSR (스트레스 반영)</p>
+                            <p class="text-xl font-black num" id="dsrValue">0%</p>
+                        </div>
+                        <div class="rounded-xl bg-slate-950/70 border border-slate-800 p-3">
+                            <p class="text-[10px] font-bold text-slate-500 mb-1">DSR (실제 금리)</p>
+                            <p class="text-xl font-black num text-slate-300" id="dsrPlain">0%</p>
+                        </div>
+                    </div>
+
+                    <div class="bar-track h-2.5 mb-2" aria-hidden="true">
+                        <div id="dsrBar" class="bar-fill bg-gradient-to-r from-amber-500 to-orange-500" style="width:0%"></div>
+                    </div>
+                    <p class="text-[11px] font-bold mb-4" id="dsrVerdict">—</p>
+
+                    <table class="tbl">
+                        <tbody id="dsrRows"></tbody>
+                    </table>
+                    <p class="text-[10px] text-slate-600 mt-3 leading-relaxed">DSR은 모든 가계대출의 연간 원리금 상환액을 연소득으로 나눈 비율입니다. 실제 심사에서는 신용대출 마이너스통장의 약정한도, 카드론 등도 일부 반영되어 계산 결과보다 한도가 낮게 나올 수 있습니다.</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Related -->
+        <section class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <a href="salary.html" class="group bg-slate-900/90 border border-slate-800 rounded-2xl p-4 hover:border-amber-500/60 transition">
+                <span class="text-xl">💰</span>
+                <p class="font-black text-sm text-white mt-1.5 mb-1">연봉 실수령액</p>
+                <p class="text-[11px] text-slate-400 leading-snug">4대보험·소득세 반영 월급</p>
+            </a>
+            <a href="jeonse.html" class="group bg-slate-900/90 border border-slate-800 rounded-2xl p-4 hover:border-amber-500/60 transition">
+                <span class="text-xl">🏠</span>
+                <p class="font-black text-sm text-white mt-1.5 mb-1">전세 vs 월세</p>
+                <p class="text-[11px] text-slate-400 leading-snug">전환율로 비교하는 주거비</p>
+            </a>
+            <a href="calc.html" class="group bg-slate-900/90 border border-slate-800 rounded-2xl p-4 hover:border-amber-500/60 transition">
+                <span class="text-xl">🧾</span>
+                <p class="font-black text-sm text-white mt-1.5 mb-1">연말정산 환급액</p>
+                <p class="text-[11px] text-slate-400 leading-snug">주택자금 공제 포함 확인</p>
+            </a>
+        </section>
+
+        <!-- Explanation -->
+        <article class="prose-kr max-w-3xl mx-auto mt-12">
+            <h2>상환방식 하나 바꿨을 뿐인데 총이자가 수천만원 달라집니다</h2>
+            <p>대출은 금액과 금리만 보게 되지만, 실제로 갚는 돈을 결정하는 것은 <strong>상환방식</strong>입니다. 같은 3억원을 같은 4.2%로 빌려도 원리금균등과 만기일시는 매달 내는 돈이 몇 배 차이 나고, 30년 총이자는 억 단위로 벌어집니다. 이 계산기는 세 방식을 같은 조건에서 나란히 놓고 비교합니다.</p>
+
+            <h3>1. 원리금균등 — 매달 같은 금액, 가장 일반적</h3>
+            <p>원리금균등은 매달 갚는 총액(원금+이자)이 일정합니다. 초기에는 이자 비중이 크고 시간이 지날수록 원금 비중이 커집니다. 3억원·4.2%·30년이면 월 약 146만 7천원, 총이자는 약 2억 2,800만원입니다. 월 부담이 일정해 가계 예산을 짜기 쉽지만, 원금 상환이 늦어 초기 이자 부담이 큰 방식입니다.</p>
+
+            <h3>2. 원금균등 — 처음에 많이, 갈수록 가볍게</h3>
+            <p>원금균등은 매달 갚는 <strong>원금이 일정</strong>합니다. 3억원을 30년으로 나누면 매달 83만 3천원의 원금에 남은 잔액의 이자가 붙습니다. 첫 달은 약 188만 3천원, 마지막 달은 약 83만 6천원으로 월 상환액이 매달 줄어듭니다. 총이자는 약 1억 8,900만원으로 원리금균등보다 3,900만원가량 적습니다. 대신 초반 2~3년의 부담이 크고, 소득이 줄어드는 시기에 상환액도 함께 줄어드는 장점이 있습니다.</p>
+
+            <h3>3. 만기일시 — 이자만 내다가 만기에 원금</h3>
+            <p>만기일시는 매달 이자만 내고 만기에 원금을 한 번에 갚습니다. 3억원·4.2%면 매달 105만원의 이자만 나가 총이자 3억 7,800만원이 됩니다. 월 부담은 가장 가볍지만 총이자가 원리금균등의 1.6배에 달하고, 만기에 3억원을 마련해야 하는 부담이 있습니다. 전세자금대출이나 단기 자금이 필요한 경우가 아니라면 신중해야 합니다.</p>
+
+            <h3>4. DSR — 2026년에는 '스트레스 금리'로 더 보수적으로</h3>
+            <p>DSR(총부채원리금상환비율)은 모든 대출의 연간 원리금 상환액을 연소득으로 나눈 비율입니다. 은행권은 40%, 2금융권은 50%가 한도입니다. 연소득 6,000만원이면 연 2,400만원, 월 200만원까지 원리금 상환에 쓸 수 있다는 뜻입니다.</p>
+            <p>2026년 하반기에는 <strong>스트레스 DSR 3단계</strong>가 적용됩니다. 실제 금리에 스트레스 금리를 더해 DSR을 계산하는데, 수도권·규제지역 주택담보대출은 <strong>3.0%</strong>, 신용대출과 기타대출은 <strong>1.5%</strong>가 더해집니다. 지방 비규제지역 주담대는 2026년 12월 31일까지 2단계 기준이 유지되어 1.5%의 절반인 0.75%만 반영됩니다. 금리 유형에 따라서도 반영 비율이 달라 변동형은 100%, 혼합형·주기형은 60%, 고정 5년 이상은 반영하지 않습니다.</p>
+            <p>예를 들어 연소득 6,000만원, 3억원 주담대(4.2%, 30년, 원리금균등)라면 실제 금리 기준 DSR은 29.3%로 여유가 있어 보이지만, 수도권 변동형으로 스트레스 금리 3.0%를 더하면 7.2% 기준 월 203만 6천원이 되어 DSR이 40.7%로 한도를 넘습니다. 같은 조건에서도 지역과 금리 유형에 따라 대출 가능 금액이 수천만원 달라지는 이유입니다.</p>
+
+            <h3>대출 한도를 늘리는 현실적인 방법</h3>
+            <ul>
+                <li><strong>금리 유형을 고정으로</strong> — 고정 5년 이상 상품은 스트레스 금리를 반영하지 않아 DSR이 낮게 나옵니다. 다만 고정형 금리가 변동형보다 높을 수 있습니다.</li>
+                <li><strong>기간을 늘리기</strong> — 30년을 40년으로 늘리면 월 상환액이 줄어 DSR이 내려갑니다. 총이자는 늘어납니다.</li>
+                <li><strong>기존 신용대출 정리</strong> — DSR은 모든 대출의 합계로 계산합니다. 금리가 높은 신용대출을 먼저 갚으면 신규 대출 여력이 늘어납니다.</li>
+                <li><strong>소득 증빙 강화</strong> — 부부 합산 소득, 성과급·상여금 포함 여부에 따라 연소득 인정액이 달라집니다. 2026년 8월 31일부터 장래소득 인정 기준이 활성화되어 취업 예정자·사회초년생의 한도 산정 방식도 바뀌었습니다.</li>
+            </ul>
+
+            <h3>계산할 때 알아 둘 점</h3>
+            <ul>
+                <li>실제 대출금리는 은행별 우대금리(급여이체·카드 실적·자동이체)에 따라 0.2~1.0%포인트 달라집니다. 계산 결과는 금리 조건을 직접 비교할 때 쓰세요.</li>
+                <li>취급수수료·인지세·근저당 설정비용은 총이자에 포함되지 않았습니다.</li>
+                <li>변동금리 상품은 기준금리가 오르면 월 상환액이 늘어납니다. 스트레스 DSR은 그 가능성을 미리 반영한 제도입니다.</li>
+                <li>2금융권은 DSR 한도가 50%지만 금리가 높아 총이자가 훨씬 커집니다.</li>
+            </ul>
+        </article>
+
+        <!-- FAQ -->
+        <section class="max-w-3xl mx-auto mt-12">
+            <h2 class="text-xl font-black text-white mb-4">자주 묻는 질문</h2>
+            <div class="space-y-2.5">
+                <details class="faq" open>
+                    <summary>3억원을 30년 원리금균등으로 갚으면 월 얼마인가요?</summary>
+                    <div class="a">금리 4.2% 기준 월 약 146만 7천원이고, 30년 총이자는 약 2억 2,800만원입니다. 같은 조건에서 원금균등은 첫 달 약 188만 3천원에서 시작해 총이자 약 1억 8,900만원, 만기일시는 매달 이자 105만원에 총이자 약 3억 7,800만원입니다. 금리가 0.5%포인트 오르면 원리금균등 월 상환액은 12만원 안팎 늘어납니다.</div>
+                </details>
+                <details class="faq">
+                    <summary>DSR 40%면 연소득 6,000만원에 대출을 얼마나 받을 수 있나요?</summary>
+                    <div class="a">연 상환 한도는 2,400만원입니다. 30년 원리금균등, 금리 4.0%, 스트레스 금리 없음을 가정하면 약 4억 1,900만원까지 가능합니다. 수도권 주담대 변동형으로 스트레스 금리 3.0%가 붙어 7.0% 기준이 되면 약 3억 60만원으로 줄어듭니다. 기존 대출이 있으면 그 원리금만큼 한도가 더 줄어듭니다.</div>
+                </details>
+                <details class="faq">
+                    <summary>지방 주담대는 왜 스트레스 금리가 낮나요?</summary>
+                    <div class="a">지방 주택시장 경기 활성화를 위해 2026년 12월 31일까지 2단계 기준(기본 적용비율 50%)이 유지되기 때문입니다. 스트레스 금리 1.5%의 절반인 0.75%만 반영됩니다. 2027년 이후에도 유지될지는 아직 확정되지 않았습니다.</div>
+                </details>
+                <details class="faq">
+                    <summary>중도상환수수료는 얼마인가요?</summary>
+                    <div class="a">은행별로 상환금액의 0.7~1.4% 수준이며, 대출 실행일로부터 3년이 지나면 대부분 면제됩니다. 1억원을 3년 안에 중도상환하면 70만~140만원이 붙습니다. 중도상환으로 아끼는 이자와 수수료를 비교해 결정하세요.</div>
+                </details>
+                <details class="faq">
+                    <summary>전세자금대출도 DSR에 포함되나요?</summary>
+                    <div class="a">전세자금대출은 DSR 산정에서 제외되는 경우가 많지만, 보증기관과 상품에 따라 다릅니다. 주택도시기금 전세자금대출은 DSR 총체적상환능력심사에서 제외되고, 은행 자체 전세대출은 포함될 수 있습니다. 신청 전에 취급 은행에 확인하는 것이 안전합니다.</div>
+                </details>
+                <details class="faq">
+                    <summary>신용대출은 왜 1억원 초과일 때만 스트레스 금리가 붙나요?</summary>
+                    <div class="a">2026년 스트레스 DSR 운영방안에 따라 신용대출은 총 대출잔액이 1억원을 초과하는 경우에만 스트레스 금리가 부과됩니다. 1억원 이하라면 실제 금리로 DSR을 계산합니다. 다만 DSR 비율 자체는 모든 신용대출에 적용됩니다.</div>
+                </details>
+            </div>
+        </section>
+
+        <!-- Source note -->
+        <section class="max-w-3xl mx-auto mt-10 rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+            <p class="text-[11px] font-black text-slate-300 mb-1.5">적용 기준·출처</p>
+            <p class="text-[11px] leading-relaxed text-slate-500">
+                2026년 하반기(7.1~12.31) 금융위원회 「3단계 스트레스 DSR」 행정지도 및 은행연합회 운영방안 기준 · 수도권·규제지역 주담대 스트레스 금리 3.0%(2025.10.16 시행, 10·15 대책) · 신용대출·기타대출 1.5%, 총잔액 1억원 초과 시 적용 · 지방 비규제지역 주담대 2단계(1.5%×50%) 유지 · DSR 한도 은행권 40%·2금융권 50%. 이자 계산은 원리금균등·원금균등·만기일시 표준 공식을 사용했습니다.
+            </p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500 px-4">
+        <p class="mb-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+            <a href="salary.html" class="font-bold text-amber-400/90 hover:text-amber-300">💰 연봉 실수령액</a>
+            <a href="loan.html" class="font-bold text-amber-400/90 hover:text-amber-300">🏦 대출·DSR</a>
+            <a href="calc.html" class="font-bold text-amber-400/90 hover:text-amber-300">🧾 연말정산·단가</a>
+            <a href="unemployment.html" class="font-bold text-amber-400/90 hover:text-amber-300">📋 실업급여</a>
+            <a href="severance.html" class="font-bold text-amber-400/90 hover:text-amber-300">📄 퇴직금</a>
+            <a href="jeonse.html" class="font-bold text-amber-400/90 hover:text-amber-300">🏠 전세 vs 월세</a>
+        </p>
+        <p class="mb-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px]">
+            <a href="about.html" class="hover:text-amber-300">About</a>
+            <span class="text-slate-700">·</span>
+            <a href="privacy.html" class="hover:text-amber-300">Privacy</a>
+            <span class="text-slate-700">·</span>
+            <a href="contact.html" class="hover:text-amber-300">Contact</a>
+        </p>
+        <p class="mb-2">계산 결과는 참고용이며 금융·투자 조언이 아닙니다. 실제 한도와 금리는 금융기관 심사 결과에 따라 달라집니다.</p>
+        <p class="mb-2">Affiliate Disclosure: When you buy through our hand-curated links, we may earn an affiliate commission at no extra cost to you.</p>
+        <p>© 2026 DailyTechFinds. All Rights Reserved. Curated for smart tech enthusiasts.</p>
+    </footer>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const fmt = (n) => Math.round(n).toLocaleString('ko-KR');
+  const eok = (n) => (n / 100000000).toFixed(2).replace(/\.00$/, '');
+
+  let method = 'equal';
+
+  function payment(P, annualRate, n, how) {
+    const i = annualRate / 100 / 12;
+    if (how === 'bullet') {
+      const monthly = P * i;
+      return { first: monthly, totalInterest: monthly * n, total: P + monthly * n };
+    }
+    if (how === 'principal') {
+      const principalPart = P / n;
+      const first = principalPart + P * i;
+      const totalInterest = P * i * (n + 1) / 2;
+      return { first, totalInterest, total: P + totalInterest, principalPart };
+    }
+    // 원리금균등
+    const monthly = i === 0 ? P / n : P * i * Math.pow(1 + i, n) / (Math.pow(1 + i, n) - 1);
+    return { first: monthly, totalInterest: monthly * n - P, total: monthly * n };
+  }
+
+  // 첫 12개월 원리금 합계 (DSR 산정용)
+  function annualRepayment(P, annualRate, n, how) {
+    const i = annualRate / 100 / 12;
+    if (how === 'bullet') return P * i * 12;
+    if (how === 'principal') {
+      const principalPart = P / n;
+      let sum = 0;
+      for (let k = 0; k < 12 && k < n; k++) {
+        sum += principalPart + (P - principalPart * k) * i;
+      }
+      return sum;
+    }
+    return payment(P, annualRate, n, 'equal').first * 12;
+  }
+
+  // 원금 1원당 연간 원리금 (한도 역산용)
+  function annualFactor(annualRate, n, how) {
+    const i = annualRate / 100 / 12;
+    if (how === 'bullet') return i * 12;
+    if (how === 'principal') {
+      let sum = 0;
+      for (let k = 0; k < 12 && k < n; k++) sum += 1 / n + (1 - k / n) * i;
+      return sum;
+    }
+    const monthly = i === 0 ? 1 / n : i * Math.pow(1 + i, n) / (Math.pow(1 + i, n) - 1);
+    return monthly * 12;
+  }
+
+  function balanceAfter(P, annualRate, n, how, months) {
+    const i = annualRate / 100 / 12;
+    if (how === 'bullet') return P;
+    if (how === 'principal') {
+      const principalPart = P / n;
+      return Math.max(0, P - principalPart * months);
+    }
+    const m = payment(P, annualRate, n, 'equal').first;
+    let bal = P;
+    for (let k = 0; k < months && k < n; k++) {
+      bal = bal * (1 + i) - m;
+    }
+    return Math.max(0, bal);
+  }
+
+  const STRESS = {
+    metro: { base: 3.0, areaFactor: 1, note: '수도권·규제지역 주담대 변동형은 스트레스 금리 3.0%가 더해져 DSR이 계산됩니다.' },
+    local: { base: 1.5, areaFactor: 0.5, note: '지방 비규제지역 주담대는 2026년 말까지 1.5%의 50%(0.75%)만 반영됩니다.' },
+    credit: { base: 1.5, areaFactor: 1, note: '신용대출은 스트레스 금리 1.5%가 더해집니다(총잔액 1억원 초과 시 적용).' },
+    etc: { base: 1.5, areaFactor: 1, note: '기타대출은 신용대출과 같은 방식으로 스트레스 금리 1.5%가 적용됩니다.' }
+  };
+  const TYPE_FACTOR = { var: 1, mixed: 0.6, fixed: 0 };
+
+  function num(id) {
+    const v = parseFloat($(id).value);
+    return isNaN(v) ? 0 : v;
+  }
+
+  function render() {
+    const P = Math.max(0, num('principal') * 10000);
+    const rate = Math.max(0, num('rate'));
+    const n = Math.max(1, parseInt($('years').value, 10) * 12);
+    const income = Math.max(0, num('income') * 10000);
+    const existing = Math.max(0, num('existing') * 10000);
+    const dsrLimit = parseFloat($('dsrLimit').value) / 100;
+    const lt = $('loanType').value;
+    const rt = $('rateType').value;
+
+    const stress = STRESS[lt].base * STRESS[lt].areaFactor * TYPE_FACTOR[rt];
+    const stressRate = rate + stress;
+    $('stressNote').textContent = STRESS[lt].note;
+    $('stressBadge').textContent = '스트레스 +' + stress.toFixed(2) + '%p';
+
+    const cur = payment(P, rate, n, method);
+    $('monthly').innerHTML = fmt(cur.first) + '<span class="text-lg text-slate-400 font-bold ml-1">원</span>';
+    $('monthlyLabel').textContent = method === 'equal' ? '매달 갚는 금액' : (method === 'principal' ? '첫 달 갚는 금액 (매달 감소)' : '매달 내는 이자 (만기 원금 별도)');
+    $('methodTitle').textContent = method === 'equal' ? '원리금균등 상환' : (method === 'principal' ? '원금균등 상환' : '만기일시 상환');
+
+    $('totalPay').textContent = fmt(cur.total);
+    $('totalInterest').textContent = fmt(cur.totalInterest);
+    $('interestRatio').textContent = (cur.totalInterest / Math.max(1, cur.total) * 100).toFixed(1);
+    $('barPrincipal').style.width = (P / Math.max(1, cur.total) * 100) + '%';
+    $('barInterest').style.width = (cur.totalInterest / Math.max(1, cur.total) * 100) + '%';
+
+    // 마일스톤
+    const bal1 = balanceAfter(P, rate, n, method, 12);
+    const bal5 = balanceAfter(P, rate, n, method, Math.min(60, n));
+    let mRows = '';
+    mRows += '<tr><td>1년 후 남은 원금</td><td class="text-right num">' + fmt(bal1) + '원</td></tr>';
+    mRows += '<tr><td>5년 후 남은 원금</td><td class="text-right num">' + fmt(bal5) + '원</td></tr>';
+    if (method === 'principal') {
+      mRows += '<tr><td>마지막 달 상환액</td><td class="text-right num">' + fmt(P / n + (P / n) * (rate / 100 / 12)) + '원</td></tr>';
+    }
+    mRows += '<tr class="hl"><td>총 상환액 (원금 ' + eok(P) + '억)</td><td class="text-right num">' + fmt(cur.total) + '원</td></tr>';
+    $('milestones').innerHTML = mRows;
+
+    // 비교표
+    const hows = [['equal', '원리금균등'], ['principal', '원금균등'], ['bullet', '만기일시']];
+    const cmp = hows.map(([k, label]) => payment(P, rate, n, k));
+    const minInt = Math.min(...cmp.map((c) => c.totalInterest));
+    let cRows = '';
+    hows.forEach(([k, label], idx) => {
+      const c = cmp[idx];
+      const on = k === method ? ' class="hl"' : '';
+      cRows += '<tr' + on + '><td>' + label + (c.totalInterest === minInt ? ' <span class="text-[9px] text-emerald-400">이자 최소</span>' : '') + '</td>'
+        + '<td class="text-right num">' + fmt(c.first) + '</td>'
+        + '<td class="text-right num">' + fmt(c.totalInterest) + '</td>'
+        + '<td class="text-right num">' + fmt(c.total) + '</td></tr>';
+    });
+    $('compareTable').innerHTML = cRows;
+    $('compareSub').textContent = eok(P) + '억원 · ' + rate + '% · ' + (n / 12) + '년 기준';
+
+    // DSR
+    const annualNew = annualRepayment(P, stressRate, n, method);
+    const annualNewPlain = annualRepayment(P, rate, n, method);
+    const dsr = income > 0 ? (existing + annualNew) / income * 100 : 0;
+    const dsrPlain = income > 0 ? (existing + annualNewPlain) / income * 100 : 0;
+
+    $('dsrValue').textContent = income > 0 ? dsr.toFixed(1) + '%' : '—';
+    $('dsrPlain').textContent = income > 0 ? dsrPlain.toFixed(1) + '%' : '—';
+    $('dsrBar').style.width = Math.min(100, dsr) + '%';
+    $('dsrBar').className = 'bar-fill ' + (dsr > dsrLimit * 100 ? 'bg-gradient-to-r from-rose-500 to-rose-400' : 'bg-gradient-to-r from-emerald-500 to-emerald-400');
+
+    const room = income * dsrLimit - existing;
+    const maxLoan = annualFactor(stressRate, n, method) > 0 ? room / annualFactor(stressRate, n, method) : 0;
+    const verdict = income > 0
+      ? (dsr <= dsrLimit * 100
+        ? '✅ 한도 이내 — 여유 ' + (dsrLimit * 100 - dsr).toFixed(1) + '%p'
+        : '⚠️ 한도 초과 — ' + (dsr - dsrLimit * 100).toFixed(1) + '%p 초과')
+      : '연소득을 입력하면 DSR이 계산됩니다.';
+    $('dsrVerdict').textContent = verdict;
+    $('dsrVerdict').className = 'text-[11px] font-bold mb-4 ' + (income === 0 ? 'text-slate-500' : (dsr <= dsrLimit * 100 ? 'text-emerald-400' : 'text-rose-400'));
+
+    let dRows = '';
+    dRows += '<tr><td>총부채 연 원리금 (기존+신규)</td><td class="text-right num">' + fmt(existing + annualNew) + '원</td></tr>';
+    dRows += '<tr><td>DSR 한도 (' + (dsrLimit * 100) + '%)</td><td class="text-right num">' + fmt(income * dsrLimit) + '원</td></tr>';
+    dRows += '<tr><td>연 상환 여유</td><td class="text-right num">' + fmt(Math.max(0, income * dsrLimit - existing - annualNew)) + '원</td></tr>';
+    dRows += '<tr class="hl"><td>한도 내 최대 대출 (스트레스 ' + stressRate.toFixed(2) + '%)</td><td class="text-right num">' + fmt(Math.max(0, maxLoan)) + '원</td></tr>';
+    $('dsrRows').innerHTML = dRows;
+  }
+
+  document.querySelectorAll('[data-principal]').forEach((b) => {
+    b.addEventListener('click', () => {
+      $('principal').value = b.dataset.principal;
+      render();
+    });
+  });
+
+  document.querySelectorAll('[data-method]').forEach((b) => {
+    b.addEventListener('click', () => {
+      method = b.dataset.method;
+      document.querySelectorAll('[data-method]').forEach((x) => x.setAttribute('aria-selected', x === b ? 'true' : 'false'));
+      render();
+    });
+  });
+
+  ['principal', 'rate', 'years', 'income', 'existing', 'loanType', 'rateType', 'dsrLimit'].forEach((id) => {
+    $(id).addEventListener('input', render);
+    $(id).addEventListener('change', render);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
