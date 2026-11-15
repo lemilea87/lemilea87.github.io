@@ -78,8 +78,10 @@
             </nav>
         </div>
         <div class="max-w-6xl mx-auto px-4 pb-2.5 flex items-center gap-1.5 overflow-x-auto text-[11px] sm:text-xs">
-            <a href="calc.html" aria-current="page" class="chip shrink-0 px-2.5 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-black">💰 연말정산·100g 단가</a>
-            <a href="unemployment.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">🧾 실업급여</a>
+            <a href="salary.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">💰 연봉 실수령액</a>
+            <a href="loan.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">🏦 대출이자·DSR</a>
+            <a href="calc.html" aria-current="page" class="chip shrink-0 px-2.5 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-black">🧾 연말정산·100g 단가</a>
+            <a href="unemployment.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">📋 실업급여</a>
             <a href="severance.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">📄 퇴직금·퇴직소득세</a>
             <a href="jeonse.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">🏠 전세 vs 월세</a>
         </div>
@@ -424,16 +426,52 @@
                 <span class="inline-block text-xs font-black text-amber-400 group-hover:translate-x-0.5 transition">테크 핫딜 전체 보기 →</span>
             </a>
         </section>
+
+        <!-- ===== Other calculators ===== -->
+        <section class="mt-6">
+            <h2 class="font-black text-sm text-white mb-2.5">다른 계산기</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <a href="salary.html" class="bg-slate-900/90 border border-amber-500/30 rounded-xl p-3 hover:border-amber-500/60 transition">
+                    <p class="text-lg mb-1">💰</p>
+                    <p class="font-black text-[12px] text-white leading-snug">연봉 실수령액</p>
+                    <p class="text-[10px] text-slate-400 mt-0.5">NEW · 4대보험·소득세</p>
+                </a>
+                <a href="loan.html" class="bg-slate-900/90 border border-amber-500/30 rounded-xl p-3 hover:border-amber-500/60 transition">
+                    <p class="text-lg mb-1">🏦</p>
+                    <p class="font-black text-[12px] text-white leading-snug">대출 이자·DSR</p>
+                    <p class="text-[10px] text-slate-400 mt-0.5">NEW · 상환방식 비교</p>
+                </a>
+                <a href="unemployment.html" class="bg-slate-900/90 border border-slate-800 rounded-xl p-3 hover:border-amber-500/60 transition">
+                    <p class="text-lg mb-1">📋</p>
+                    <p class="font-black text-[12px] text-white leading-snug">실업급여</p>
+                    <p class="text-[10px] text-slate-400 mt-0.5">2026 상한·하한</p>
+                </a>
+                <a href="severance.html" class="bg-slate-900/90 border border-slate-800 rounded-xl p-3 hover:border-amber-500/60 transition">
+                    <p class="text-lg mb-1">📄</p>
+                    <p class="font-black text-[12px] text-white leading-snug">퇴직금</p>
+                    <p class="text-[10px] text-slate-400 mt-0.5">퇴직소득세까지</p>
+                </a>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
     <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500 px-4">
         <p class="mb-2">Affiliate Disclosure: When you buy through our hand-curated links, we may earn an affiliate commission at no extra cost to you.</p>
         <p class="mb-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-            <a href="calc.html" class="font-bold text-amber-400/90 hover:text-amber-300">🧮 연말정산·단가</a>
-            <a href="unemployment.html" class="font-bold text-amber-400/90 hover:text-amber-300">🧾 실업급여</a>
+            <a href="salary.html" class="font-bold text-amber-400/90 hover:text-amber-300">💰 연봉 실수령액</a>
+            <a href="loan.html" class="font-bold text-amber-400/90 hover:text-amber-300">🏦 대출·DSR</a>
+            <a href="calc.html" class="font-bold text-amber-400/90 hover:text-amber-300">🧾 연말정산·단가</a>
+            <a href="unemployment.html" class="font-bold text-amber-400/90 hover:text-amber-300">📋 실업급여</a>
             <a href="severance.html" class="font-bold text-amber-400/90 hover:text-amber-300">📄 퇴직금</a>
             <a href="jeonse.html" class="font-bold text-amber-400/90 hover:text-amber-300">🏠 전세 vs 월세</a>
+        </p>
+        <p class="mb-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px]">
+            <a href="about.html" class="hover:text-amber-300">About</a>
+            <span class="text-slate-700">·</span>
+            <a href="privacy.html" class="hover:text-amber-300">Privacy</a>
+            <span class="text-slate-700">·</span>
+            <a href="contact.html" class="hover:text-amber-300">Contact</a>
         </p>
         <p class="mb-2">계산 결과는 참고용이며 투자·세무 조언이 아닙니다. 세법과 상품 조건은 바뀔 수 있습니다.</p>
         <p>© 2026 DailyTechFinds. All Rights Reserved. Curated for smart tech enthusiasts.</p>
