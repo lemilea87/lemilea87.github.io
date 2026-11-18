@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 월세 세액공제 계산기 | 전월세 전환율·월 실질 부담</title>
+<meta name="description" content="총급여 8,000만원 이하 무주택 세대주라면 낸 월세의 15~17%(연 1,000만원 한도)를 세금에서 돌려받습니다. 내 월세 세액공제액과 지방소득세까지 반영한 실수령 효과, 제안받은 전월세 전환율이 법정 상한 5.0%를 넘는지 한 번에 계산합니다.">
+<meta name="keywords" content="월세 세액공제 계산기, 2026 연말정산 월세, 월세 15% 17%, 월세 공제 한도 1000만원, 전월세 전환율 계산, 전월세 전환율 상한 5%, 월세 실효 부담, 무주택 세대주, 주말부부 월세 공제">
+<link rel="canonical" href="https://lemilea87.github.io/wolse.html">
+<link rel="alternate" hreflang="ko" href="https://lemilea87.github.io/wolse.html">
+<link rel="alternate" hreflang="x-default" href="https://lemilea87.github.io/wolse.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DailyTechFinds">
+<meta property="og:title" content="2026 월세 세액공제 계산기 — 전환율 상한 5% 점검">
+<meta property="og:description" content="낸 월세의 15~17%를 세금에서 공제. 연 1,000만원 한도와 2026년 신설된 배우자 추가공제까지 반영해 실질 월세 부담을 계산합니다.">
+<meta property="og:url" content="https://lemilea87.github.io/wolse.html">
+<meta property="og:locale" content="ko_KR">
+<meta name="robots" content="index,follow">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+    body { font-family: 'Plus Jakarta Sans', 'Noto Sans KR', system-ui, -apple-system, 'Malgun Gothic', sans-serif; background-color: #080c14; color: #f1f5f9; }
+    .glow-effect { box-shadow: 0 0 30px -5px rgba(245, 158, 11, 0.15); }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type="number"] { -moz-appearance: textfield; }
+    .fld { width: 100%; background: rgba(2,6,23,.75); border: 1px solid #1e293b; border-radius: .85rem; padding: .7rem .9rem; font-weight: 700; font-size: .95rem; color: #f8fafc; outline: none; transition: border-color .15s, box-shadow .15s; }
+    .fld:focus { border-color: rgba(245,158,11,.7); box-shadow: 0 0 0 3px rgba(245,158,11,.15); }
+    .fld::placeholder { color: #475569; font-weight: 500; }
+    .chip { transition: all .15s ease; }
+    .chip:hover { border-color: rgba(245,158,11,.5); color: #fbbf24; }
+    .bar-track { background: rgba(30,41,59,.9); border-radius: 9999px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 9999px; transition: width .35s ease; }
+    .num { font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+    .prose-kr h2 { font-size: 1.35rem; font-weight: 900; color: #fff; margin-bottom: .6rem; letter-spacing: -.01em; }
+    .prose-kr h3 { font-size: 1rem; font-weight: 800; color: #fbbf24; margin: 1.4rem 0 .5rem; }
+    .prose-kr p { color: #94a3b8; font-size: .9rem; line-height: 1.85; margin-bottom: .9rem; }
+    .prose-kr li { color: #94a3b8; font-size: .875rem; line-height: 1.8; margin-left: 1.1rem; list-style: disc; margin-bottom: .35rem; }
+    .prose-kr strong { color: #e2e8f0; font-weight: 800; }
+    .tbl { width: 100%; border-collapse: collapse; font-size: .8rem; }
+    .tbl th { background: rgba(30,41,59,.7); color: #fbbf24; font-weight: 800; padding: .55rem .5rem; text-align: left; border-bottom: 1px solid #1e293b; }
+    .tbl td { padding: .5rem .5rem; color: #cbd5e1; border-bottom: 1px solid rgba(30,41,59,.6); }
+    .tbl tr.hl td { background: rgba(245,158,11,.12); color: #fde68a; font-weight: 800; }
+    details.faq { border: 1px solid #1e293b; border-radius: .9rem; background: rgba(15,23,42,.6); }
+    details.faq summary { cursor: pointer; padding: .9rem 1rem; font-weight: 800; font-size: .875rem; color: #e2e8f0; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+    details.faq summary::-webkit-details-marker { display: none; }
+    details.faq summary::after { content: '+'; color: #f59e0b; font-weight: 900; }
+    details.faq[open] summary::after { content: '−'; }
+    details.faq .a { padding: 0 1rem 1rem; color: #94a3b8; font-size: .85rem; line-height: 1.8; }
+    .chk { width: 1.05rem; height: 1.05rem; accent-color: #f59e0b; }
+</style>
+<script type="application/ld+json">
+[{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "2026 월세 세액공제·전월세 전환율 계산기",
+  "url": "https://lemilea87.github.io/wolse.html",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any (웹 브라우저)",
+  "inLanguage": "ko",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" },
+  "description": "총급여 8,000만원 이하 무주택 세대주가 낸 월세의 15%(총급여 5,500만원 이하는 17%)를 연 1,000만원 한도로 세액공제받습니다. 공제액과 지방소득세 효과, 제안받은 전월세 전환율의 법정 상한 초과 여부를 계산합니다.",
+  "featureList": [
+    "총급여·종합소득금액에 따른 공제율 17% / 15% 판정",
+    "연 1,000만원 한도 자동 적용",
+    "지방소득세 10% 포함 실질 환급액",
+    "전월세 전환율과 법정 상한 5.0% 비교",
+    "세액공제 반영 실효 전환율"
+  ]
+},
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "월세 세액공제는 얼마까지 받나요?", "acceptedAnswer": {"@type": "Answer", "text": "낸 월세 중 연 1,000만원까지 인정됩니다. 총급여 5,500만원 이하(종합소득금액 4,500만원 이하)는 17%로 최대 170만원, 총급여 5,500만원 초과 8,000만원 이하(종합소득금액 7,000만원 이하)는 15%로 최대 150만원입니다. 지방소득세 10%가 함께 줄어 실제 절감은 그 1.1배입니다."}},
+    {"@type": "Question", "name": "무주택 세대주 요건은 어떻게 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "과세기간 종료일(12월 31일) 현재 무주택 세대의 세대주여야 합니다. 세대주가 주택 관련 공제나 월세 세액공제를 받지 않았다면 세대원도 받을 수 있습니다. 임대차계약서 주소와 주민등록 주소가 같아야 하고 실제 거주해야 합니다."}},
+    {"@type": "Question", "name": "전월세 전환율 상한은 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "연 10%와 한국은행 기준금리+연 2%p 중 낮은 쪽입니다. 2026년 8월 27일 기준금리가 3.00%이므로 상한은 연 5.0%입니다. 기준금리가 오르면 상한도 올라갑니다."}},
+    {"@type": "Question", "name": "월세 공제와 현금영수증 소득공제를 같이 받을 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "집주인이 사업자가 아니어서 월세를 현금영수증으로 소득공제 받았다면 그 금액은 월세 세액공제 대상에서 빠집니다. 두 제도 중 하나만 선택해야 합니다."}},
+    {"@type": "Question", "name": "2027년부터 월세 공제가 늘어나나요?", "acceptedAnswer": {"@type": "Answer", "text": "2026년 세제개편안은 2027년 지급분부터 공제 대상 월세 한도를 연 1,200만원으로 올리고, 총급여 5,500만원 초과 8,000만원 이하 청년(15~34세)에게 17%를 적용하는 내용을 담고 있습니다. 2026년 11월 기준 국회 의결 전 정부안입니다."}}
+  ]
+}]
+</script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-rose-600 py-2 text-center text-[11px] sm:text-xs font-black uppercase tracking-widest text-slate-950">
+        🏠 2026년 귀속 월세 세액공제 · 한도 1,000만원 · 15~17%
+    </div>
+
+    <!-- Navbar -->
+    <header class="border-b border-slate-800/80 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
+            <a href="index.html" class="flex items-center space-x-2 shrink-0">
+                <span class="text-2xl">⚡</span>
+                <span class="font-black text-lg sm:text-xl tracking-tight bg-gradient-to-r from-amber-400 via-orange-400 to-rose-500 bg-clip-text text-transparent">DailyTechFinds</span>
+            </a>
+            <nav class="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-bold">
+                <a href="index.html" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">🔥 핫딜 허브</a>
+                <a href="calc.html" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">🧮 계산기 모음</a>
+                <a href="https://cshop.naver.com/lemilea" target="_blank" rel="noopener noreferrer" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">🛍️ 못산템</a>
+                <a href="en/index.html" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">🌐 EN</a>
+            </nav>
+        </div>
+        <div class="max-w-6xl mx-auto px-4 pb-2.5 flex items-center gap-1.5 overflow-x-auto text-[11px] sm:text-xs">
+            <a href="salary.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">💰 연봉 실수령액</a>
+            <a href="loan.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">🏦 대출이자·DSR</a>
+            <a href="calc.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">🧾 연금·IRP 환급</a>
+            <a href="unemployment.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">📋 실업급여</a>
+            <a href="severance.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">📄 퇴직금·퇴직소득세</a>
+            <a href="jeonse.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">🏠 전세 vs 월세</a>
+            <a href="card.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">💳 카드 소득공제</a>
+            <a href="wolse.html" aria-current="page" class="chip shrink-0 px-2.5 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-black">🏠 월세 세액공제</a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="max-w-3xl mx-auto px-4 pt-10 pb-6 text-center w-full">
+        <span class="text-amber-400 text-[11px] font-black uppercase tracking-widest bg-amber-400/10 px-3.5 py-1.5 rounded-full border border-amber-400/20 inline-block mb-3">
+            🏠 2026년 귀속 · 조세특례제한법 제95조의2 기준
+        </span>
+        <h1 class="text-3xl sm:text-4xl md:text-[2.7rem] font-black tracking-tight leading-tight mb-3">
+            월세도 <span class="bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 bg-clip-text text-transparent">세금에서</span><br>돌려받습니다
+        </h1>
+        <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
+            낸 월세의 15~17%, 연 1,000만원까지. 공제액과 지방소득세까지 반영한 실질 부담을 계산하고, 제안받은 전월세 전환율이 법정 상한을 넘었는지도 함께 확인하세요.
+        </p>
+    </section>
+
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-1 w-full">
+
+        <section class="grid grid-cols-1 lg:grid-cols-5 gap-5">
+
+            <!-- Inputs -->
+            <div class="lg:col-span-2 space-y-4">
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h2 class="font-black text-base text-white mb-1">내 소득·월세</h2>
+                    <p class="text-[11px] text-slate-500 mb-4">올해 낸 월세와 급여를 넣으세요.</p>
+
+                    <div class="mb-3">
+                        <label for="salary" class="block text-xs font-bold text-slate-300 mb-1.5">총급여(연)</label>
+                        <div class="flex items-center gap-2">
+                            <input id="salary" type="number" min="0" step="1000000" value="48000000" class="fld num">
+                            <span class="text-xs text-slate-500 shrink-0">원</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mt-1.5">비과세를 뺀 과세 급여. 8,000만원을 넘으면 대상이 아닙니다.</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="other" class="block text-xs font-bold text-slate-300 mb-1.5">종합소득금액(사업·금융소득 등)</label>
+                        <select id="other" class="fld">
+                            <option value="0" selected>없음 또는 4,500만원 이하</option>
+                            <option value="1">4,500만원 초과 7,000만원 이하</option>
+                            <option value="2">7,000만원 초과</option>
+                        </select>
+                        <p class="text-[11px] text-slate-500 mt-1.5">근로소득만 있다면 그대로 두세요.</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="rent" class="block text-xs font-bold text-slate-300 mb-1.5">월세(월)</label>
+                        <div class="flex items-center gap-2">
+                            <input id="rent" type="number" min="0" step="10000" value="600000" class="fld num">
+                            <span class="text-xs text-slate-500 shrink-0">원</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="months" class="block text-xs font-bold text-slate-300 mb-1.5">올해 낸 개월 수</label>
+                        <div class="flex items-center gap-2">
+                            <input id="months" type="number" min="0" max="12" step="1" value="12" class="fld num">
+                            <span class="text-xs text-slate-500 shrink-0">개월</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mt-1.5">연중 계약했다면 임차일수 기준으로 그해 몫만 계산됩니다.</p>
+                    </div>
+
+                    <div class="mb-0">
+                        <span class="block text-xs font-bold text-slate-300 mb-1.5">공제 요건</span>
+                        <label class="flex items-start gap-2 py-1.5 cursor-pointer">
+                            <input id="cHouse" type="checkbox" class="chk mt-0.5" checked>
+                            <span class="text-[11px] text-slate-400 leading-relaxed">12월 31일 기준 무주택 세대의 세대주(또는 공제받지 않은 세대원)</span>
+                        </label>
+                        <label class="flex items-start gap-2 py-1.5 cursor-pointer">
+                            <input id="cAddr" type="checkbox" class="chk mt-0.5" checked>
+                            <span class="text-[11px] text-slate-400 leading-relaxed">임대차계약서 주소 = 주민등록 주소, 실제 거주</span>
+                        </label>
+                        <label class="flex items-start gap-2 py-1.5 cursor-pointer">
+                            <input id="cSize" type="checkbox" class="chk mt-0.5" checked>
+                            <span class="text-[11px] text-slate-400 leading-relaxed">전용 85㎡ 이하 또는 기준시가 4억원 이하 주택(오피스텔·고시원 포함)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h2 class="font-black text-base text-white mb-1">전월세 전환율 점검</h2>
+                    <p class="text-[11px] text-slate-500 mb-4">전세를 월세로 바꾼 조건이 법정 상한 안인지 봅니다.</p>
+                    <div class="mb-3">
+                        <label for="jeonseDep" class="block text-xs font-bold text-slate-300 mb-1.5">전세보증금(전환 전)</label>
+                        <div class="flex items-center gap-2">
+                            <input id="jeonseDep" type="number" min="0" step="1000000" value="300000000" class="fld num">
+                            <span class="text-xs text-slate-500 shrink-0">원</span>
+                        </div>
+                    </div>
+                    <div class="mb-0">
+                        <label for="wolseDep" class="block text-xs font-bold text-slate-300 mb-1.5">월세보증금</label>
+                        <div class="flex items-center gap-2">
+                            <input id="wolseDep" type="number" min="0" step="1000000" value="20000000" class="fld num">
+                            <span class="text-xs text-slate-500 shrink-0">원</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="lg:col-span-3 space-y-4">
+
+                <div class="bg-gradient-to-br from-amber-950/60 via-slate-900 to-slate-900 border border-amber-700/40 rounded-2xl p-5 glow-effect">
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span class="text-[11px] font-black uppercase tracking-widest text-amber-400">예상 월세 세액공제</span>
+                        <span id="r-badge" class="text-[10px] font-black px-2 py-1 rounded-lg bg-slate-800 text-slate-300">계산 중</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 mb-4">
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[11px] text-slate-400 mb-0.5">세액공제(소득세)</div>
+                            <div id="r-credit" class="text-2xl font-black text-white num">0원</div>
+                            <div id="r-credit-sub" class="text-[10px] text-slate-500 mt-0.5">공제율 0%</div>
+                        </div>
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[11px] text-slate-400 mb-0.5">실제 돌려받는 효과</div>
+                            <div id="r-total" class="text-2xl font-black text-amber-300 num">0원</div>
+                            <div id="r-total-sub" class="text-[10px] text-slate-500 mt-0.5">지방소득세 10% 포함</div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[10px] text-slate-500 mb-0.5">올해 낸 월세</div>
+                            <div id="r-rent" class="text-sm font-black text-slate-100 num">-</div>
+                        </div>
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[10px] text-slate-500 mb-0.5">공제 대상 월세</div>
+                            <div id="r-applied" class="text-sm font-black text-slate-100 num">-</div>
+                        </div>
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[10px] text-slate-500 mb-0.5">월 실질 부담</div>
+                            <div id="r-effective" class="text-sm font-black text-slate-100 num">-</div>
+                        </div>
+                    </div>
+                    <div class="bar-track h-2 mt-4"><div id="bar-applied" class="bar-fill bg-gradient-to-r from-amber-500 to-emerald-400" style="width:0%"></div></div>
+
+                    <p id="r-verdict" class="text-[11px] text-slate-400 leading-relaxed mt-4">-</p>
+                </div>
+
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h3 class="font-black text-sm text-white mb-1">공제 내역</h3>
+                    <p class="text-[11px] text-slate-500 mb-3">한도는 연 1,000만원, 공제율은 총급여와 종합소득금액으로 갈립니다.</p>
+                    <table class="tbl">
+                        <tbody>
+                            <tr><td class="w-3/5">올해 낸 월세 합계</td><td class="text-right num" id="b-rent">-</td></tr>
+                            <tr><td>한도 초과로 빠지는 금액</td><td class="text-right num" id="b-excess">-</td></tr>
+                            <tr><td>공제 대상 월세(한도 적용)</td><td class="text-right num" id="b-applied">-</td></tr>
+                            <tr class="hl"><td>적용 공제율</td><td class="text-right num" id="b-rate">-</td></tr>
+                            <tr><td>세액공제(소득세)</td><td class="text-right num" id="b-credit">-</td></tr>
+                            <tr><td>지방소득세 포함 합계</td><td class="text-right num" id="b-total">-</td></tr>
+                            <tr><td>이 한도에서 받을 수 있는 최대</td><td class="text-right num" id="b-max">-</td></tr>
+                        </tbody>
+                    </table>
+                    <p id="b-note" class="text-[11px] text-slate-500 mt-3 leading-relaxed">-</p>
+                </div>
+
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h3 class="font-black text-sm text-white mb-1">전월세 전환율 · 법정 상한 5.0%</h3>
+                    <p class="text-[11px] text-slate-500 mb-3">전환율 = (월세 × 12) ÷ (전세보증금 − 월세보증금) × 100</p>
+                    <div class="flex items-end justify-between gap-3 mb-2">
+                        <div>
+                            <div class="text-[10px] text-slate-500">제안받은 전환율</div>
+                            <div id="r-conv" class="text-2xl font-black text-amber-300 num">-</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-[10px] text-slate-500">법정 상한 월세</div>
+                            <div id="r-caprent" class="text-base font-black text-slate-100 num">-</div>
+                        </div>
+                        <span id="r-convbadge" class="text-[10px] font-black px-2 py-1 rounded-lg bg-slate-800 text-slate-300">-</span>
+                    </div>
+                    <div class="bar-track h-2 mb-4"><div id="bar-conv" class="bar-fill bg-gradient-to-r from-emerald-500 to-amber-400" style="width:0%"></div></div>
+                    <table class="tbl">
+                        <tbody>
+                            <tr><td class="w-3/5">전세보증금 − 월세보증금</td><td class="text-right num" id="c-gap">-</td></tr>
+                            <tr><td>법정 상한 전환율(기준금리 3.00% + 2%p)</td><td class="text-right num" id="c-cap">5.00%</td></tr>
+                            <tr><td>상한을 넘는 월세</td><td class="text-right num" id="c-over">-</td></tr>
+                            <tr class="hl"><td>세액공제 반영 실효 전환율</td><td class="text-right num" id="c-eff">-</td></tr>
+                        </tbody>
+                    </table>
+                    <p id="c-note" class="text-[11px] text-slate-500 mt-3 leading-relaxed">-</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <a href="jeonse.html" class="group bg-gradient-to-br from-sky-950/60 to-slate-900 border border-sky-800/60 rounded-2xl p-5 hover:border-sky-500/70 transition">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-2xl">🏠</span>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-sky-400">Compare</span>
+                </div>
+                <h3 class="font-black text-white text-base mb-1">전세 vs 월세, 총비용 비교</h3>
+                <p class="text-xs text-slate-400 leading-relaxed mb-3">대출이자·기회비용까지 넣고 두 조건을 같은 저울에 올려보세요.</p>
+                <span class="inline-block text-xs font-black text-sky-400 group-hover:translate-x-0.5 transition">주거비 비교 계산하기 →</span>
+            </a>
+            <a href="card.html" class="group bg-gradient-to-br from-emerald-950/60 to-slate-900 border border-emerald-800/60 rounded-2xl p-5 hover:border-emerald-500/70 transition">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-2xl">💳</span>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-emerald-400">Next Step</span>
+                </div>
+                <h3 class="font-black text-white text-base mb-1">카드 소득공제까지 챙기기</h3>
+                <p class="text-xs text-slate-400 leading-relaxed mb-3">월세 공제와 함께 받을 수 있는 카드 공제를 확인하세요.</p>
+                <span class="inline-block text-xs font-black text-emerald-400 group-hover:translate-x-0.5 transition">카드 공제 계산하기 →</span>
+            </a>
+        </section>
+
+        <!-- 해설 -->
+        <article class="mt-10 prose-kr bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8">
+            <h2>월세 세액공제, 요건에서 갈립니다</h2>
+            <p>월세 세액공제는 소득공제가 아니라 <strong>세액공제</strong>입니다. 과세표준을 줄이는 것이 아니라 <strong>산출된 세금에서 직접 빼는</strong> 제도라서, 월세의 15~17%가 그대로 환급 효과로 돌아옵니다. 다만 요건을 하나라도 놓치면 전액 제외되므로 순서대로 확인해야 합니다.</p>
+            <p>첫째, 소득입니다. 총급여 8,000만원 이하(종합소득금액 7,000만원 이하)여야 합니다. 둘째, 주택입니다. <strong>12월 31일 기준 무주택 세대의 세대주</strong>여야 하고, 세대주가 주택 관련 공제를 받지 않았다면 세대원도 받을 수 있습니다. 셋째, 주소입니다. 임대차계약서 주소와 주민등록 주소가 같아야 하고 실제로 거주해야 합니다. 이사하고 전입신고를 미루면 여기서 걸립니다.</p>
+            <p>공제 대상 주택은 전용 85㎡ 이하(읍·면은 100㎡)이거나 기준시가 4억원 이하인 주택입니다. 오피스텔과 고시원도 포함됩니다. 2026년 2월 시행령 개정으로 기본공제 대상 자녀·손자녀가 3명 이상이면 지역과 관계없이 전용 100㎡ 이하까지 대상이 넓어졌습니다.</p>
+
+            <h3>공제액은 이렇게 계산합니다</h3>
+            <p>올해 낸 월세 중 <strong>연 1,000만원까지</strong> 인정되고, 총급여 5,500만원 이하(종합소득금액 4,500만원 이하)는 17%, 5,500만원 초과 8,000만원 이하는 15%입니다. 최대 공제액은 170만원(17%) 또는 150만원(15%)이고, 소득세가 줄면 지방소득세(소득세의 10%)도 함께 줄어 실제 절감은 그 1.1배입니다.</p>
+            <p>예를 들어 총급여 4,800만원인 직장인이 월 60만원씩 12개월, 720만원을 냈다면 17%인 <strong>122만4,000원</strong>이 소득세에서 빠지고, 지방소득세까지 하면 약 134만6,400원이 줄어듭니다. 월로 나누면 11만2,200원가량 부담이 가벼워지는 셈입니다. 월 90만원씩 냈다면 1,080만원 중 1,000만원만 인정되어 15%인 150만원이 됩니다.</p>
+
+            <h2>2026년에 달라진 두 가지</h2>
+            <p>2025년 12월 23일 조세특례제한법 개정으로 <strong>세대주와 다른 시·군·구에 사는 배우자도 요건을 갖추면 월세 공제를 추가로 받을 수 있게</strong> 됐습니다(2026년 1월 1일 이후 낸 월세부터). 주말부부처럼 따로 사는 무주택 부부가 대상이고, 부부 월세를 합쳐 1,000만원이 한도입니다. 한도가 두 배로 늘어나는 것은 아닙니다.</p>
+            <p>또 하나는 앞서 본 다자녀 주택 기준 완화(전용 100㎡)입니다. 두 제도 모두 신청주의이므로 연말정산 때 임대차계약서 사본, 월세 지급 증빙(계좌이체 내역), 주민등록등본을 회사에 제출해야 합니다.</p>
+
+            <h2>월세 공제와 현금영수증 공제는 하나만</h2>
+            <p>집주인이 사업자로 등록되어 월세에 현금영수증을 발급받았다면, 그 금액을 현금영수증 소득공제(30%)로 받을 수 있습니다. 다만 <strong>같은 월세를 월세 세액공제와 현금영수증 소득공제에 동시에 넣을 수는 없습니다.</strong> 소득이 낮을수록 세액공제(17%)가, 소득이 높고 카드 공제 한도가 남아 있다면 소득공제 쪽이 유리할 수 있으니 두 계산기를 함께 돌려보세요.</p>
+
+            <h2>전월세 전환율 — 이 월세가 비싼지 판정하는 기준</h2>
+            <p><strong>전환율 = (월세 × 12) ÷ (전세보증금 − 월세보증금) × 100</strong>입니다. 전세보증금 3억원을 월세보증금 2,000만원·월 80만원으로 바꿨다면 960만원 ÷ 2억8,000만원 = <strong>3.43%</strong>입니다. 전환율이 낮을수록 세입자에게 유리합니다.</p>
+            <p>주택임대차보호법 제7조의2와 같은 법 시행령 제9조는 보증금을 월세로 바꿀 때의 상한을 <strong>연 10%와 한국은행 기준금리 + 연 2%p 중 낮은 쪽</strong>으로 정했습니다. 2026년 8월 27일 기준금리가 3.00%로 오르면서 상한은 <strong>연 5.0%</strong>가 됐습니다. 보증금 1억원을 월세로 돌리면 월 41만6,667원이 상한입니다.</p>
+            <p>이 상한은 계약 기간 중이거나 갱신할 때 보증금의 전부·일부를 월세로 바꾸는 경우에 적용되는 강행규정입니다. 상한을 넘겨 낸 월세는 초과분의 반환을 청구할 수 있습니다(같은 법 제10조의2). 기준금리가 바뀌면 상한도 함께 움직이므로 계약 시점의 기준금리를 확인하세요. 다음 금융통화위원회는 2026년 11월 26일입니다.</p>
+
+            <h3>세액공제까지 반영한 '실효 전환율'</h3>
+            <p>월세 세액공제를 받으면 실제로 나가는 월세가 줄어들므로, 전환율도 그만큼 낮아진 것과 같습니다. 이 계산기는 공제액(지방소득세 포함)을 뺀 실지출로 전환율을 다시 계산한 <strong>실효 전환율</strong>을 보여줍니다. 다만 이 공제는 소득·주택 요건을 갖춘 근로자에게만 적용되고, 세대주와 배우자 중 한 명만 받을 수 있습니다. 전세로 갈 때는 주택임차차입금 원리금 상환액 공제가 대신 붙으므로, 두 조건의 실질 비교는 <a href="jeonse.html" class="text-amber-300 underline">전세 vs 월세 계산기</a>에서 이어서 하세요.</p>
+
+            <h2>2027년에는 한도가 올라갑니다(정부안)</h2>
+            <p>2026년 세제개편안은 2027년 1월 1일 이후 낸 월세부터 공제 대상 한도를 <strong>연 1,000만원에서 1,200만원</strong>으로 올리고, 총급여 5,500만원 초과 8,000만원 이하 <strong>청년(15~34세)에게도 17%</strong>를 적용하는 내용을 담고 있습니다. 2026년 11월 기준 국회 의결 전 정부안이므로, 2026년에 낸 월세는 지금 기준(1,000만원 한도)으로 계산됩니다.</p>
+        </article>
+
+        <!-- FAQ -->
+        <section class="mt-8">
+            <h2 class="text-lg font-black text-white mb-3">자주 묻는 질문</h2>
+            <div class="space-y-2.5">
+                <details class="faq" open>
+                    <summary>월세 세액공제는 얼마까지 받나요?</summary>
+                    <div class="a">낸 월세 중 연 1,000만원까지 인정됩니다. 총급여 5,500만원 이하(종합소득금액 4,500만원 이하)는 17%로 최대 170만원, 5,500만원 초과 8,000만원 이하(종합소득금액 7,000만원 이하)는 15%로 최대 150만원입니다. 지방소득세 10%가 함께 줄어 실제 절감은 그 1.1배입니다.</div>
+                </details>
+                <details class="faq">
+                    <summary>무주택 세대주 요건은 어떻게 되나요?</summary>
+                    <div class="a">과세기간 종료일(12월 31일) 현재 무주택 세대의 세대주여야 합니다. 세대주가 주택 관련 공제나 월세 세액공제를 받지 않았다면 세대원도 받을 수 있습니다. 임대차계약서 주소와 주민등록 주소가 같아야 하고 실제 거주해야 합니다.</div>
+                </details>
+                <details class="faq">
+                    <summary>전월세 전환율 상한은 지금 얼마인가요?</summary>
+                    <div class="a">연 10%와 한국은행 기준금리+연 2%p 중 낮은 쪽입니다. 2026년 8월 27일 기준금리가 3.00%이므로 상한은 연 5.0%입니다. 기준금리가 오르면 상한도 올라갑니다.</div>
+                </details>
+                <details class="faq">
+                    <summary>월세 공제와 현금영수증 소득공제를 같이 받을 수 있나요?</summary>
+                    <div class="a">집주인이 사업자가 아니어서 월세를 현금영수증으로 소득공제 받았다면 그 금액은 월세 세액공제 대상에서 빠집니다. 두 제도 중 하나만 선택해야 합니다.</div>
+                </details>
+                <details class="faq">
+                    <summary>연중에 이사했거나 계약이 두 개면 어떻게 계산하나요?</summary>
+                    <div class="a">계약서상 계약기간 동안 낼 월세 합계를 계약기간 일수로 나눈 뒤, 그해 임차일수를 곱해 그해 몫만 잡습니다. 두 집에 살았어도 요건을 채운 기간의 월세를 합산하되, 총 인정액은 여전히 연 1,000만원 한도입니다.</div>
+                </details>
+                <details class="faq">
+                    <summary>2027년부터 월세 공제가 늘어나나요?</summary>
+                    <div class="a">2026년 세제개편안은 2027년 지급분부터 한도를 연 1,200만원으로 올리고, 총급여 5,500만원 초과 8,000만원 이하 청년(15~34세)에게 17%를 적용하는 내용을 담고 있습니다. 2026년 11월 기준 국회 의결 전 정부안입니다.</div>
+                </details>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500">
+        <p class="mb-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+            <a href="salary.html" class="font-bold text-amber-400/90 hover:text-amber-300">💰 연봉 실수령액</a>
+            <a href="loan.html" class="font-bold text-amber-400/90 hover:text-amber-300">🏦 대출·DSR</a>
+            <a href="calc.html" class="font-bold text-amber-400/90 hover:text-amber-300">🧾 연금·IRP</a>
+            <a href="unemployment.html" class="font-bold text-amber-400/90 hover:text-amber-300">📋 실업급여</a>
+            <a href="severance.html" class="font-bold text-amber-400/90 hover:text-amber-300">📄 퇴직금</a>
+            <a href="jeonse.html" class="font-bold text-amber-400/90 hover:text-amber-300">🏠 전세 vs 월세</a>
+            <a href="card.html" class="font-bold text-amber-400/90 hover:text-amber-300">💳 카드 소득공제</a>
+            <a href="wolse.html" class="font-bold text-amber-400/90 hover:text-amber-300">🏠 월세 세액공제</a>
+        </p>
+        <p class="mb-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px]">
+            <a href="about.html" class="hover:text-amber-300">About</a>
+            <span class="text-slate-700">·</span>
+            <a href="privacy.html" class="hover:text-amber-300">Privacy</a>
+            <span class="text-slate-700">·</span>
+            <a href="contact.html" class="hover:text-amber-300">Contact</a>
+            <span class="text-slate-700">·</span>
+            <a href="en/index.html" class="hover:text-amber-300">English tools</a>
+        </p>
+        <p class="mb-2 text-[11px] text-slate-600">계산 결과는 2026년 귀속 조세특례제한법 제95조의2와 국세청 안내, 주택임대차보호법을 기준으로 한 참고값입니다. 최종 금액은 회사 연말정산과 국세상담센터(126)로 확인하세요.</p>
+        <p class="mb-2">© 2026 DailyTechFinds. All Rights Reserved. Curated for smart tech enthusiasts.</p>
+    </footer>
+
+<script>
+(function () {
+    "use strict";
+
+    /*__CORE_START__*/
+    var RENT_CAP = 10000000;      // 연 1,000만원
+    var SALARY_CAP = 80000000;    // 총급여 8,000만원
+    var YOUTH_SALARY = 55000000;  // 17% 구간 총급여
+    var LEGAL_CAP = 5.0;          // 2026-08-27 기준금리 3.00% + 2%p
+
+    function wolseCore(o) {
+        var salary = Math.max(0, +o.salary || 0);
+        var other = Math.min(2, Math.max(0, Math.round(+o.other || 0))); // 0 없음/4,500 이하, 1 4,500 초과, 2 7,000 초과
+        var rent = Math.max(0, +o.rent || 0);
+        var months = Math.min(12, Math.max(0, +o.months || 0));
+        var eligible = !!(o.noHouse !== false && o.addrMatch !== false && o.houseOk !== false);
+
+        var rate = 0, reason = "";
+        if (salary > SALARY_CAP || other >= 2) {
+            rate = 0;
+            reason = "총급여 8,000만원 또는 종합소득금액 7,000만원을 넘어 공제 대상이 아닙니다.";
+        } else if (salary <= YOUTH_SALARY && other === 0) {
+            rate = 17;
+        } else {
+            rate = 15;
+        }
+
+        var rentYear = rent * months;
+        var applied = Math.min(rentYear, RENT_CAP);
+        var credit = applied * rate / 100;
+        var total = credit * 1.1;                       // 지방소득세 10% 포함
+        var maxCredit = RENT_CAP * rate / 100;
+        var maxTotal = maxCredit * 1.1;
+
+        if (!eligible) {
+            credit = 0;
+            total = 0;
+            reason = "무주택 세대주·주소 일치·주택 요건 중 충족하지 못한 항목이 있어 공제액이 0원입니다.";
+        }
+
+        return {
+            salary: salary,
+            other: other,
+            rate: rate,
+            eligible: eligible,
+            reason: reason,
+            rentYear: rentYear,
+            applied: eligible ? applied : 0,
+            excess: Math.max(0, rentYear - RENT_CAP),
+            credit: credit,
+            total: total,
+            maxCredit: maxCredit,
+            maxTotal: maxTotal,
+            effectiveMonthly: months > 0 ? rent - total / months : rent,
+            effectiveYear: rentYear - total
+        };
+    }
+
+    function convCore(o) {
+        var jeonse = Math.max(0, +o.jeonseDep || 0);
+        var wolse = Math.max(0, +o.wolseDep || 0);
+        var rent = Math.max(0, +o.rent || 0);
+        var rentYear = rent * 12;
+        var gap = jeonse - wolse;
+        var conv = gap > 0 ? (rentYear / gap) * 100 : null;
+        var capRent = gap > 0 ? (gap * LEGAL_CAP / 100) / 12 : null;
+        var over = capRent === null ? 0 : Math.max(0, rent - capRent);
+        return {
+            gap: gap,
+            rentYear: rentYear,
+            conv: conv,
+            cap: LEGAL_CAP,
+            capRent: capRent,
+            overMonthly: over,
+            overYear: over * 12
+        };
+    }
+
+    // 세액공제까지 반영한 실효 전환율 — 월 기준으로 맞춰 12개월로 환산합니다.
+    function effectiveConv(o) {
+        var w = wolseCore(o);
+        var c = convCore(o);
+        if (c.gap <= 0) { return null; }
+        var months = Math.min(12, Math.max(0, +o.months || 0));
+        var monthlySaved = months > 0 ? w.total / months : 0;
+        return ((((+(o.rent || 0)) - monthlySaved) * 12) / c.gap) * 100;
+    }
+    /*__CORE_END__*/
+
+    var $ = function (id) { return document.getElementById(id); };
+    function won(n) { return Math.round(n).toLocaleString("ko-KR") + "원"; }
+    function pct(n) { return (Math.round(n * 100) / 100).toFixed(2) + "%"; }
+    function numv(id, dflt) {
+        var el = $(id);
+        if (!el) { return dflt; }
+        var v = parseFloat(String(el.value).replace(/,/g, ""));
+        return isFinite(v) ? Math.max(0, v) : dflt;
+    }
+    function readInput() {
+        var sel = $("other");
+        return {
+            salary: numv("salary", 0),
+            other: sel ? parseInt(sel.value, 10) || 0 : 0,
+            rent: numv("rent", 0),
+            months: numv("months", 12),
+            noHouse: $("cHouse").checked,
+            addrMatch: $("cAddr").checked,
+            houseOk: $("cSize").checked,
+            jeonseDep: numv("jeonseDep", 0),
+            wolseDep: numv("wolseDep", 0)
+        };
+    }
+
+    function render() {
+        var input = readInput();
+        var w = wolseCore(input);
+        var c = convCore(input);
+        var eff = effectiveConv(input);
+
+        $("r-credit").textContent = won(w.credit);
+        $("r-credit-sub").textContent = "공제율 " + w.rate + "% · 인정 월세 " + won(w.applied);
+        $("r-total").textContent = won(w.total);
+        $("r-total-sub").textContent = w.total > 0 ? "지방소득세 포함 · 월 " + won(w.total / Math.max(1, input.months)) + " 효과" : "공제 요건을 확인하세요";
+        $("r-rent").textContent = won(w.rentYear);
+        $("r-applied").textContent = won(w.applied);
+        $("r-effective").textContent = w.total > 0 ? won(w.effectiveMonthly) : "-";
+        $("bar-applied").style.width = (w.maxCredit > 0 ? Math.min(100, (w.credit / w.maxCredit) * 100) : 0) + "%";
+
+        $("b-rent").textContent = won(w.rentYear);
+        $("b-excess").textContent = won(w.excess);
+        $("b-applied").textContent = won(w.applied);
+        $("b-rate").textContent = w.rate + "%";
+        $("b-credit").textContent = won(w.credit);
+        $("b-total").textContent = won(w.total);
+        $("b-max").textContent = won(w.maxTotal);
+
+        var note = [];
+        if (w.reason) { note.push(w.reason); }
+        if (w.excess > 0) { note.push("월세가 연 1,000만원을 넘어 " + won(w.excess) + "은 공제에서 빠집니다."); }
+        if (w.rate === 15 && w.salary > 0 && w.salary <= YOUTH_SALARY && w.other === 1) {
+            note.push("총급여는 17% 구간이지만 종합소득금액이 4,500만원을 넘어 15%가 적용됩니다.");
+        }
+        if (!w.reason && w.credit > 0) {
+            note.push("연말정산 때 임대차계약서 사본, 월세 지급 내역, 주민등록등본을 회사에 내야 인정됩니다.");
+        }
+        $("b-note").textContent = note.join(" ");
+
+        var badge = $("r-badge");
+        if (!w.eligible) {
+            badge.textContent = "요건 미충족";
+            badge.className = "text-[10px] font-black px-2 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30";
+        } else if (w.rate === 0) {
+            badge.textContent = "대상 아님";
+            badge.className = "text-[10px] font-black px-2 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30";
+        } else if (w.excess > 0) {
+            badge.textContent = "한도 도달";
+            badge.className = "text-[10px] font-black px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+        } else {
+            badge.textContent = w.rate + "% 적용";
+            badge.className = "text-[10px] font-black px-2 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30";
+        }
+
+        var v;
+        if (w.rentYear <= 0) {
+            v = "월세와 개월 수를 넣으면 공제액과 실질 부담을 계산합니다.";
+        } else if (!w.eligible || w.rate === 0) {
+            v = w.reason;
+        } else {
+            v = "올해 낸 월세 " + won(w.rentYear) + " 중 " + won(w.applied) + "에 " + w.rate + "%를 적용해 " +
+                won(w.credit) + "을 세금에서 뺍니다. 지방소득세까지 " + won(w.total) + "이 줄어 월 실질 부담은 " +
+                won(w.effectiveMonthly) + "입니다.";
+        }
+        $("r-verdict").textContent = v;
+
+        $("c-gap").textContent = won(c.gap);
+        $("c-cap").textContent = c.cap.toFixed(2) + "%";
+        $("c-over").textContent = c.capRent === null ? "-" : won(c.overMonthly) + " (연 " + won(c.overYear) + ")";
+        $("c-eff").textContent = eff === null ? "-" : pct(eff);
+        $("r-conv").textContent = c.conv === null ? "-" : pct(c.conv);
+        $("r-caprent").textContent = c.capRent === null ? "-" : won(c.capRent);
+
+        var cb = $("r-convbadge");
+        if (c.conv === null) {
+            cb.textContent = "비교 불가";
+            cb.className = "text-[10px] font-black px-2 py-1 rounded-lg bg-slate-800 text-slate-400";
+        } else if (c.conv > c.cap + 0.001) {
+            cb.textContent = "상한 초과";
+            cb.className = "text-[10px] font-black px-2 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30";
+        } else {
+            cb.textContent = "상한 이내";
+            cb.className = "text-[10px] font-black px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+        }
+        $("bar-conv").style.width = c.conv === null ? "0%" : Math.min(100, (c.conv / (c.cap * 2)) * 100) + "%";
+
+        var cnote = [];
+        if (c.conv === null) {
+            cnote.push("전세보증금이 월세보증금보다 커야 전환율을 계산할 수 있습니다.");
+        } else if (c.overMonthly > 0) {
+            cnote.push("법정 상한(연 " + c.cap.toFixed(1) + "%)을 넘는 월세가 월 " + won(c.overMonthly) + "입니다. 계약 갱신·전환 시 초과분 반환을 청구할 수 있습니다.");
+        } else {
+            cnote.push("법정 상한 안의 조건입니다. 상한까지는 월 " + won(Math.max(0, c.capRent - input.rent)) + "의 여유가 있습니다.");
+        }
+        if (eff !== null) {
+            cnote.push("세액공제를 반영하면 같은 조건의 실효 전환율이 " + pct(eff) + "로 낮아집니다.");
+        }
+        $("c-note").textContent = cnote.join(" ");
+
+        window.__lastResult = w;
+        window.__lastConv = c;
+    }
+
+    window.wolseCore = wolseCore;
+    window.convCore = convCore;
+    window.effectiveConv = effectiveConv;
+
+    var ids = ["salary", "other", "rent", "months", "jeonseDep", "wolseDep"];
+    for (var i = 0; i < ids.length; i++) {
+        var el = $(ids[i]);
+        if (el) {
+            el.addEventListener("input", render);
+            el.addEventListener("change", render);
+        }
+    }
+    var chks = ["cHouse", "cAddr", "cSize"];
+    for (var j = 0; j < chks.length; j++) {
+        var c2 = $(chks[j]);
+        if (c2) { c2.addEventListener("change", render); }
+    }
+    render();
+})();
+</script>
+</body>
+</html>

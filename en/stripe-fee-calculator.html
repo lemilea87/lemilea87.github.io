@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stripe &amp; PayPal Fee Calculator (2026) | Net Profit Per Sale</title>
+<meta name="description" content="Free Stripe and PayPal fee calculator. Enter a price to see the processing fee, what you actually keep, your effective rate, and the price you must charge to net a target amount. Rates from the official US pricing pages (Stripe 2.9% + $0.30, PayPal Checkout 3.49% + $0.49).">
+<meta name="keywords" content="stripe fee calculator, paypal fee calculator, payment processing fee, net profit per sale, stripe vs paypal fees, merchant fees, effective fee rate, reverse fee calculator">
+<link rel="canonical" href="https://lemilea87.github.io/en/stripe-fee-calculator.html">
+<link rel="alternate" hreflang="en" href="https://lemilea87.github.io/en/stripe-fee-calculator.html">
+<link rel="alternate" hreflang="x-default" href="https://lemilea87.github.io/en/stripe-fee-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DailyTechFinds">
+<meta property="og:title" content="Stripe &amp; PayPal Fee Calculator — what you actually keep">
+<meta property="og:description" content="Processing fee, net payout, effective rate, break-even price and reverse fee math for Stripe, PayPal and custom rates.">
+<meta property="og:url" content="https://lemilea87.github.io/en/stripe-fee-calculator.html">
+<meta property="og:locale" content="en_US">
+<meta name="robots" content="index,follow">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+    body { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; background-color: #080c14; color: #f1f5f9; }
+    .glow-effect { box-shadow: 0 0 30px -5px rgba(245, 158, 11, 0.15); }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type="number"] { -moz-appearance: textfield; }
+    .fld { width: 100%; background: rgba(2,6,23,.75); border: 1px solid #1e293b; border-radius: .85rem; padding: .7rem .9rem; font-weight: 700; font-size: .95rem; color: #f8fafc; outline: none; transition: border-color .15s, box-shadow .15s; }
+    .fld:focus { border-color: rgba(245,158,11,.7); box-shadow: 0 0 0 3px rgba(245,158,11,.15); }
+    .chip { transition: all .15s ease; }
+    .chip:hover { border-color: rgba(245,158,11,.5); color: #fbbf24; }
+    .bar-track { background: rgba(30,41,59,.9); border-radius: 9999px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 9999px; transition: width .35s ease; }
+    .num { font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+    .prose-en h2 { font-size: 1.35rem; font-weight: 900; color: #fff; margin-bottom: .6rem; letter-spacing: -.01em; }
+    .prose-en h3 { font-size: 1rem; font-weight: 800; color: #fbbf24; margin: 1.4rem 0 .5rem; }
+    .prose-en p { color: #94a3b8; font-size: .9rem; line-height: 1.85; margin-bottom: .9rem; }
+    .prose-en li { color: #94a3b8; font-size: .875rem; line-height: 1.8; margin-left: 1.1rem; list-style: disc; margin-bottom: .35rem; }
+    .prose-en strong { color: #e2e8f0; font-weight: 800; }
+    .tbl { width: 100%; border-collapse: collapse; font-size: .8rem; }
+    .tbl th { background: rgba(30,41,59,.7); color: #fbbf24; font-weight: 800; padding: .55rem .5rem; text-align: left; border-bottom: 1px solid #1e293b; }
+    .tbl td { padding: .5rem .5rem; color: #cbd5e1; border-bottom: 1px solid rgba(30,41,59,.6); }
+    .tbl tr.hl td { background: rgba(245,158,11,.12); color: #fde68a; font-weight: 800; }
+    details.faq { border: 1px solid #1e293b; border-radius: .9rem; background: rgba(15,23,42,.6); }
+    details.faq summary { cursor: pointer; padding: .9rem 1rem; font-weight: 800; font-size: .875rem; color: #e2e8f0; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+    details.faq summary::-webkit-details-marker { display: none; }
+    details.faq summary::after { content: '+'; color: #f59e0b; font-weight: 900; }
+    details.faq[open] summary::after { content: '−'; }
+    details.faq .a { padding: 0 1rem 1rem; color: #94a3b8; font-size: .85rem; line-height: 1.8; }
+</style>
+<script type="application/ld+json">
+[{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Stripe & PayPal Fee Calculator",
+  "url": "https://lemilea87.github.io/en/stripe-fee-calculator.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any (web browser)",
+  "inLanguage": "en",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Calculate payment processing fees, net payout per sale, effective fee rate and the price required to net a target amount for Stripe, PayPal and custom percentage + fixed fee structures.",
+  "featureList": [
+    "Fee and net payout per sale",
+    "Effective fee rate and cost as share of revenue",
+    "Reverse calculation: price needed to net a target",
+    "Side-by-side comparison of Stripe and PayPal rates",
+    "Product cost and profit margin"
+  ]
+},
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "How do you calculate a Stripe fee?", "acceptedAnswer": {"@type": "Answer", "text": "Stripe charges a percentage of the transaction plus a fixed fee per successful charge. For US domestic cards that is 2.9% + $0.30, so a $100 sale costs $3.20 and you keep $96.80. International cards add 1.5% and a currency conversion adds 1%."}},
+    {"@type": "Question", "name": "What does PayPal charge per transaction?", "acceptedAnswer": {"@type": "Answer", "text": "PayPal Checkout and Guest Checkout cost 3.49% + $0.49 for US commercial transactions. Card payments taken through an invoice, payment link or Apple Pay cost 2.99% + $0.49. International commercial transactions add 1.50%."}},
+    {"@type": "Question", "name": "How do I find the price that nets me a target amount?", "acceptedAnswer": {"@type": "Answer", "text": "Divide the target plus the fixed fee by one minus the percentage rate. To net $100 with a 2.9% + $0.30 processor: (100 + 0.30) / (1 - 0.029) = $103.30. Charging exactly $100 would only net $96.80."}},
+    {"@type": "Question", "name": "Why is the effective fee rate higher than the advertised rate?", "acceptedAnswer": {"@type": "Answer", "text": "The fixed fee does not scale with the sale. On a $5 charge a 2.9% + $0.30 fee is 32.9% of the sale, while on a $500 charge it is 2.96%. Small average order values pay a much higher real rate."}},
+    {"@type": "Question", "name": "Are processing fees charged on sales tax and shipping?", "acceptedAnswer": {"@type": "Answer", "text": "Usually yes. Processors charge on the total amount captured, including tax and shipping, so those dollars cost you the same percentage even though they are not your revenue."}}
+  ]
+}]
+</script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-rose-600 py-2 text-center text-[11px] sm:text-xs font-black uppercase tracking-widest text-slate-950">
+        Payment Fee Tools · Rates read from official US pricing pages, November 2026
+    </div>
+
+    <header class="border-b border-slate-800/80 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
+            <a href="index.html" class="flex items-center space-x-2 shrink-0">
+                <span class="text-2xl">⚡</span>
+                <span class="font-black text-lg sm:text-xl tracking-tight bg-gradient-to-r from-amber-400 via-orange-400 to-rose-500 bg-clip-text text-transparent">DailyTechFinds</span>
+            </a>
+            <nav class="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-bold">
+                <a href="index.html" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">Tools</a>
+                <a href="stripe-fee-calculator.html" aria-current="page" class="px-2.5 sm:px-3 py-2 rounded-xl text-amber-400">Fees</a>
+                <a href="compound-fire-calculator.html" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">Compound &amp; FIRE</a>
+                <a href="../index.html" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">🇰🇷 한국어</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="max-w-3xl mx-auto px-4 pt-10 pb-6 text-center w-full">
+        <span class="text-amber-400 text-[11px] font-black uppercase tracking-widest bg-amber-400/10 px-3.5 py-1.5 rounded-full border border-amber-400/20 inline-block mb-3">
+            Stripe 2.9% + $0.30 · PayPal Checkout 3.49% + $0.49 · Custom rates
+        </span>
+        <h1 class="text-3xl sm:text-4xl md:text-[2.7rem] font-black tracking-tight leading-tight mb-3">
+            How much of a sale do you<br><span class="bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 bg-clip-text text-transparent">actually keep?</span>
+        </h1>
+        <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
+            Processing fees hide in the fixed fee. Enter your price and see the exact fee, net payout, real effective rate, and the price you must charge to net a target amount.
+        </p>
+    </section>
+
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-1 w-full">
+        <section class="grid grid-cols-1 lg:grid-cols-5 gap-5">
+
+            <div class="lg:col-span-2 space-y-4">
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h2 class="font-black text-base text-white mb-1">Your sale</h2>
+                    <p class="text-[11px] text-slate-500 mb-4">Prices in USD.</p>
+
+                    <div class="mb-3">
+                        <label for="preset" class="block text-xs font-bold text-slate-300 mb-1.5">Processor preset</label>
+                        <select id="preset" class="fld">
+                            <option value="2.9|0.30" selected>Stripe — US domestic card (2.9% + $0.30)</option>
+                            <option value="4.4|0.30">Stripe — international card (2.9% + 1.5% + $0.30)</option>
+                            <option value="5.4|0.30">Stripe — international + conversion (2.9% + 1.5% + 1% + $0.30)</option>
+                            <option value="3.49|0.49">PayPal Checkout / Guest (3.49% + $0.49)</option>
+                            <option value="2.99|0.49">PayPal card via invoice or link (2.99% + $0.49)</option>
+                            <option value="4.99|0.49">PayPal international Checkout (3.49% + 1.5% + $0.49)</option>
+                            <option value="0.8|0">Stripe ACH bank debit (0.8%, capped at $5)</option>
+                            <option value="custom">Custom rate…</option>
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 mb-3">
+                        <div>
+                            <label for="rate" class="block text-xs font-bold text-slate-300 mb-1.5">Percentage</label>
+                            <div class="flex items-center gap-1.5">
+                                <input id="rate" type="number" min="0" max="100" step="0.01" value="2.9" class="fld num">
+                                <span class="text-xs text-slate-500 shrink-0">%</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="fixed" class="block text-xs font-bold text-slate-300 mb-1.5">Fixed fee</label>
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-xs text-slate-500 shrink-0">$</span>
+                                <input id="fixed" type="number" min="0" step="0.01" value="0.30" class="fld num">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 mb-3">
+                        <div>
+                            <label for="price" class="block text-xs font-bold text-slate-300 mb-1.5">Price per sale</label>
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-xs text-slate-500 shrink-0">$</span>
+                                <input id="price" type="number" min="0" step="1" value="50" class="fld num">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="qty" class="block text-xs font-bold text-slate-300 mb-1.5">Sales / month</label>
+                            <input id="qty" type="number" min="0" step="1" value="200" class="fld num">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 mb-0">
+                        <div>
+                            <label for="cost" class="block text-xs font-bold text-slate-300 mb-1.5">Product cost / sale</label>
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-xs text-slate-500 shrink-0">$</span>
+                                <input id="cost" type="number" min="0" step="0.5" value="12" class="fld num">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="target" class="block text-xs font-bold text-slate-300 mb-1.5">Target net / sale</label>
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-xs text-slate-500 shrink-0">$</span>
+                                <input id="target" type="number" min="0" step="1" value="40" class="fld num">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h3 class="font-black text-sm text-white mb-2">Fee table (per $100 sale)</h3>
+                    <table class="tbl">
+                        <thead><tr><th>Route</th><th class="text-right">Fee</th><th class="text-right">You keep</th></tr></thead>
+                        <tbody id="compare"></tbody>
+                    </table>
+                    <p class="text-[11px] text-slate-500 mt-3 leading-relaxed">Same $100, different rails. The fixed fee is what separates them on small tickets.</p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-3 space-y-4">
+                <div class="bg-gradient-to-br from-amber-950/60 via-slate-900 to-slate-900 border border-amber-700/40 rounded-2xl p-5 glow-effect">
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span class="text-[11px] font-black uppercase tracking-widest text-amber-400">Net per sale</span>
+                        <span id="r-badge" class="text-[10px] font-black px-2 py-1 rounded-lg bg-slate-800 text-slate-300">-</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 mb-4">
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[11px] text-slate-400 mb-0.5">You keep</div>
+                            <div id="r-net" class="text-2xl font-black text-white num">$0.00</div>
+                            <div id="r-net-sub" class="text-[10px] text-slate-500 mt-0.5">after processing fee</div>
+                        </div>
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[11px] text-slate-400 mb-0.5">Profit after cost</div>
+                            <div id="r-profit" class="text-2xl font-black text-amber-300 num">$0.00</div>
+                            <div id="r-profit-sub" class="text-[10px] text-slate-500 mt-0.5">margin -</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[10px] text-slate-500 mb-0.5">Fee per sale</div>
+                            <div id="r-fee" class="text-sm font-black text-slate-100 num">-</div>
+                        </div>
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[10px] text-slate-500 mb-0.5">Effective rate</div>
+                            <div id="r-eff" class="text-sm font-black text-slate-100 num">-</div>
+                        </div>
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[10px] text-slate-500 mb-0.5">Fees per month</div>
+                            <div id="r-monthly" class="text-sm font-black text-slate-100 num">-</div>
+                        </div>
+                    </div>
+                    <div class="bar-track h-2 mt-4"><div id="bar-split" class="bar-fill bg-gradient-to-r from-amber-500 to-emerald-400" style="width:0%"></div></div>
+                    <p id="r-verdict" class="text-[11px] text-slate-400 leading-relaxed mt-4">-</p>
+                </div>
+
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h3 class="font-black text-sm text-white mb-1">Reverse: price to net your target</h3>
+                    <p class="text-[11px] text-slate-500 mb-3">Charging the target itself loses money. This is the price that lands the target in your account.</p>
+                    <table class="tbl">
+                        <tbody>
+                            <tr><td class="w-3/5">Target net per sale</td><td class="text-right num" id="b-target">-</td></tr>
+                            <tr class="hl"><td>Price you must charge</td><td class="text-right num" id="b-needprice">-</td></tr>
+                            <tr><td>Fee on that price</td><td class="text-right num" id="b-needfee">-</td></tr>
+                            <tr><td>If you charged the target instead</td><td class="text-right num" id="b-short">-</td></tr>
+                            <tr><td>Monthly revenue at that price</td><td class="text-right num" id="b-revenue">-</td></tr>
+                        </tbody>
+                    </table>
+                    <p id="b-note" class="text-[11px] text-slate-500 mt-3 leading-relaxed">-</p>
+                </div>
+
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h3 class="font-black text-sm text-white mb-1">Fee sensitivity by ticket size</h3>
+                    <p class="text-[11px] text-slate-500 mb-3">The same processor, different real cost.</p>
+                    <table class="tbl">
+                        <thead><tr><th>Price</th><th class="text-right">Fee</th><th class="text-right">Effective rate</th></tr></thead>
+                        <tbody id="sensitivity"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <article class="mt-10 prose-en bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8">
+            <h2>The fee is two numbers, and only one of them scales</h2>
+            <p>A card processor charges <strong>a percentage of the sale plus a fixed amount per successful charge</strong>. Stripe's US domestic online card rate is <strong>2.9% + $0.30</strong>; PayPal's Checkout button is <strong>3.49% + $0.49</strong>. On a $100 sale Stripe takes $3.20 and PayPal takes $3.98. The gap looks small until you multiply it by a thousand orders, and it behaves completely differently at a $5 price point: the fixed fee alone is 6% of a $5 sale on Stripe and 9.8% on PayPal.</p>
+            <p>That is why the advertised rate is not the rate you pay. The <strong>effective rate</strong> is total fee divided by the sale. At 2.9% + $0.30, a $5 charge carries a 32.9% effective rate and a $500 charge carries 2.96%. Low-ticket businesses — digital downloads, coffee, in-app tips — feel the fixed fee far more than the percentage.</p>
+
+            <h3>What adds to the baseline</h3>
+            <ul>
+                <li><strong>International cards:</strong> +1.5% on Stripe and +1.5% on PayPal commercial transactions.</li>
+                <li><strong>Currency conversion:</strong> +1% on Stripe when a conversion is required; PayPal builds a 3%–4% spread into the exchange rate instead of a line item.</li>
+                <li><strong>Manually entered cards:</strong> +0.5% on Stripe.</li>
+                <li><strong>Disputes:</strong> roughly $15 per dispute, and another $15 if you contest it (refunded if you win).</li>
+            </ul>
+            <p>Fees are charged on the amount captured, which usually includes <strong>sales tax and shipping</strong>. Those dollars pass through your account but are charged the same percentage, so a store with heavy tax and shipping collects less margin than the headline rate suggests.</p>
+
+            <h3>Pricing so the fee does not eat the target</h3>
+            <p>If you want $40 net from a 2.9% + $0.30 processor, charging $40 leaves you with $38.54. The price that nets $40 is <strong>($40 + $0.30) ÷ (1 − 0.029) = $41.49</strong>. The general formula is <strong>(target + fixed) ÷ (1 − rate)</strong>. Recomputing it per product is the only way to keep a target margin intact across price points, because the fixed fee's share changes with every ticket size.</p>
+            <p>Cards and wallets are also not the only rails. Bank debits are cheaper on large tickets (Stripe ACH 0.8%, capped at $5) and expensive on tiny ones, so the right route depends on your average order value rather than on a single headline percentage.</p>
+
+            <h3>What this calculator does not include</h3>
+            <p>It does not model monthly platform fees, subscription add-ons, chargeback ratios, refund fee retention, tax remittance, or negotiated volume pricing. It uses the published US rates read in November 2026 from Stripe's pricing page and PayPal's US merchant fee page; your contract, region and payment method can change them. Use it to compare routes and to price a product, then reconcile against a real settlement report.</p>
+        </article>
+
+        <section class="mt-8">
+            <h2 class="text-lg font-black text-white mb-3">Frequently asked</h2>
+            <div class="space-y-2.5">
+                <details class="faq" open>
+                    <summary>How do you calculate a Stripe fee?</summary>
+                    <div class="a">Stripe charges a percentage plus a fixed fee per successful charge. For US domestic cards that is 2.9% + $0.30, so a $100 sale costs $3.20 and you keep $96.80. International cards add 1.5%; a required currency conversion adds 1%.</div>
+                </details>
+                <details class="faq">
+                    <summary>What does PayPal charge per transaction?</summary>
+                    <div class="a">PayPal Checkout and Guest Checkout cost 3.49% + $0.49 for US commercial transactions. Card payments taken through an invoice, payment link or Apple Pay cost 2.99% + $0.49. International commercial transactions add 1.50%.</div>
+                </details>
+                <details class="faq">
+                    <summary>How do I find the price that nets a target amount?</summary>
+                    <div class="a">(target + fixed fee) ÷ (1 − percentage rate). To net $100 at 2.9% + $0.30: (100 + 0.30) ÷ 0.971 = $103.30.</div>
+                </details>
+                <details class="faq">
+                    <summary>Why is my effective rate higher than the advertised rate?</summary>
+                    <div class="a">Because the fixed fee does not scale. On a $5 charge, $0.30 is 6% of the sale on its own, so 2.9% + $0.30 becomes 32.9% effective. Raise the average order value or move small tickets to a cheaper rail.</div>
+                </details>
+                <details class="faq">
+                    <summary>Are fees charged on sales tax and shipping?</summary>
+                    <div class="a">Usually yes. Processors charge on the total captured amount. Tax and shipping are not your revenue, but they still cost you the percentage, which is why pre-tax margin can look better than the settlement report.</div>
+                </details>
+                <details class="faq">
+                    <summary>Which is cheaper, Stripe or PayPal?</summary>
+                    <div class="a">On comparable card checkout, Stripe is cheaper per sale at every size in this model: 2.9% + $0.30 against 3.49% + $0.49. PayPal can be cheaper only on the 2.99% + $0.49 card-via-invoice route, which still carries a higher fixed fee.</div>
+                </details>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500">
+        <p class="mb-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+            <a href="index.html" class="font-bold text-amber-400/90 hover:text-amber-300">Tools</a>
+            <a href="stripe-fee-calculator.html" class="font-bold text-amber-400/90 hover:text-amber-300">Stripe &amp; PayPal fees</a>
+            <a href="compound-fire-calculator.html" class="font-bold text-amber-400/90 hover:text-amber-300">Compound &amp; FIRE</a>
+            <a href="../card.html" class="font-bold text-amber-400/90 hover:text-amber-300">🇰🇷 카드 소득공제</a>
+            <a href="../wolse.html" class="font-bold text-amber-400/90 hover:text-amber-300">🇰🇷 월세 세액공제</a>
+        </p>
+        <p class="mb-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px]">
+            <a href="../about.html" class="hover:text-amber-300">About</a>
+            <span class="text-slate-700">·</span>
+            <a href="../privacy.html" class="hover:text-amber-300">Privacy</a>
+            <span class="text-slate-700">·</span>
+            <a href="../contact.html" class="hover:text-amber-300">Contact</a>
+        </p>
+        <p class="mb-2 text-[11px] text-slate-600">Rates were read from Stripe's and PayPal's official US pricing pages in November 2026 and are for comparison only. Your agreement, region and payment method may differ.</p>
+        <p class="mb-2">© 2026 DailyTechFinds. All Rights Reserved.</p>
+    </footer>
+
+<script>
+(function () {
+    "use strict";
+
+    /*__CORE_START__*/
+    // 모든 금액은 달러(USD). 수수료 = 금액 x 비율 + 고정수수료.
+    function feeOf(price, ratePct, fixed) {
+        var p = Math.max(0, +price || 0);
+        var r = Math.min(100, Math.max(0, +ratePct || 0)) / 100;
+        var f = Math.max(0, +fixed || 0);
+        return p * r + f;
+    }
+
+    function feeCore(o) {
+        var price = Math.max(0, +o.price || 0);
+        var rate = Math.min(100, Math.max(0, +o.rate || 0));
+        var fixed = Math.max(0, +o.fixed || 0);
+        var qty = Math.max(0, +o.qty || 0);
+        var cost = Math.max(0, +o.cost || 0);
+        var fee = price > 0 ? feeOf(price, rate, fixed) : 0;
+        var net = price - fee;
+        var profit = net - cost;
+        var monthlyFees = fee * qty;
+        var monthlyRevenue = price * qty;
+        var monthlyProfit = profit * qty;
+        return {
+            price: price, rate: rate, fixed: fixed, qty: qty, cost: cost,
+            fee: fee,
+            net: net,
+            effectiveRate: price > 0 ? (fee / price) * 100 : 0,
+            profit: profit,
+            marginPct: price > 0 ? (profit / price) * 100 : 0,
+            monthlyFees: monthlyFees,
+            monthlyRevenue: monthlyRevenue,
+            monthlyProfit: monthlyProfit,
+            keptShare: price > 0 ? (net / price) * 100 : 0
+        };
+    }
+
+    // 목표 순수령액을 만들기 위해 청구해야 하는 금액
+    function priceForNet(target, ratePct, fixed) {
+        var t = Math.max(0, +target || 0);
+        var r = Math.min(99.99, Math.max(0, +ratePct || 0)) / 100;
+        var f = Math.max(0, +fixed || 0);
+        if (r >= 1) { return null; }
+        return (t + f) / (1 - r);
+    }
+
+    var ROUTES = [
+        { name: "Stripe — US domestic card", rate: 2.9, fixed: 0.30 },
+        { name: "Stripe — international card", rate: 4.4, fixed: 0.30 },
+        { name: "PayPal Checkout", rate: 3.49, fixed: 0.49 },
+        { name: "PayPal card via invoice/link", rate: 2.99, fixed: 0.49 },
+        { name: "PayPal international Checkout", rate: 4.99, fixed: 0.49 }
+    ];
+
+    function routeTable(price) {
+        var rows = [];
+        for (var i = 0; i < ROUTES.length; i++) {
+            var fee = feeOf(price, ROUTES[i].rate, ROUTES[i].fixed);
+            rows.push({ name: ROUTES[i].name, fee: fee, net: price - fee, rate: ROUTES[i].rate, fixed: ROUTES[i].fixed });
+        }
+        return rows;
+    }
+
+    function sensitivity(rate, fixed) {
+        var prices = [5, 10, 25, 50, 100, 250, 500, 1000];
+        var out = [];
+        for (var i = 0; i < prices.length; i++) {
+            var fee = feeOf(prices[i], rate, fixed);
+            out.push({ price: prices[i], fee: fee, effRate: (fee / prices[i]) * 100 });
+        }
+        return out;
+    }
+    /*__CORE_END__*/
+
+    var $ = function (id) { return document.getElementById(id); };
+    function usd(n) { return "$" + (Math.round(n * 100) / 100).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+    function pct(n) { return (Math.round(n * 100) / 100).toFixed(2) + "%"; }
+    function numv(id, dflt) {
+        var el = $(id);
+        if (!el) { return dflt; }
+        var v = parseFloat(String(el.value).replace(/,/g, ""));
+        return isFinite(v) ? Math.max(0, v) : dflt;
+    }
+
+    function readInput() {
+        return {
+            price: numv("price", 0),
+            rate: numv("rate", 0),
+            fixed: numv("fixed", 0),
+            qty: numv("qty", 0),
+            cost: numv("cost", 0),
+            target: numv("target", 0)
+        };
+    }
+
+    function render() {
+        var input = readInput();
+        var r = feeCore(input);
+
+        $("r-net").textContent = usd(r.net);
+        $("r-net-sub").textContent = "fee " + usd(r.fee) + " on " + usd(r.price);
+        $("r-profit").textContent = usd(r.profit);
+        $("r-profit-sub").textContent = "margin " + pct(r.marginPct) + " after cost " + usd(r.cost);
+        $("r-fee").textContent = usd(r.fee);
+        $("r-eff").textContent = pct(r.effectiveRate);
+        $("r-monthly").textContent = usd(r.monthlyFees);
+        $("bar-split").style.width = Math.min(100, Math.max(0, r.keptShare)) + "%";
+
+        var badge = $("r-badge");
+        if (r.price <= 0) {
+            badge.textContent = "enter a price";
+            badge.className = "text-[10px] font-black px-2 py-1 rounded-lg bg-slate-800 text-slate-300";
+        } else if (r.profit < 0) {
+            badge.textContent = "loss per sale";
+            badge.className = "text-[10px] font-black px-2 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30";
+        } else {
+            badge.textContent = "keeps " + pct(r.keptShare);
+            badge.className = "text-[10px] font-black px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+        }
+
+        var verdict;
+        if (r.price <= 0) {
+            verdict = "Enter a price to see the fee and payout.";
+        } else if (r.profit < 0) {
+            verdict = "At " + usd(r.price) + " you lose " + usd(-r.profit) + " per sale after the processing fee and your " + usd(r.cost) + " cost. Raise the price or cut the cost.";
+        } else {
+            verdict = "The processor keeps " + usd(r.fee) + " (" + pct(r.effectiveRate) + " of the sale). After your " + usd(r.cost) +
+                " cost you keep " + usd(r.profit) + " per sale, " + usd(r.monthlyProfit) + " a month at " + r.qty + " sales, " +
+                "with " + usd(r.monthlyFees) + " going to fees.";
+        }
+        $("r-verdict").textContent = verdict;
+
+        // reverse
+        var need = priceForNet(input.target, input.rate, input.fixed);
+        $("b-target").textContent = usd(input.target);
+        if (need === null) {
+            $("b-needprice").textContent = "n/a";
+            $("b-needfee").textContent = "-";
+            $("b-short").textContent = "-";
+            $("b-revenue").textContent = "-";
+            $("b-note").textContent = "A percentage of 100% or more cannot net a positive amount.";
+        } else {
+            var needFee = feeOf(need, input.rate, input.fixed);
+            var shortNet = input.target - feeOf(input.target, input.rate, input.fixed);
+            $("b-needprice").textContent = usd(need);
+            $("b-needfee").textContent = usd(needFee);
+            $("b-short").textContent = usd(shortNet);
+            $("b-revenue").textContent = usd(need * input.qty);
+            $("b-note").textContent = "Charging the target itself (" + usd(input.target) + ") nets only " + usd(shortNet) +
+                ", short by " + usd(input.target - shortNet) + ". The price above lands " + usd(input.target) + " in your account.";
+        }
+
+        // compare
+        var rows = routeTable(100);
+        var html = "";
+        for (var i = 0; i < rows.length; i++) {
+            var hi = rows[i].name.indexOf("Stripe — US domestic") === 0 ? ' class="hl"' : "";
+            html += "<tr" + hi + "><td>" + rows[i].name + "</td><td class='text-right num'>" + usd(rows[i].fee) +
+                "</td><td class='text-right num'>" + usd(rows[i].net) + "</td></tr>";
+        }
+        $("compare").innerHTML = html;
+
+        // sensitivity
+        var sens = sensitivity(input.rate, input.fixed);
+        var s = "";
+        for (var j = 0; j < sens.length; j++) {
+            s += "<tr><td>" + usd(sens[j].price) + "</td><td class='text-right num'>" + usd(sens[j].fee) +
+                "</td><td class='text-right num'>" + pct(sens[j].effRate) + "</td></tr>";
+        }
+        $("sensitivity").innerHTML = s;
+
+        window.__lastResult = r;
+    }
+
+    window.feeCore = feeCore;
+    window.feeOf = feeOf;
+    window.priceForNet = priceForNet;
+    window.routeTable = routeTable;
+    window.sensitivity = sensitivity;
+
+    var preset = $("preset");
+    if (preset) {
+        preset.addEventListener("change", function () {
+            var v = preset.value;
+            if (v === "custom") { return; }
+            var parts = v.split("|");
+            $("rate").value = parts[0];
+            $("fixed").value = parts[1];
+            render();
+        });
+    }
+    var ids = ["price", "rate", "fixed", "qty", "cost", "target"];
+    for (var i = 0; i < ids.length; i++) {
+        var el = $(ids[i]);
+        if (el) {
+            el.addEventListener("input", render);
+            el.addEventListener("change", render);
+        }
+    }
+    render();
+})();
+</script>
+</body>
+</html>

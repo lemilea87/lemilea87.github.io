@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compound Interest &amp; FIRE Calculator (2026) | Years to Financial Independence</title>
+<meta name="description" content="Compound interest and FIRE calculator: project your portfolio year by year, find your FIRE number from annual spending and a withdrawal rate, and see how many years of contributions you need. Shows real (inflation-adjusted) figures and Coast FIRE.">
+<meta name="keywords" content="compound interest calculator, FIRE calculator, financial independence retire early, FIRE number, 4% rule, coast fire, safe withdrawal rate, investment growth, monthly contribution, real return">
+<link rel="canonical" href="https://lemilea87.github.io/en/compound-fire-calculator.html">
+<link rel="alternate" hreflang="en" href="https://lemilea87.github.io/en/compound-fire-calculator.html">
+<link rel="alternate" hreflang="x-default" href="https://lemilea87.github.io/en/compound-fire-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DailyTechFinds">
+<meta property="og:title" content="Compound Interest &amp; FIRE Calculator — years to independence">
+<meta property="og:description" content="Portfolio projection, FIRE number, Coast FIRE and the exact year you reach your target, in real terms.">
+<meta property="og:url" content="https://lemilea87.github.io/en/compound-fire-calculator.html">
+<meta property="og:locale" content="en_US">
+<meta name="robots" content="index,follow">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+    body { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; background-color: #080c14; color: #f1f5f9; }
+    .glow-effect { box-shadow: 0 0 30px -5px rgba(245, 158, 11, 0.15); }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type="number"] { -moz-appearance: textfield; }
+    .fld { width: 100%; background: rgba(2,6,23,.75); border: 1px solid #1e293b; border-radius: .85rem; padding: .7rem .9rem; font-weight: 700; font-size: .95rem; color: #f8fafc; outline: none; transition: border-color .15s, box-shadow .15s; }
+    .fld:focus { border-color: rgba(245,158,11,.7); box-shadow: 0 0 0 3px rgba(245,158,11,.15); }
+    .chip { transition: all .15s ease; }
+    .chip:hover { border-color: rgba(245,158,11,.5); color: #fbbf24; }
+    .bar-track { background: rgba(30,41,59,.9); border-radius: 9999px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 9999px; transition: width .35s ease; }
+    .num { font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+    .prose-en h2 { font-size: 1.35rem; font-weight: 900; color: #fff; margin-bottom: .6rem; letter-spacing: -.01em; }
+    .prose-en h3 { font-size: 1rem; font-weight: 800; color: #fbbf24; margin: 1.4rem 0 .5rem; }
+    .prose-en p { color: #94a3b8; font-size: .9rem; line-height: 1.85; margin-bottom: .9rem; }
+    .prose-en li { color: #94a3b8; font-size: .875rem; line-height: 1.8; margin-left: 1.1rem; list-style: disc; margin-bottom: .35rem; }
+    .prose-en strong { color: #e2e8f0; font-weight: 800; }
+    .tbl { width: 100%; border-collapse: collapse; font-size: .8rem; }
+    .tbl th { background: rgba(30,41,59,.7); color: #fbbf24; font-weight: 800; padding: .55rem .5rem; text-align: left; border-bottom: 1px solid #1e293b; }
+    .tbl td { padding: .5rem .5rem; color: #cbd5e1; border-bottom: 1px solid rgba(30,41,59,.6); }
+    .tbl tr.hl td { background: rgba(245,158,11,.12); color: #fde68a; font-weight: 800; }
+    details.faq { border: 1px solid #1e293b; border-radius: .9rem; background: rgba(15,23,42,.6); }
+    details.faq summary { cursor: pointer; padding: .9rem 1rem; font-weight: 800; font-size: .875rem; color: #e2e8f0; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+    details.faq summary::-webkit-details-marker { display: none; }
+    details.faq summary::after { content: '+'; color: #f59e0b; font-weight: 900; }
+    details.faq[open] summary::after { content: '−'; }
+    details.faq .a { padding: 0 1rem 1rem; color: #94a3b8; font-size: .85rem; line-height: 1.8; }
+</style>
+<script type="application/ld+json">
+[{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Compound Interest & FIRE Calculator",
+  "url": "https://lemilea87.github.io/en/compound-fire-calculator.html",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any (web browser)",
+  "inLanguage": "en",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Projects a portfolio with monthly compounding, calculates the FIRE number from annual spending and a safe withdrawal rate, solves the number of years to reach it in real terms, and shows Coast FIRE and yearly balances.",
+  "featureList": [
+    "Monthly compounding projection with contributions",
+    "FIRE number from spending and withdrawal rate",
+    "Years and age to reach the target",
+    "Real (inflation-adjusted) and nominal balances",
+    "Coast FIRE amount and status"
+  ]
+},
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What is a FIRE number?", "acceptedAnswer": {"@type": "Answer", "text": "The portfolio value that can fund your annual spending at a chosen withdrawal rate. At a 4% withdrawal rate the FIRE number is 25 times annual spending, so $40,000 of spending needs $1,000,000."}},
+    {"@type": "Question", "name": "Is the 4% rule reliable?", "acceptedAnswer": {"@type": "Answer", "text": "The 4% rule comes from US historical return sequences over 30-year retirements. Longer retirements, high valuations, inflation shocks or fees can make it too optimistic, which is why this calculator lets you set the withdrawal rate yourself and shows a 3.5% and 3% alternative."}},
+    {"@type": "Question", "name": "Why does the calculator use a real return?", "acceptedAnswer": {"@type": "Answer", "text": "Spending rises with inflation, so comparing a nominal balance with today's spending overstates progress. Reducing the return by inflation keeps both the target and the projection in today's dollars, which is the number you can actually act on."}},
+    {"@type": "Question", "name": "What is Coast FIRE?", "acceptedAnswer": {"@type": "Answer", "text": "The amount you need today so that, with no further contributions, compound growth alone reaches your FIRE number by your target retirement age. Once you are past it you only need to cover current expenses, not to keep saving."}},
+    {"@type": "Question", "name": "Does the order of contributions matter?", "acceptedAnswer": {"@type": "Answer", "text": "This model adds contributions at the end of each month. Contributing at the start of the month, as many payroll plans do, produces a slightly higher balance, so the result here is marginally conservative."}}
+  ]
+}]
+</script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-rose-600 py-2 text-center text-[11px] sm:text-xs font-black uppercase tracking-widest text-slate-950">
+        Monthly compounding · real returns · FIRE number and Coast FIRE
+    </div>
+
+    <header class="border-b border-slate-800/80 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
+            <a href="index.html" class="flex items-center space-x-2 shrink-0">
+                <span class="text-2xl">⚡</span>
+                <span class="font-black text-lg sm:text-xl tracking-tight bg-gradient-to-r from-amber-400 via-orange-400 to-rose-500 bg-clip-text text-transparent">DailyTechFinds</span>
+            </a>
+            <nav class="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-bold">
+                <a href="index.html" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">Tools</a>
+                <a href="stripe-fee-calculator.html" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">Fees</a>
+                <a href="compound-fire-calculator.html" aria-current="page" class="px-2.5 sm:px-3 py-2 rounded-xl text-amber-400">Compound &amp; FIRE</a>
+                <a href="../index.html" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">🇰🇷 한국어</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="max-w-3xl mx-auto px-4 pt-10 pb-6 text-center w-full">
+        <span class="text-amber-400 text-[11px] font-black uppercase tracking-widest bg-amber-400/10 px-3.5 py-1.5 rounded-full border border-amber-400/20 inline-block mb-3">
+            Real returns · 4% rule default · today's dollars
+        </span>
+        <h1 class="text-3xl sm:text-4xl md:text-[2.7rem] font-black tracking-tight leading-tight mb-3">
+            How many years until your<br><span class="bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 bg-clip-text text-transparent">money works for you?</span>
+        </h1>
+        <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
+            Compounding is boring until you see the year the curve crosses your FIRE number. Everything here is in today's dollars, so inflation cannot flatter the result.
+        </p>
+    </section>
+
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-1 w-full">
+        <section class="grid grid-cols-1 lg:grid-cols-5 gap-5">
+
+            <div class="lg:col-span-2 space-y-4">
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h2 class="font-black text-base text-white mb-1">Your numbers</h2>
+                    <p class="text-[11px] text-slate-500 mb-4">USD, monthly contributions.</p>
+
+                    <div class="grid grid-cols-2 gap-3 mb-3">
+                        <div>
+                            <label for="age" class="block text-xs font-bold text-slate-300 mb-1.5">Age now</label>
+                            <input id="age" type="number" min="15" max="90" step="1" value="32" class="fld num">
+                        </div>
+                        <div>
+                            <label for="current" class="block text-xs font-bold text-slate-300 mb-1.5">Invested today</label>
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-xs text-slate-500 shrink-0">$</span>
+                                <input id="current" type="number" min="0" step="1000" value="40000" class="fld num">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 mb-3">
+                        <div>
+                            <label for="monthly" class="block text-xs font-bold text-slate-300 mb-1.5">Monthly contribution</label>
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-xs text-slate-500 shrink-0">$</span>
+                                <input id="monthly" type="number" min="0" step="50" value="1500" class="fld num">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="ret" class="block text-xs font-bold text-slate-300 mb-1.5">Return (annual)</label>
+                            <div class="flex items-center gap-1.5">
+                                <input id="ret" type="number" min="0" max="30" step="0.1" value="7" class="fld num">
+                                <span class="text-xs text-slate-500 shrink-0">%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 mb-3">
+                        <div>
+                            <label for="infl" class="block text-xs font-bold text-slate-300 mb-1.5">Inflation</label>
+                            <div class="flex items-center gap-1.5">
+                                <input id="infl" type="number" min="0" max="20" step="0.1" value="2.8" class="fld num">
+                                <span class="text-xs text-slate-500 shrink-0">%</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="spend" class="block text-xs font-bold text-slate-300 mb-1.5">Annual spending</label>
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-xs text-slate-500 shrink-0">$</span>
+                                <input id="spend" type="number" min="0" step="1000" value="40000" class="fld num">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 mb-0">
+                        <div>
+                            <label for="swr" class="block text-xs font-bold text-slate-300 mb-1.5">Withdrawal rate</label>
+                            <div class="flex items-center gap-1.5">
+                                <input id="swr" type="number" min="1" max="12" step="0.1" value="4" class="fld num">
+                                <span class="text-xs text-slate-500 shrink-0">%</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="retire" class="block text-xs font-bold text-slate-300 mb-1.5">Target age</label>
+                            <input id="retire" type="number" min="30" max="90" step="1" value="55" class="fld num">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h3 class="font-black text-sm text-white mb-2">Same spending, different withdrawal rate</h3>
+                    <table class="tbl">
+                        <thead><tr><th>Rate</th><th class="text-right">FIRE number</th></tr></thead>
+                        <tbody id="swrTable"></tbody>
+                    </table>
+                    <p class="text-[11px] text-slate-500 mt-3 leading-relaxed">Lower rates need a bigger portfolio but survive longer retirements.</p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-3 space-y-4">
+                <div class="bg-gradient-to-br from-amber-950/60 via-slate-900 to-slate-900 border border-amber-700/40 rounded-2xl p-5 glow-effect">
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span class="text-[11px] font-black uppercase tracking-widest text-amber-400">Time to financial independence</span>
+                        <span id="r-badge" class="text-[10px] font-black px-2 py-1 rounded-lg bg-slate-800 text-slate-300">-</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 mb-4">
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[11px] text-slate-400 mb-0.5">FIRE number</div>
+                            <div id="r-firenum" class="text-2xl font-black text-white num">$0</div>
+                            <div id="r-firenum-sub" class="text-[10px] text-slate-500 mt-0.5">in today's dollars</div>
+                        </div>
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[11px] text-slate-400 mb-0.5">Years to reach it</div>
+                            <div id="r-years" class="text-2xl font-black text-amber-300 num">-</div>
+                            <div id="r-years-sub" class="text-[10px] text-slate-500 mt-0.5">at this contribution</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[10px] text-slate-500 mb-0.5">You are</div>
+                            <div id="r-progress" class="text-sm font-black text-slate-100 num">-</div>
+                        </div>
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[10px] text-slate-500 mb-0.5">Projected at target age</div>
+                            <div id="r-atretire" class="text-sm font-black text-slate-100 num">-</div>
+                        </div>
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[10px] text-slate-500 mb-0.5">Real return used</div>
+                            <div id="r-real" class="text-sm font-black text-slate-100 num">-</div>
+                        </div>
+                    </div>
+                    <div class="bar-track h-2 mt-4"><div id="bar-progress" class="bar-fill bg-gradient-to-r from-amber-500 to-emerald-400" style="width:0%"></div></div>
+                    <p id="r-verdict" class="text-[11px] text-slate-400 leading-relaxed mt-4">-</p>
+                </div>
+
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h3 class="font-black text-sm text-white mb-1">Coast FIRE</h3>
+                    <p class="text-[11px] text-slate-500 mb-3">The balance that grows into your FIRE number with no further saving.</p>
+                    <table class="tbl">
+                        <tbody>
+                            <tr><td class="w-3/5">Coast amount needed today (for age <span id="b-retire">55</span>)</td><td class="text-right num" id="b-coast">-</td></tr>
+                            <tr class="hl"><td>Your position</td><td class="text-right num" id="b-coaststatus">-</td></tr>
+                            <tr><td>Monthly contribution needed to hit target age</td><td class="text-right num" id="b-needmonthly">-</td></tr>
+                            <tr><td>Nominal balance at target age</td><td class="text-right num" id="b-nominal">-</td></tr>
+                        </tbody>
+                    </table>
+                    <p id="b-note" class="text-[11px] text-slate-500 mt-3 leading-relaxed">-</p>
+                </div>
+
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h3 class="font-black text-sm text-white mb-3">Year by year (real)</h3>
+                    <div class="max-h-72 overflow-y-auto">
+                        <table class="tbl">
+                            <thead><tr><th>Age</th><th class="text-right">Contributed</th><th class="text-right">Balance</th><th class="text-right">Growth</th></tr></thead>
+                            <tbody id="schedule"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <article class="mt-10 prose-en bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8">
+            <h2>Two numbers decide everything: what you spend, and what you withdraw</h2>
+            <p>Financial independence is a division problem. Take the annual spending you want to fund and divide it by a <strong>withdrawal rate</strong>. At 4% that is 25 times spending: $40,000 a year needs <strong>$1,000,000</strong>. At 3.5% it is 28.6 times, at 3% it is 33.3 times. The withdrawal rate is a risk choice, not a law — lower rates buy a longer retirement and a bigger target.</p>
+            <p>Compounding then decides how long the accumulation takes. With $40,000 invested, $1,500 a month and a 7% return, the nominal balance passes $1,000,000 in about 22 years. Raise the contribution to $2,500 a month and it takes about 17. Double the starting balance and you save roughly two years. What moves the date most, though, is the gap between income and spending — the savings rate — because it changes both the contributions and the target at once.</p>
+
+            <h3>Why this calculator works in today's dollars</h3>
+            <p>A nominal projection is misleading: $1,000,000 in 22 years buys far less than $1,000,000 today, while spending rises with inflation. So the model <strong>subtracts inflation from the return</strong> (real return ≈ (1 + return) ÷ (1 + inflation) − 1) and holds the spending target at today's level. At 7% return and 2.8% inflation the real return is 4.09%, and the projection is a purchasing-power comparison rather than a bigger-looking number. Nominal balance is shown separately, labelled, for anyone who wants the statement value.</p>
+
+            <h3>Coast FIRE is the quieter milestone</h3>
+            <p>Coast FIRE is the amount you need <strong>today</strong> so that compound growth alone reaches the FIRE number by your target age, with no further contributions. Discount the FIRE number back over the remaining years at the real return and you have it. Past that point, stopping contributions does not delay retirement as long as the money stays invested — which is why some people cut hours or take lower-paying work long before they retire fully.</p>
+
+            <h3>What this model leaves out</h3>
+            <ul>
+                <li><strong>Taxes.</strong> Contributions are treated as after-tax, and withdrawal taxes (capital gains, dividend tax, retirement account rules) are not modelled. In accounts taxed on the way out, the target is larger.</li>
+                <li><strong>Fees and fund costs.</strong> A 0.5% expense ratio is a 0.5% drag on the return you enter, not a separate line.</li>
+                <li><strong>Sequence risk.</strong> A bad first decade of retirement can force selling assets at lows; average returns hide that.</li>
+                <li><strong>Variable spending.</strong> Real spending usually falls in the first years of retirement and rises later with health costs.</li>
+                <li><strong>Contribution timing.</strong> Contributions are added at month end, so results are marginally conservative compared with payroll investing.</li>
+            </ul>
+        </article>
+
+        <section class="mt-8">
+            <h2 class="text-lg font-black text-white mb-3">Frequently asked</h2>
+            <div class="space-y-2.5">
+                <details class="faq" open>
+                    <summary>What is a FIRE number?</summary>
+                    <div class="a">The portfolio that funds your annual spending at a chosen withdrawal rate. At 4%, it is 25 times annual spending: $40,000 of spending needs $1,000,000.</div>
+                </details>
+                <details class="faq">
+                    <summary>Is the 4% rule reliable?</summary>
+                    <div class="a">It comes from US historical sequences over 30-year retirements. Longer retirements, high starting valuations, inflation shocks and fees can make it too optimistic — which is why the withdrawal rate is an input here, with 3.5% and 3% shown as alternatives.</div>
+                </details>
+                <details class="faq">
+                    <summary>Why use a real return instead of the nominal one?</summary>
+                    <div class="a">Because your spending target rises with inflation. Comparing a nominal balance to today's spending flatters progress. Keeping both sides in today's dollars gives a number you can act on.</div>
+                </details>
+                <details class="faq">
+                    <summary>What is Coast FIRE?</summary>
+                    <div class="a">The amount needed today so that compound growth alone reaches the FIRE number by your target retirement age. Beyond it, you only need to cover current expenses.</div>
+                </details>
+                <details class="faq">
+                    <summary>Should I count a paid-off home in the FIRE number?</summary>
+                    <div class="a">Count the spending it removes, not its market value. A paid-off home lowers annual housing cost, which lowers the FIRE number. Adding its value to your portfolio double counts unless you plan to sell.</div>
+                </details>
+                <details class="faq">
+                    <summary>Does a higher return always shorten the date?</summary>
+                    <div class="a">In the model, yes; in reality, higher expected returns come with more volatility, and volatility at the wrong moment hurts. Use a lower return for planning and check the result still works.</div>
+                </details>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500">
+        <p class="mb-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+            <a href="index.html" class="font-bold text-amber-400/90 hover:text-amber-300">Tools</a>
+            <a href="stripe-fee-calculator.html" class="font-bold text-amber-400/90 hover:text-amber-300">Stripe &amp; PayPal fees</a>
+            <a href="compound-fire-calculator.html" class="font-bold text-amber-400/90 hover:text-amber-300">Compound &amp; FIRE</a>
+            <a href="../index.html" class="font-bold text-amber-400/90 hover:text-amber-300">🇰🇷 한국어 계산기</a>
+        </p>
+        <p class="mb-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px]">
+            <a href="../about.html" class="hover:text-amber-300">About</a>
+            <span class="text-slate-700">·</span>
+            <a href="../privacy.html" class="hover:text-amber-300">Privacy</a>
+            <span class="text-slate-700">·</span>
+            <a href="../contact.html" class="hover:text-amber-300">Contact</a>
+        </p>
+        <p class="mb-2 text-[11px] text-slate-600">Projections are mathematical, not advice. Returns, inflation and taxes vary; past returns do not guarantee future ones.</p>
+        <p class="mb-2">© 2026 DailyTechFinds. All Rights Reserved.</p>
+    </footer>
+
+<script>
+(function () {
+    "use strict";
+
+    /*__CORE_START__*/
+    // 월 단위 복리. 기여금은 월말 적립.
+    function fvAt(principal, monthly, rateMonthly, months) {
+        var p = Math.max(0, +principal || 0);
+        var c = Math.max(0, +monthly || 0);
+        var n = Math.max(0, +months || 0);
+        var m = +rateMonthly || 0;
+        if (n <= 0) { return p; }
+        if (Math.abs(m) < 1e-12) { return p + c * n; }
+        var growth = Math.pow(1 + m, n);
+        return p * growth + c * ((growth - 1) / m);
+    }
+
+    // 목표 금액에 도달하는 개월 수. 도달 불가면 null.
+    function monthsToTarget(principal, monthly, rateMonthly, target) {
+        var p = Math.max(0, +principal || 0);
+        var c = Math.max(0, +monthly || 0);
+        var m = +rateMonthly || 0;
+        var t = Math.max(0, +target || 0);
+        if (p >= t) { return 0; }
+        if (Math.abs(m) < 1e-12) {
+            if (c <= 0) { return null; }
+            return (t - p) / c;
+        }
+        var num = t * m + c;
+        var den = p * m + c;
+        if (den <= 0 || num <= 0) { return null; }
+        var n = Math.log(num / den) / Math.log(1 + m);
+        if (!isFinite(n) || n < 0) { return null; }
+        return n;
+    }
+
+    function monthlyRate(annualPct) {
+        return Math.pow(1 + (Math.max(-99, +annualPct || 0) / 100), 1 / 12) - 1;
+    }
+
+    function fireCore(o) {
+        var age = Math.max(0, +o.age || 0);
+        var current = Math.max(0, +o.current || 0);
+        var monthly = Math.max(0, +o.monthly || 0);
+        var ret = Math.max(0, +o.ret || 0);
+        var infl = Math.max(0, +o.infl || 0);
+        var spend = Math.max(0, +o.spend || 0);
+        var swr = Math.min(100, Math.max(0.1, +o.swr || 0));
+        var retireAge = Math.max(age, +o.retire || age);
+
+        var realPct = ((1 + ret / 100) / (1 + infl / 100) - 1) * 100;
+        var mReal = monthlyRate(realPct);
+        var mNom = monthlyRate(ret);
+
+        var fireNumber = spend / (swr / 100);
+        var months = monthsToTarget(current, monthly, mReal, fireNumber);
+        var fireAge = months === null ? null : age + months / 12;
+
+        var monthsToRetire = (retireAge - age) * 12;
+        var balanceAtRetire = fvAt(current, monthly, mReal, monthsToRetire);
+        var nominalAtRetire = fvAt(current, monthly, mNom, monthsToRetire);
+
+        // 은퇴 시점에 목표를 채우기 위해 필요한 월 적립액
+        var needMonthly = null;
+        if (monthsToRetire > 0) {
+            if (balanceAtRetire >= fireNumber) {
+                needMonthly = 0;
+            } else if (Math.abs(mReal) < 1e-12) {
+                needMonthly = (fireNumber - current) / monthsToRetire;
+            } else {
+                var growth = Math.pow(1 + mReal, monthsToRetire);
+                needMonthly = (fireNumber - current * growth) * mReal / (growth - 1);
+                if (needMonthly < 0) { needMonthly = 0; }
+            }
+        } else {
+            needMonthly = balanceAtRetire >= fireNumber ? 0 : null;
+        }
+
+        // Coast FIRE: 오늘 필요 금액 (추가 적립 없이 목표 나이에 목표액 도달)
+        var coastNumber = monthsToRetire > 0 ? fireNumber / Math.pow(1 + mReal, monthsToRetire) : fireNumber;
+        var coastReached = current >= coastNumber;
+
+        // 연도별 스케줄 (실질)
+        var yearsTotal = Math.max(1, Math.ceil(Math.max(months === null ? 0 : months, monthsToRetire) / 12) + 1);
+        yearsTotal = Math.min(yearsTotal, 60);
+        var schedule = [];
+        for (var y = 0; y <= yearsTotal; y++) {
+            var bal = fvAt(current, monthly, mReal, y * 12);
+            schedule.push({
+                age: age + y,
+                contributed: current + monthly * 12 * y,
+                balance: bal,
+                growth: bal - (current + monthly * 12 * y)
+            });
+        }
+
+        return {
+            fireNumber: fireNumber,
+            realPct: realPct,
+            months: months,
+            years: months === null ? null : months / 12,
+            fireAge: fireAge,
+            balanceAtRetire: balanceAtRetire,
+            nominalAtRetire: nominalAtRetire,
+            progress: fireNumber > 0 ? (current / fireNumber) * 100 : 0,
+            needMonthly: needMonthly,
+            coastNumber: coastNumber,
+            coastReached: coastReached,
+            schedule: schedule,
+            monthsToRetire: monthsToRetire
+        };
+    }
+
+    function swrTable(spend) {
+        var rates = [3, 3.5, 4, 4.5, 5];
+        var rows = [];
+        for (var i = 0; i < rates.length; i++) {
+            rows.push({ rate: rates[i], number: spend / (rates[i] / 100) });
+        }
+        return rows;
+    }
+    /*__CORE_END__*/
+
+    var $ = function (id) { return document.getElementById(id); };
+    function usd(n) {
+        if (n === null || n === undefined || !isFinite(n)) { return "-"; }
+        if (Math.abs(n) >= 1000000) { return "$" + (Math.round(n / 1000) / 1000).toFixed(2) + "M"; }
+        return "$" + Math.round(n).toLocaleString("en-US");
+    }
+    function usdFull(n) { return "$" + Math.round(n).toLocaleString("en-US"); }
+    function pct(n) { return (Math.round(n * 100) / 100).toFixed(2) + "%"; }
+    function numv(id, dflt) {
+        var el = $(id);
+        if (!el) { return dflt; }
+        var v = parseFloat(String(el.value).replace(/,/g, ""));
+        return isFinite(v) ? Math.max(0, v) : dflt;
+    }
+
+    function readInput() {
+        return {
+            age: numv("age", 0),
+            current: numv("current", 0),
+            monthly: numv("monthly", 0),
+            ret: numv("ret", 0),
+            infl: numv("infl", 0),
+            spend: numv("spend", 0),
+            swr: numv("swr", 4),
+            retire: numv("retire", 0)
+        };
+    }
+
+    function render() {
+        var input = readInput();
+        var r = fireCore(input);
+
+        $("r-firenum").textContent = usdFull(r.fireNumber);
+        $("r-firenum-sub").textContent = "at " + input.swr + "% of " + usdFull(input.spend) + " a year";
+        $("r-years").textContent = r.years === null ? "50+ yrs" : (Math.round(r.years * 10) / 10) + " yrs";
+        $("r-years-sub").textContent = r.fireAge === null ? "increase the contribution" : "age " + (Math.round(r.fireAge * 10) / 10);
+        $("r-progress").textContent = pct(r.progress);
+        $("r-atretire").textContent = usdFull(r.balanceAtRetire);
+        $("r-real").textContent = pct(r.realPct);
+        $("bar-progress").style.width = Math.min(100, Math.max(0, r.progress)) + "%";
+        $("b-retire").textContent = input.retire;
+
+        var badge = $("r-badge");
+        if (r.fireNumber <= 0) {
+            badge.textContent = "add spending";
+            badge.className = "text-[10px] font-black px-2 py-1 rounded-lg bg-slate-800 text-slate-300";
+        } else if (r.months === 0) {
+            badge.textContent = "already there";
+            badge.className = "text-[10px] font-black px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+        } else if (r.months === null) {
+            badge.textContent = "not reached";
+            badge.className = "text-[10px] font-black px-2 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30";
+        } else if (r.fireAge !== null && r.fireAge <= input.retire) {
+            badge.textContent = "ahead of target";
+            badge.className = "text-[10px] font-black px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+        } else {
+            badge.textContent = "behind target";
+            badge.className = "text-[10px] font-black px-2 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30";
+        }
+
+        var v;
+        if (r.fireNumber <= 0) {
+            v = "Enter annual spending and a withdrawal rate to get your FIRE number.";
+        } else if (r.months === 0) {
+            v = "Your balance already covers " + usdFull(r.fireNumber) + " at a " + input.swr + "% withdrawal rate.";
+        } else if (r.months === null) {
+            v = "At " + usdFull(input.monthly) + " a month and a " + pct(r.realPct) + " real return, the portfolio does not reach " +
+                usdFull(r.fireNumber) + ". Raise the contribution or the return assumption.";
+        } else {
+            v = "You reach " + usdFull(r.fireNumber) + " in " + (Math.round(r.years * 10) / 10) + " years (age " +
+                (Math.round(r.fireAge * 10) / 10) + "). At age " + input.retire + " the balance is " + usdFull(r.balanceAtRetire) +
+                " in today's dollars, " + (r.balanceAtRetire >= r.fireNumber ? "above" : "below") + " the target.";
+        }
+        $("r-verdict").textContent = v;
+
+        $("b-coast").textContent = usdFull(r.coastNumber);
+        $("b-coaststatus").textContent = r.coastReached ? "coasted (" + usdFull(Math.max(0, input.current - r.coastNumber)) + " spare)" : "short " + usdFull(Math.max(0, r.coastNumber - input.current));
+        $("b-needmonthly").textContent = r.needMonthly === null ? "n/a" : usdFull(r.needMonthly);
+        $("b-nominal").textContent = usdFull(r.nominalAtRetire);
+        $("b-note").textContent = r.coastReached
+            ? "Coast FIRE is cleared: with no further contributions, growth alone reaches the target by age " + input.retire + "."
+            : "You need " + usdFull(Math.max(0, r.coastNumber - input.current)) + " more today to clear Coast FIRE for age " + input.retire + ".";
+
+        var swrRows = swrTable(input.spend);
+        var sh = "";
+        for (var i = 0; i < swrRows.length; i++) {
+            var hl = swrRows[i].rate === input.swr ? ' class="hl"' : "";
+            sh += "<tr" + hl + "><td>" + swrRows[i].rate + "%</td><td class='text-right num'>" + usdFull(swrRows[i].number) + "</td></tr>";
+        }
+        $("swrTable").innerHTML = sh;
+
+        var rows = r.schedule;
+        var html = "";
+        for (var j = 0; j < rows.length; j++) {
+            var row = rows[j];
+            var cls = "";
+            if (r.fireAge !== null && Math.abs(row.age - Math.round(r.fireAge)) < 0.5 && row.balance >= r.fireNumber) { cls = ' class="hl"'; }
+            html += "<tr" + cls + "><td>" + Math.round(row.age) + "</td><td class='text-right num'>" + usdFull(row.contributed) +
+                "</td><td class='text-right num'>" + usdFull(row.balance) + "</td><td class='text-right num'>" + usdFull(row.growth) + "</td></tr>";
+        }
+        $("schedule").innerHTML = html;
+
+        window.__lastResult = r;
+    }
+
+    window.fireCore = fireCore;
+    window.fvAt = fvAt;
+    window.monthsToTarget = monthsToTarget;
+    window.swrTable = swrTable;
+    window.monthlyRate = monthlyRate;
+
+    var ids = ["age", "current", "monthly", "ret", "infl", "spend", "swr", "retire"];
+    for (var i = 0; i < ids.length; i++) {
+        var el = $(ids[i]);
+        if (el) {
+            el.addEventListener("input", render);
+            el.addEventListener("change", render);
+        }
+    }
+    render();
+})();
+</script>
+</body>
+</html>

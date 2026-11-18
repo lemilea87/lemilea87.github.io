@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 신용카드·체크카드 소득공제 계산기 | 황금비율·환급액</title>
+<meta name="description" content="총급여 25% 문턱부터 공제율·한도까지 그대로 계산합니다. 신용카드 15%, 체크카드·현금영수증 30%, 전통시장·대중교통 40%, 2026년부터 늘어난 자녀 수별 한도까지 반영해 예상 소득공제액과 세금 절감액, 남은 12월 카드 배분(황금비율)을 바로 보여줍니다.">
+<meta name="keywords" content="신용카드 소득공제 계산기, 2026 연말정산, 체크카드 공제율 30%, 총급여 25% 최저사용금액, 카드 공제 한도, 자녀 수 공제한도, 전통시장 40%, 대중교통 40%, 연말정산 환급액, 카드 황금비율">
+<link rel="canonical" href="https://lemilea87.github.io/card.html">
+<link rel="alternate" hreflang="ko" href="https://lemilea87.github.io/card.html">
+<link rel="alternate" hreflang="x-default" href="https://lemilea87.github.io/card.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DailyTechFinds">
+<meta property="og:title" content="2026 카드 소득공제 계산기 — 체크카드 황금비율 진단">
+<meta property="og:description" content="총급여 25% 문턱, 결제수단별 공제율, 자녀 수별 한도. 2026년 귀속 기준으로 예상 공제액과 세금 절감액을 계산합니다.">
+<meta property="og:url" content="https://lemilea87.github.io/card.html">
+<meta property="og:locale" content="ko_KR">
+<meta name="robots" content="index,follow">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+    body { font-family: 'Plus Jakarta Sans', 'Noto Sans KR', system-ui, -apple-system, 'Malgun Gothic', sans-serif; background-color: #080c14; color: #f1f5f9; }
+    .glow-effect { box-shadow: 0 0 30px -5px rgba(245, 158, 11, 0.15); }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type="number"] { -moz-appearance: textfield; }
+    .fld { width: 100%; background: rgba(2,6,23,.75); border: 1px solid #1e293b; border-radius: .85rem; padding: .7rem .9rem; font-weight: 700; font-size: .95rem; color: #f8fafc; outline: none; transition: border-color .15s, box-shadow .15s; }
+    .fld:focus { border-color: rgba(245,158,11,.7); box-shadow: 0 0 0 3px rgba(245,158,11,.15); }
+    .fld::placeholder { color: #475569; font-weight: 500; }
+    .chip { transition: all .15s ease; }
+    .chip:hover { border-color: rgba(245,158,11,.5); color: #fbbf24; }
+    .bar-track { background: rgba(30,41,59,.9); border-radius: 9999px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 9999px; transition: width .35s ease; }
+    .num { font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+    .prose-kr h2 { font-size: 1.35rem; font-weight: 900; color: #fff; margin-bottom: .6rem; letter-spacing: -.01em; }
+    .prose-kr h3 { font-size: 1rem; font-weight: 800; color: #fbbf24; margin: 1.4rem 0 .5rem; }
+    .prose-kr p { color: #94a3b8; font-size: .9rem; line-height: 1.85; margin-bottom: .9rem; }
+    .prose-kr li { color: #94a3b8; font-size: .875rem; line-height: 1.8; margin-left: 1.1rem; list-style: disc; margin-bottom: .35rem; }
+    .prose-kr strong { color: #e2e8f0; font-weight: 800; }
+    .tbl { width: 100%; border-collapse: collapse; font-size: .8rem; }
+    .tbl th { background: rgba(30,41,59,.7); color: #fbbf24; font-weight: 800; padding: .55rem .5rem; text-align: left; border-bottom: 1px solid #1e293b; }
+    .tbl td { padding: .5rem .5rem; color: #cbd5e1; border-bottom: 1px solid rgba(30,41,59,.6); }
+    .tbl tr.hl td { background: rgba(245,158,11,.12); color: #fde68a; font-weight: 800; }
+    details.faq { border: 1px solid #1e293b; border-radius: .9rem; background: rgba(15,23,42,.6); }
+    details.faq summary { cursor: pointer; padding: .9rem 1rem; font-weight: 800; font-size: .875rem; color: #e2e8f0; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+    details.faq summary::-webkit-details-marker { display: none; }
+    details.faq summary::after { content: '+'; color: #f59e0b; font-weight: 900; }
+    details.faq[open] summary::after { content: '−'; }
+    details.faq .a { padding: 0 1rem 1rem; color: #94a3b8; font-size: .85rem; line-height: 1.8; }
+</style>
+<script type="application/ld+json">
+[{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "2026 신용카드·체크카드 소득공제 계산기",
+  "url": "https://lemilea87.github.io/card.html",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any (웹 브라우저)",
+  "inLanguage": "ko",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" },
+  "description": "총급여의 25%(최저사용금액)를 넘는 카드 사용액에 신용카드 15%, 체크카드·현금영수증 30%, 전통시장·대중교통 40%, 문화체육 30%를 적용해 2026년 귀속 소득공제액과 세금 절감액을 계산합니다. 자녀 수별 공제 한도와 추가공제까지 반영합니다.",
+  "featureList": [
+    "최저사용금액(총급여 25%) 자동 계산",
+    "결제수단·사용처 5종 공제율 적용",
+    "자녀 수별 기본공제 한도와 추가공제 한도",
+    "한도 소진에 필요한 추가 사용액 역산",
+    "남은 기간 결제수단별 공제 증가액 비교(황금비율)"
+  ]
+},
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "2026년 카드 소득공제 공제율은 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "2026년 귀속 기준으로 신용카드 15%, 체크카드·현금영수증 30%, 전통시장 40%, 대중교통 40%, 도서·공연·영화·체육시설 등 문화체육 30%입니다. 문화체육 30%는 총급여 7,000만원 이하 근로자에게만 적용됩니다."}},
+    {"@type": "Question", "name": "카드 공제 한도는 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "2026년부터 자녀 수에 따라 기본 한도가 늘었습니다. 총급여 7,000만원 이하는 자녀가 없으면 300만원, 1명이면 350만원, 2명 이상이면 400만원입니다. 총급여 7,000만원 초과는 250만원·275만원·300만원이며, 전통시장·대중교통·문화체육 사용분은 따로 추가공제(7,000만원 이하 300만원, 초과 200만원 한도)가 붙습니다."}},
+    {"@type": "Question", "name": "체크카드를 얼마나 써야 유리한가요?", "acceptedAnswer": {"@type": "Answer", "text": "총급여의 25%까지는 공제율이 가장 낮은 신용카드 사용분으로 먼저 채워지므로, 그 구간은 혜택이 좋은 신용카드로 쓰고 25%를 넘는 지출부터 체크카드·현금영수증(30%)으로 돌리는 것이 공제액을 가장 크게 만듭니다."}},
+    {"@type": "Question", "name": "카드 소득공제로 세금이 얼마나 줄어드나요?", "acceptedAnswer": {"@type": "Answer", "text": "소득공제액에 본인의 한계세율을 곱한 만큼 과세표준이 줄어듭니다. 소득세 15% 구간이면 지방소득세 10%를 포함해 공제액의 16.5%만큼 세금이 줄어듭니다. 공제액 전액을 돌려받는 세액공제와 다릅니다."}},
+    {"@type": "Question", "name": "2027년부터 카드 공제가 줄어드나요?", "acceptedAnswer": {"@type": "Answer", "text": "2026년 8월 정부 세제개편안은 2027년 사용분부터 대중교통 40% 우대공제를 없애고 추가공제 한도를 100만원씩 줄이는 내용을 담고 있습니다. 국회 심의 전 정부안이며 2026년에 쓴 금액에는 적용되지 않습니다."}}
+  ]
+}]
+</script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-rose-600 py-2 text-center text-[11px] sm:text-xs font-black uppercase tracking-widest text-slate-950">
+        💳 2026년 귀속 카드 소득공제 · 자녀 수별 한도 반영
+    </div>
+
+    <!-- Navbar -->
+    <header class="border-b border-slate-800/80 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
+            <a href="index.html" class="flex items-center space-x-2 shrink-0">
+                <span class="text-2xl">⚡</span>
+                <span class="font-black text-lg sm:text-xl tracking-tight bg-gradient-to-r from-amber-400 via-orange-400 to-rose-500 bg-clip-text text-transparent">DailyTechFinds</span>
+            </a>
+            <nav class="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-bold">
+                <a href="index.html" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">🔥 핫딜 허브</a>
+                <a href="calc.html" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">🧮 계산기 모음</a>
+                <a href="https://cshop.naver.com/lemilea" target="_blank" rel="noopener noreferrer" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">🛍️ 못산템</a>
+                <a href="en/index.html" class="px-2.5 sm:px-3 py-2 rounded-xl text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 transition">🌐 EN</a>
+            </nav>
+        </div>
+        <div class="max-w-6xl mx-auto px-4 pb-2.5 flex items-center gap-1.5 overflow-x-auto text-[11px] sm:text-xs">
+            <a href="salary.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">💰 연봉 실수령액</a>
+            <a href="loan.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">🏦 대출이자·DSR</a>
+            <a href="calc.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">🧾 연금·IRP 환급</a>
+            <a href="unemployment.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">📋 실업급여</a>
+            <a href="severance.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">📄 퇴직금·퇴직소득세</a>
+            <a href="jeonse.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">🏠 전세 vs 월세</a>
+            <a href="card.html" aria-current="page" class="chip shrink-0 px-2.5 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-black">💳 카드 소득공제</a>
+            <a href="wolse.html" class="chip shrink-0 px-2.5 py-1.5 rounded-lg text-slate-300 bg-slate-800/60 border border-slate-700/60">🏠 월세 세액공제</a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="max-w-3xl mx-auto px-4 pt-10 pb-6 text-center w-full">
+        <span class="text-amber-400 text-[11px] font-black uppercase tracking-widest bg-amber-400/10 px-3.5 py-1.5 rounded-full border border-amber-400/20 inline-block mb-3">
+            💳 2026년 귀속 · 조세특례제한법 제126조의2 기준
+        </span>
+        <h1 class="text-3xl sm:text-4xl md:text-[2.7rem] font-black tracking-tight leading-tight mb-3">
+            카드 얼마 썼을 때,<br><span class="bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 bg-clip-text text-transparent">세금 얼마나</span> 돌려받을까?
+        </h1>
+        <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
+            총급여의 25% 문턱, 결제수단별 공제율, 2026년에 늘어난 자녀 수별 한도까지 그대로 넣었습니다. 남은 12월에 어느 카드로 얼마를 써야 공제가 가장 커지는지도 함께 계산합니다.
+        </p>
+    </section>
+
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-1 w-full">
+
+        <section class="grid grid-cols-1 lg:grid-cols-5 gap-5">
+
+            <!-- Inputs -->
+            <div class="lg:col-span-2 space-y-4">
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h2 class="font-black text-base text-white mb-1">내 소득 조건</h2>
+                    <p class="text-[11px] text-slate-500 mb-4">급여명세서의 과세 급여로 계산하세요.</p>
+
+                    <div class="mb-3">
+                        <label for="salary" class="block text-xs font-bold text-slate-300 mb-1.5">총급여(연)</label>
+                        <div class="flex items-center gap-2">
+                            <input id="salary" type="number" min="0" step="1000000" value="50000000" class="fld num">
+                            <span class="text-xs text-slate-500 shrink-0">원</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mt-1.5">비과세(식대 등)를 뺀 과세 급여. 최저사용금액은 <span id="r-minratio" class="text-amber-300 font-bold">12,500,000원</span></p>
+                    </div>
+                    <div class="mb-3">
+                        <label for="children" class="block text-xs font-bold text-slate-300 mb-1.5">기본공제 대상 자녀 수</label>
+                        <select id="children" class="fld">
+                            <option value="0" selected>없음</option>
+                            <option value="1">1명</option>
+                            <option value="2">2명 이상</option>
+                        </select>
+                        <p class="text-[11px] text-slate-500 mt-1.5">20세 이하(장애인은 나이 제한 없음) 직계비속. 2026년부터 1명당 기본한도 +50만원.</p>
+                    </div>
+                    <div class="mb-0">
+                        <label for="rate" class="block text-xs font-bold text-slate-300 mb-1.5">내 한계세율(소득세)</label>
+                        <select id="rate" class="fld">
+                            <option value="6">6% (과세표준 1,400만원 이하)</option>
+                            <option value="15" selected>15% (1,400만~5,000만원)</option>
+                            <option value="24">24% (5,000만~8,800만원)</option>
+                            <option value="35">35% (8,800만~1억5,000만원)</option>
+                        </select>
+                        <p class="text-[11px] text-slate-500 mt-1.5">공제액 × 이 세율(+지방소득세 10%)이 실제 절감액입니다.</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h2 class="font-black text-base text-white mb-1">올해 카드 사용액</h2>
+                    <p class="text-[11px] text-slate-500 mb-4">1월 1일~12월 31일 사용분. 홈택스 '연말정산 미리보기'에서 확인할 수 있습니다.</p>
+
+                    <div class="mb-3">
+                        <label for="credit" class="block text-xs font-bold text-slate-300 mb-1.5">신용카드 (15%)</label>
+                        <div class="flex items-center gap-2">
+                            <input id="credit" type="number" min="0" step="100000" value="8000000" class="fld num">
+                            <span class="text-xs text-slate-500 shrink-0">원</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="debit" class="block text-xs font-bold text-slate-300 mb-1.5">체크카드·현금영수증 (30%)</label>
+                        <div class="flex items-center gap-2">
+                            <input id="debit" type="number" min="0" step="100000" value="4000000" class="fld num">
+                            <span class="text-xs text-slate-500 shrink-0">원</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="market" class="block text-xs font-bold text-slate-300 mb-1.5">전통시장 (40%)</label>
+                        <div class="flex items-center gap-2">
+                            <input id="market" type="number" min="0" step="100000" value="500000" class="fld num">
+                            <span class="text-xs text-slate-500 shrink-0">원</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="transit" class="block text-xs font-bold text-slate-300 mb-1.5">대중교통 (40%)</label>
+                        <div class="flex items-center gap-2">
+                            <input id="transit" type="number" min="0" step="100000" value="1200000" class="fld num">
+                            <span class="text-xs text-slate-500 shrink-0">원</span>
+                        </div>
+                    </div>
+                    <div class="mb-0">
+                        <label for="culture" class="block text-xs font-bold text-slate-300 mb-1.5">도서·공연·영화·체육 (30%)</label>
+                        <div class="flex items-center gap-2">
+                            <input id="culture" type="number" min="0" step="100000" value="300000" class="fld num">
+                            <span class="text-xs text-slate-500 shrink-0">원</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mt-1.5">전통시장·대중교통·문화 사용액은 신용/체크 칸에 넣지 말고 각자의 칸에만 넣으세요.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="lg:col-span-3 space-y-4">
+
+                <div class="bg-gradient-to-br from-amber-950/60 via-slate-900 to-slate-900 border border-amber-700/40 rounded-2xl p-5 glow-effect">
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span class="text-[11px] font-black uppercase tracking-widest text-amber-400">예상 소득공제액</span>
+                        <span id="r-badge" class="text-[10px] font-black px-2 py-1 rounded-lg bg-slate-800 text-slate-300">계산 중</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 mb-4">
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[11px] text-slate-400 mb-0.5">소득공제액</div>
+                            <div id="r-deduction" class="text-2xl font-black text-white num">0원</div>
+                            <div id="r-deduction-sub" class="text-[10px] text-slate-500 mt-0.5">기본 0 + 추가 0</div>
+                        </div>
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[11px] text-slate-400 mb-0.5">예상 세금 절감</div>
+                            <div id="r-saved" class="text-2xl font-black text-amber-300 num">0원</div>
+                            <div id="r-saved-sub" class="text-[10px] text-slate-500 mt-0.5">소득세+지방소득세</div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[10px] text-slate-500 mb-0.5">최저사용금액(25%)</div>
+                            <div id="r-threshold" class="text-sm font-black text-slate-100 num">-</div>
+                        </div>
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[10px] text-slate-500 mb-0.5">남은 공제 여력</div>
+                            <div id="r-remaining" class="text-sm font-black text-slate-100 num">-</div>
+                        </div>
+                        <div class="bg-slate-950/50 rounded-xl p-3 border border-slate-800">
+                            <div class="text-[10px] text-slate-500 mb-0.5">한도 소진율</div>
+                            <div id="r-capacity" class="text-sm font-black text-slate-100 num">-</div>
+                        </div>
+                    </div>
+                    <div class="bar-track h-2 mt-4"><div id="bar-capacity" class="bar-fill bg-gradient-to-r from-amber-500 to-rose-400" style="width:0%"></div></div>
+
+                    <p id="r-verdict" class="text-[11px] text-slate-400 leading-relaxed mt-4">-</p>
+                </div>
+
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h3 class="font-black text-sm text-white mb-1">공제 구성 — 문턱을 넘은 금액에만 붙습니다</h3>
+                    <p class="text-[11px] text-slate-500 mb-3">최저사용금액은 공제율이 낮은 신용카드 → 체크 → 문화 → 전통시장 → 대중교통 순서로 차감됩니다.</p>
+                    <div class="space-y-2.5" id="parts"></div>
+                    <table class="tbl mt-4">
+                        <tbody>
+                            <tr><td class="w-1/2">최저사용금액(총급여 25%)</td><td class="text-right num" id="b-threshold">-</td></tr>
+                            <tr><td>카드 등 사용액 합계</td><td class="text-right num" id="b-total">-</td></tr>
+                            <tr><td>문턱을 넘은 금액</td><td class="text-right num" id="b-over">-</td></tr>
+                            <tr class="hl"><td>기본공제 한도</td><td class="text-right num" id="b-limit">-</td></tr>
+                            <tr><td>추가공제 한도</td><td class="text-right num" id="b-extralimit">-</td></tr>
+                            <tr><td>계산된 공제액(한도 전)</td><td class="text-right num" id="b-computed">-</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h3 class="font-black text-sm text-white mb-1">체크카드 황금비율 진단</h3>
+                    <p class="text-[11px] text-slate-500 mb-3">같은 돈을 써도 결제수단을 바꾸면 공제가 달라집니다. 아래 금액은 이번 조건에서 한도를 채우는 데 필요한 추가 사용액입니다.</p>
+                    <table class="tbl">
+                        <thead>
+                            <tr><th>한도 채우는 방법</th><th class="text-right">추가 사용액</th><th class="text-right">공제 증가</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>체크카드·현금영수증(30%)</td><td class="text-right num" id="g-debit">-</td><td class="text-right num" id="g-debit-d">-</td></tr>
+                            <tr><td>신용카드(15%)</td><td class="text-right num" id="g-credit">-</td><td class="text-right num" id="g-credit-d">-</td></tr>
+                            <tr><td>전통시장(40%)</td><td class="text-right num" id="g-market">-</td><td class="text-right num" id="g-market-d">-</td></tr>
+                            <tr><td>대중교통(40%)</td><td class="text-right num" id="g-transit">-</td><td class="text-right num" id="g-transit-d">-</td></tr>
+                        </tbody>
+                    </table>
+                    <p id="g-note" class="text-[11px] text-slate-500 mt-3 leading-relaxed">-</p>
+                </div>
+
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+                    <h3 class="font-black text-sm text-white mb-1">남은 기간, 어느 카드로 쓸까?</h3>
+                    <p class="text-[11px] text-slate-500 mb-3">12월에 더 쓸 금액을 넣으면 결제수단별 공제 증가액을 비교합니다.</p>
+                    <div class="flex items-center gap-2 mb-3">
+                        <input id="simAmount" type="number" min="0" step="100000" value="1000000" class="fld num">
+                        <span class="text-xs text-slate-500 shrink-0">원 더 쓸 때</span>
+                    </div>
+                    <div class="space-y-1.5" id="sim"></div>
+                    <p id="sim-note" class="text-[11px] text-slate-500 mt-3 leading-relaxed">-</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <a href="calc.html" class="group bg-gradient-to-br from-sky-950/60 to-slate-900 border border-sky-800/60 rounded-2xl p-5 hover:border-sky-500/70 transition">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-2xl">🧾</span>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-sky-400">Next Step</span>
+                </div>
+                <h3 class="font-black text-white text-base mb-1">연금저축·IRP 환급까지</h3>
+                <p class="text-xs text-slate-400 leading-relaxed mb-3">카드 한도를 다 채웠다면 다음은 세액공제입니다.</p>
+                <span class="inline-block text-xs font-black text-sky-400 group-hover:translate-x-0.5 transition">연금·IRP 계산하기 →</span>
+            </a>
+            <a href="wolse.html" class="group bg-gradient-to-br from-emerald-950/60 to-slate-900 border border-emerald-800/60 rounded-2xl p-5 hover:border-emerald-500/70 transition">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-2xl">🏠</span>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-emerald-400">Rent Credit</span>
+                </div>
+                <h3 class="font-black text-white text-base mb-1">월세 세액공제 15~17%</h3>
+                <p class="text-xs text-slate-400 leading-relaxed mb-3">월세를 낸다면 이쪽이 환급액이 더 큽니다.</p>
+                <span class="inline-block text-xs font-black text-emerald-400 group-hover:translate-x-0.5 transition">월세 공제 계산하기 →</span>
+            </a>
+        </section>
+
+        <!-- 해설 -->
+        <article class="mt-10 prose-kr bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8">
+            <h2>카드 소득공제, 세 단계만 알면 끝납니다</h2>
+            <p>카드 소득공제는 "쓴 만큼 돌려받는" 제도가 아닙니다. <strong>① 총급여의 25%를 넘겼는지 → ② 넘긴 금액을 무엇으로 썼는지 → ③ 한도를 넘지 않았는지</strong> 순서로 계산합니다. 이 계산기도 같은 순서로 계산합니다.</p>
+            <p>1단계, 최저사용금액입니다. 총급여 5,000만원이면 1,250만원까지는 공제가 0원입니다. 이 문턱은 법이 <strong>공제율이 가장 낮은 신용카드 사용분부터 채운 것으로</strong> 간주합니다(조세특례제한법 제126조의2). 그래서 체크카드만 쓴 사람은 문턱 구간까지 30%짜리로 깎이지만, 신용카드로 문턱을 넘긴 사람은 그 뒤 체크카드 사용분에 30%를 그대로 받습니다.</p>
+            <p>2단계, 공제율입니다. 2026년 귀속 기준으로 신용카드 15%, 체크카드·현금영수증 30%, 전통시장 40%, 대중교통 40%, 도서·공연·박물관·미술관·영화관람료·체육시설 이용료는 30%입니다. 문화체육 30%는 총급여 7,000만원 이하만 적용되고, 체육시설 이용료는 2025년 7월 1일 이후 지출분부터 포함됩니다.</p>
+            <p>3단계, 한도입니다. 기본 한도는 총급여 7,000만원 이하 300만원, 초과 250만원이고, <strong>2026년부터 자녀 수에 따라 1명당 50만원(7,000만원 초과자는 25만원)씩 최대 2명분까지</strong> 늘어납니다. 여기에 전통시장·대중교통·문화체육 사용분은 기본 한도를 넘었을 때 추가로 공제되는데, 7,000만원 이하는 300만원, 초과는 200만원이 한도입니다(초과자는 문화체육 제외).</p>
+
+            <h3>직접 계산해 본 예시</h3>
+            <p>총급여 5,000만원·자녀 없음·신용카드 800만원·체크카드 400만원·전통시장 50만원·대중교통 120만원·문화 30만원을 넣어 보겠습니다. 사용액 합계는 1,400만원, 최저사용금액은 1,250만원이라 150만원이 공제 대상입니다. 이 150만원은 신용카드 사용분에서 먼저 빠지므로 신용카드는 650만원이 남고, 공제액은 650만원×15% + 400만원×30% + 50만원×40% + 120만원×40% + 30만원×30% = 97만5,000 + 120만 + 20만 + 48만 + 9만 = <strong>294만5,000원</strong>입니다. 기본 한도 300만원보다 작으므로 전액 인정되고, 한계세율 15%·지방소득세 포함이면 세금이 약 48만6,000원 줄어듭니다. 남은 여력은 305만5,000원(기본 300만 + 추가 300만 − 294만5,000)입니다.</p>
+
+            <h2>황금비율 — 25%까지는 신용, 그 뒤는 체크</h2>
+            <p>공제액을 가장 크게 만드는 배분은 단순합니다. <strong>총급여의 25%까지는 신용카드</strong>로 채우고(어차피 15%로 계산될 구간입니다), <strong>25%를 넘는 지출부터는 체크카드·현금영수증</strong>으로 돌립니다. 그다음 한도가 다 차면 다시 혜택이 좋은 신용카드를 쓰면 됩니다. 한도에 이미 닿은 사람은 결제수단을 바꿔도 공제가 늘지 않으니, 그때는 카드 혜택이나 연금저축·IRP 세액공제 쪽을 보는 편이 낫습니다.</p>
+            <p>다만 실제 생활에서는 신용카드 할인·적립이 체크카드보다 큰 경우가 많습니다. 공제 차이는 체크카드 30%와 신용카드 15%의 15%p, 즉 100만원을 바꿔 쓸 때 공제액 15만원, 세금으로는 한계세율 15% 기준 약 2만4,750원 차이입니다. 카드 자체 혜택이 그보다 크다면 신용카드가 여전히 유리할 수 있습니다. 이 계산기의 '남은 기간' 비교표에 실제 금액을 넣어 판단하세요.</p>
+
+            <h2>공제되지 않는 사용액</h2>
+            <ul>
+                <li><strong>보험료</strong>: 국민건강보험료, 고용보험료, 연금보험료, 보험계약 보험료·공제료</li>
+                <li><strong>세금과 공과금</strong>: 국세·지방세, 전기·수도·가스·전화·인터넷 요금, 아파트 관리비, 도로통행료</li>
+                <li><strong>자동차 구입비</strong>(중고차는 구입금액의 10%만 인정), 취득세·등록면허세가 부과되는 재산 구입비</li>
+                <li><strong>학교·보육시설 수업료·보육비</strong>, 상품권 등 유가증권, 리스료, 금융·보험용역 수수료</li>
+                <li><strong>해외 사용분</strong>과 면세점 구입비</li>
+            </ul>
+            <p>또 신용카드 소득공제는 본인 명의 카드가 원칙이고, 연 소득금액 100만원 이하인 배우자·직계존비속의 사용분은 합칠 수 있습니다. 맞벌이 배우자와 형제자매 사용분은 합칠 수 없습니다.</p>
+
+            <h2>2027년에는 기준이 바뀝니다</h2>
+            <p>2026년 8월 3일 정부가 발표한 세제개편안은 <strong>2027년 사용분부터</strong> 대중교통 40% 우대공제를 없애고(신용 15%·체크 30% 일반 공제율 적용), 추가공제 한도를 300만→200만원(총급여 7,000만원 초과는 200만→100만원)으로 줄이며, 반대로 도서·공연 등 문화비의 총급여 7,000만원 이하 요건은 폐지하는 내용을 담고 있습니다. 국회 심의 전 정부안이므로 확정은 아니지만, <strong>2026년에 쓴 금액에는 적용되지 않습니다.</strong> 올해 안에 대중교통·전통시장 지출이 몰려 있다면 12월 안에 결제하는 편이 유리합니다.</p>
+
+            <h3>계산기가 하지 않는 것</h3>
+            <p>이 계산기는 카드사 매출전표 기준 사용액을 그대로 받습니다. 실제 연말정산에서는 회사가 국세청 자료로 다시 집계하므로, 취소·부분환불·상품권 결제·사업 관련 지출이 섞이면 숫자가 달라질 수 있습니다. 최종 금액은 홈택스 '연말정산 미리보기'와 회사 정산 결과로 확인하세요.</p>
+        </article>
+
+        <!-- FAQ -->
+        <section class="mt-8">
+            <h2 class="text-lg font-black text-white mb-3">자주 묻는 질문</h2>
+            <div class="space-y-2.5">
+                <details class="faq" open>
+                    <summary>2026년 카드 소득공제 공제율은 얼마인가요?</summary>
+                    <div class="a">2026년 귀속 기준으로 신용카드 15%, 체크카드·현금영수증 30%, 전통시장 40%, 대중교통 40%, 도서·공연·영화·체육시설 등 문화체육 30%입니다. 문화체육 30%는 총급여 7,000만원 이하 근로자에게만 적용됩니다.</div>
+                </details>
+                <details class="faq">
+                    <summary>카드 공제 한도는 얼마인가요?</summary>
+                    <div class="a">2026년부터 자녀 수에 따라 기본 한도가 늘었습니다. 총급여 7,000만원 이하는 자녀가 없으면 300만원, 1명이면 350만원, 2명 이상이면 400만원입니다. 7,000만원 초과는 250만원·275만원·300만원이며, 전통시장·대중교통·문화체육 사용분에는 추가공제(7,000만원 이하 300만원, 초과 200만원 한도)가 따로 붙습니다.</div>
+                </details>
+                <details class="faq">
+                    <summary>체크카드를 얼마나 써야 유리한가요?</summary>
+                    <div class="a">총급여의 25%까지는 공제율이 가장 낮은 신용카드 사용분으로 먼저 채워지는 구조입니다. 그래서 25%까지는 혜택이 좋은 신용카드로 쓰고, 25%를 넘는 지출부터 체크카드·현금영수증(30%)으로 돌리는 것이 공제액을 가장 크게 만듭니다.</div>
+                </details>
+                <details class="faq">
+                    <summary>카드 소득공제로 세금이 얼마나 줄어드나요?</summary>
+                    <div class="a">소득공제액에 본인의 한계세율을 곱한 만큼 과세표준이 줄어듭니다. 소득세 15% 구간이면 지방소득세 10%를 포함해 공제액의 16.5%만큼 세금이 줄어듭니다. 공제액 전액을 돌려받는 세액공제와 다릅니다.</div>
+                </details>
+                <details class="faq">
+                    <summary>2027년부터 카드 공제가 줄어드나요?</summary>
+                    <div class="a">2026년 8월 정부 세제개편안은 2027년 사용분부터 대중교통 40% 우대공제를 없애고 추가공제 한도를 100만원씩 줄이는 내용을 담고 있습니다. 국회 심의 전 정부안이며 2026년에 쓴 금액에는 적용되지 않습니다.</div>
+                </details>
+                <details class="faq">
+                    <summary>가족 카드 사용액도 합칠 수 있나요?</summary>
+                    <div class="a">연 소득금액 100만원 이하(총급여 500만원 이하 근로소득만 있는 경우 포함)인 배우자와 직계존비속의 카드 사용분은 본인 사용액에 합칠 수 있습니다. 맞벌이 배우자, 형제자매 사용분은 합칠 수 없습니다.</div>
+                </details>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500">
+        <p class="mb-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+            <a href="salary.html" class="font-bold text-amber-400/90 hover:text-amber-300">💰 연봉 실수령액</a>
+            <a href="loan.html" class="font-bold text-amber-400/90 hover:text-amber-300">🏦 대출·DSR</a>
+            <a href="calc.html" class="font-bold text-amber-400/90 hover:text-amber-300">🧾 연금·IRP</a>
+            <a href="unemployment.html" class="font-bold text-amber-400/90 hover:text-amber-300">📋 실업급여</a>
+            <a href="severance.html" class="font-bold text-amber-400/90 hover:text-amber-300">📄 퇴직금</a>
+            <a href="jeonse.html" class="font-bold text-amber-400/90 hover:text-amber-300">🏠 전세 vs 월세</a>
+            <a href="card.html" class="font-bold text-amber-400/90 hover:text-amber-300">💳 카드 소득공제</a>
+            <a href="wolse.html" class="font-bold text-amber-400/90 hover:text-amber-300">🏠 월세 세액공제</a>
+        </p>
+        <p class="mb-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px]">
+            <a href="about.html" class="hover:text-amber-300">About</a>
+            <span class="text-slate-700">·</span>
+            <a href="privacy.html" class="hover:text-amber-300">Privacy</a>
+            <span class="text-slate-700">·</span>
+            <a href="contact.html" class="hover:text-amber-300">Contact</a>
+            <span class="text-slate-700">·</span>
+            <a href="en/index.html" class="hover:text-amber-300">English tools</a>
+        </p>
+        <p class="mb-2 text-[11px] text-slate-600">계산 결과는 2026년 귀속 조세특례제한법 제126조의2와 국세청 안내를 기준으로 한 참고값입니다. 최종 금액은 홈택스 연말정산 미리보기와 회사 정산으로 확인하세요.</p>
+        <p class="mb-2">© 2026 DailyTechFinds. All Rights Reserved. Curated for smart tech enthusiasts.</p>
+    </footer>
+
+<script>
+(function () {
+    "use strict";
+
+    /*__CORE_START__*/
+    var LIMITS = {
+        salaryTier: 70000000,
+        base: { low: [3000000, 3500000, 4000000], high: [2500000, 2750000, 3000000] },
+        extra: { low: 3000000, high: 2000000 }
+    };
+    var RATE = { credit: 0.15, debit: 0.30, market: 0.40, transit: 0.40, culture: 0.30 };
+    var MIN_RATIO = 0.25;
+
+    function cardLimits(salary, children) {
+        var c = Math.min(2, Math.max(0, Math.round(children || 0)));
+        var low = salary <= LIMITS.salaryTier;
+        var base = (low ? LIMITS.base.low : LIMITS.base.high)[c];
+        var extra = low ? LIMITS.extra.low : LIMITS.extra.high;
+        return { base: base, extra: extra, total: base + extra, tierLow: low, children: c };
+    }
+
+    function cardCore(input) {
+        var o = input || {};
+        var salary = Math.max(0, +o.salary || 0);
+        var lim = cardLimits(salary, o.children);
+        var cultureLow = lim.tierLow;
+
+        // 총급여 7,000만원 초과자는 문화비 30% 우대가 없어 신용카드 사용분으로 계산합니다.
+        var credit = Math.max(0, +o.credit || 0) + (cultureLow ? 0 : Math.max(0, +o.culture || 0));
+        var debit = Math.max(0, +o.debit || 0);
+        var market = Math.max(0, +o.market || 0);
+        var transit = Math.max(0, +o.transit || 0);
+        var culture = cultureLow ? Math.max(0, +o.culture || 0) : 0;
+
+        var total = credit + debit + market + transit + culture;
+        var threshold = salary * MIN_RATIO;
+        var over = Math.max(0, total - threshold);
+
+        // 최저사용금액은 공제율이 낮은 순서(신용 → 체크 → 문화 → 전통시장 → 대중교통)로 차감합니다.
+        var rem = Math.min(threshold, total);
+        function afterThreshold(v) {
+            var take = Math.min(v, rem);
+            rem -= take;
+            return v - take;
+        }
+        var c = afterThreshold(credit);
+        var d = afterThreshold(debit);
+        var cu = afterThreshold(culture);
+        var m = afterThreshold(market);
+        var tr = afterThreshold(transit);
+
+        var pCredit = c * RATE.credit;
+        var pDebit = d * RATE.debit;
+        var pCulture = cu * RATE.culture;
+        var pMarket = m * RATE.market;
+        var pTransit = tr * RATE.transit;
+        var computed = pCredit + pDebit + pCulture + pMarket + pTransit;
+        var extraEligible = pMarket + pTransit + pCulture;
+
+        var baseDeduction, extraDeduction;
+        if (computed <= lim.base) {
+            baseDeduction = computed;
+            extraDeduction = 0;
+        } else {
+            baseDeduction = lim.base;
+            extraDeduction = Math.min(computed - lim.base, extraEligible, lim.extra);
+        }
+        var deduction = baseDeduction + extraDeduction;
+        var maxDeduction = lim.base + lim.extra;
+        var remaining = Math.max(0, maxDeduction - deduction);
+        var rate = Math.max(0, +o.marginalRate || 0);
+        var savedTax = deduction * (rate / 100) * 1.1;
+
+        return {
+            salary: salary,
+            children: lim.children,
+            tierLow: lim.tierLow,
+            total: total,
+            threshold: threshold,
+            over: over,
+            shortfall: Math.max(0, threshold - total),
+            cultureApplies: cultureLow,
+            parts: {
+                credit: pCredit, debit: pDebit, culture: pCulture, market: pMarket, transit: pTransit
+            },
+            afterThreshold: { credit: c, debit: d, culture: cu, market: m, transit: tr },
+            computed: computed,
+            baseLimit: lim.base,
+            extraLimit: lim.extra,
+            baseDeduction: baseDeduction,
+            extraDeduction: extraDeduction,
+            deduction: deduction,
+            maxDeduction: maxDeduction,
+            remaining: remaining,
+            capacityUsed: maxDeduction > 0 ? (deduction / maxDeduction) * 100 : 0,
+            savedTax: savedTax,
+            marginalRate: rate
+        };
+    }
+
+    // 특정 결제수단으로 amount원을 더 썼을 때의 결과
+    function cardAdd(input, channel, amount) {
+        var o = {};
+        for (var k in input) { if (Object.prototype.hasOwnProperty.call(input, k)) { o[k] = input[k]; } }
+        o[channel] = (+o[channel] || 0) + Math.max(0, +amount || 0);
+        return cardCore(o);
+    }
+
+    // 한도를 꽉 채우는 데 필요한 추가 사용액(1,000원 단위로 올림). 불가능하면 null.
+    function cardNeed(input, channel) {
+        var target = cardCore(input).maxDeduction;
+        function ded(a) { return cardAdd(input, channel, a).deduction; }
+        if (ded(0) >= target - 0.5) { return 0; }
+        var hi = 500000000;
+        if (ded(hi) < target - 0.5) { return null; }
+        var lo = 0;
+        for (var i = 0; i < 60; i++) {
+            var mid = (lo + hi) / 2;
+            if (ded(mid) >= target - 0.5) { hi = mid; } else { lo = mid; }
+        }
+        var down = Math.floor(hi / 1000) * 1000;
+        if (ded(down) >= target - 0.5) { return down; }
+        return down + 1000;
+    }
+    /*__CORE_END__*/
+
+    var $ = function (id) { return document.getElementById(id); };
+    function won(n) { return Math.round(n).toLocaleString("ko-KR") + "원"; }
+    function pct(n) { return (Math.round(n * 10) / 10).toFixed(1) + "%"; }
+    function numv(id, dflt) {
+        var el = $(id);
+        if (!el) { return dflt; }
+        var v = parseFloat(String(el.value).replace(/,/g, ""));
+        return isFinite(v) ? Math.max(0, v) : dflt;
+    }
+    function readInput() {
+        var sel = $("children");
+        return {
+            salary: numv("salary", 0),
+            children: sel ? parseInt(sel.value, 10) || 0 : 0,
+            marginalRate: parseFloat(($("rate") || {}).value) || 0,
+            credit: numv("credit", 0),
+            debit: numv("debit", 0),
+            market: numv("market", 0),
+            transit: numv("transit", 0),
+            culture: numv("culture", 0)
+        };
+    }
+
+    function render() {
+        var input = readInput();
+        var r = cardCore(input);
+
+        $("r-minratio").textContent = won(r.threshold);
+        $("r-deduction").textContent = won(r.deduction);
+        $("r-deduction-sub").textContent = "기본 " + won(r.baseDeduction) + " + 추가 " + won(r.extraDeduction);
+        $("r-saved").textContent = won(r.savedTax);
+        $("r-saved-sub").textContent = "한계세율 " + r.marginalRate + "% + 지방소득세";
+        $("r-threshold").textContent = won(r.threshold);
+        $("r-remaining").textContent = won(r.remaining);
+        $("r-capacity").textContent = pct(r.capacityUsed);
+        $("bar-capacity").style.width = Math.min(100, r.capacityUsed) + "%";
+
+        $("b-threshold").textContent = won(r.threshold);
+        $("b-total").textContent = won(r.total);
+        $("b-over").textContent = won(r.over);
+        $("b-limit").textContent = won(r.baseLimit) + (r.children > 0 ? " (자녀 " + r.children + "명)" : "");
+        $("b-extralimit").textContent = won(r.extraLimit);
+        $("b-computed").textContent = won(r.computed);
+
+        var badge = $("r-badge");
+        if (r.shortfall > 0) {
+            badge.textContent = "문턱 미달";
+            badge.className = "text-[10px] font-black px-2 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30";
+        } else if (r.deduction >= r.maxDeduction - 1) {
+            badge.textContent = "한도 소진";
+            badge.className = "text-[10px] font-black px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+        } else {
+            badge.textContent = "여력 " + won(r.remaining);
+            badge.className = "text-[10px] font-black px-2 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30";
+        }
+
+        var v;
+        if (r.salary <= 0) {
+            v = "총급여를 입력하면 최저사용금액과 공제액을 계산합니다.";
+        } else if (r.shortfall > 0) {
+            v = "아직 최저사용금액(총급여 25% = " + won(r.threshold) + ")에 " + won(r.shortfall) +
+                " 모자랍니다. 이 금액까지는 공제가 0원이므로, 남은 기간 지출은 신용카드로 채우는 편이 낫습니다.";
+        } else if (r.deduction >= r.maxDeduction - 1) {
+            v = "공제 한도(" + won(r.maxDeduction) + ")를 모두 채웠습니다. 더 써도 공제는 늘지 않으니 카드 혜택이나 연금저축·IRP 세액공제를 보세요.";
+        } else {
+            v = "지금 구조로는 공제 여력이 " + won(r.remaining) + " 남았습니다. 여력을 채우는 데 필요한 금액은 아래 황금비율 표에 정리했습니다.";
+        }
+        $("r-verdict").textContent = v;
+
+        // 구성 bars
+        var names = [
+            ["credit", "신용카드 15%", "from-sky-500 to-cyan-400", "text-sky-300"],
+            ["debit", "체크·현금영수증 30%", "from-emerald-500 to-teal-400", "text-emerald-300"],
+            ["market", "전통시장 40%", "from-rose-500 to-orange-400", "text-rose-300"],
+            ["transit", "대중교통 40%", "from-violet-500 to-fuchsia-400", "text-violet-300"],
+            ["culture", "문화·체육 30%", "from-amber-500 to-yellow-400", "text-amber-300"]
+        ];
+        var maxPart = Math.max(r.parts.credit, r.parts.debit, r.parts.market, r.parts.transit, r.parts.culture, 1);
+        var html = "";
+        for (var i = 0; i < names.length; i++) {
+            var key = names[i][0];
+            if (key === "culture" && !r.cultureApplies) { continue; }
+            var val = r.parts[key];
+            html += '<div><div class="flex items-center justify-between text-[11px] mb-1">' +
+                '<span class="font-bold ' + names[i][3] + '">' + names[i][1] + '</span>' +
+                '<span class="num text-slate-300">' + won(val) + '</span></div>' +
+                '<div class="bar-track h-2"><div class="bar-fill bg-gradient-to-r ' + names[i][2] + '" style="width:' +
+                (val / maxPart * 100).toFixed(1) + '%"></div></div></div>';
+        }
+        $("parts").innerHTML = html;
+
+        // 황금비율
+        var gd = cardNeed(input, "debit"), gc = cardNeed(input, "credit"),
+            gm = cardNeed(input, "market"), gt = cardNeed(input, "transit");
+        function setNeed(idv, idn, need, label) {
+            if (need === null) {
+                $("g-" + idv).textContent = "한도 밖";
+                $("g-" + idv + "-d").textContent = "공제 " + won(0);
+            } else {
+                $("g-" + idv).textContent = need === 0 ? "이미 충족" : won(need);
+                $("g-" + idv + "-d").textContent = won(r.remaining);
+            }
+        }
+        setNeed("debit", null, gd);
+        setNeed("credit", null, gc);
+        setNeed("market", null, gm);
+        setNeed("transit", null, gt);
+
+        var note = [];
+        if (r.shortfall > 0) {
+            note.push("최저사용금액까지 " + won(r.shortfall) + "이 비어 있어 어떤 카드로 써도 지금은 공제가 0원입니다. 먼저 문턱을 넘기는 것이 우선입니다.");
+        }
+        if (r.remaining <= 1) {
+            note.push("한도를 모두 채워 추가 사용으로 늘릴 공제가 없습니다.");
+        } else if (gd !== null && gc !== null && gd > 0) {
+            note.push("같은 " + won(Math.max(gd, 1)) + "을 쓰더라도 체크카드로 쓰면 한도가 채워지고, 신용카드로는 " + won(gc) + "이 필요합니다. 차이는 " + won(gc - gd) + "입니다.");
+        }
+        note.push("전통시장·대중교통은 40%로 계산되어 가장 적은 지출로 한도를 채웁니다. 다만 실제 지출 계획이 없는 곳에 돈을 쓰는 것은 공제 이득보다 손해가 큽니다.");
+        $("g-note").textContent = note.join(" ");
+
+        // 시뮬레이터
+        var amt = numv("simAmount", 0);
+        var chans = [
+            ["credit", "신용카드(15%)", "💳"],
+            ["debit", "체크·현금영수증(30%)", "🏧"],
+            ["market", "전통시장(40%)", "🏪"],
+            ["transit", "대중교통(40%)", "🚇"],
+            ["culture", "문화·체육(30%)", "🎬"]
+        ];
+        var simHtml = "";
+        var best = null, bestDelta = -1;
+        for (var j = 0; j < chans.length; j++) {
+            var ch = chans[j][0];
+            if (ch === "culture" && !r.cultureApplies) { continue; }
+            var res = cardAdd(input, ch, amt);
+            var delta = res.deduction - r.deduction;
+            if (delta > bestDelta + 0.5) { bestDelta = delta; best = chans[j][1]; }
+            simHtml += '<div class="flex items-center justify-between gap-2 bg-slate-950/50 border border-slate-800 rounded-xl px-3 py-2">' +
+                '<span class="text-[11px] font-bold text-slate-300">' + chans[j][2] + " " + chans[j][1] + '</span>' +
+                '<span class="text-right"><span class="num text-xs font-black text-amber-300">+' + Math.round(delta).toLocaleString("ko-KR") + '원</span>' +
+                '<span class="block text-[10px] text-slate-500">세금 −' + Math.round(delta * r.marginalRate / 100 * 1.1).toLocaleString("ko-KR") + '원</span></span></div>';
+        }
+        $("sim").innerHTML = simHtml;
+
+        if (amt <= 0) {
+            $("sim-note").textContent = "더 쓸 금액을 입력하면 결제수단별 차이를 계산합니다.";
+        } else if (bestDelta <= 0.5) {
+            $("sim-note").textContent = "지금은 한도가 이미 찼거나 문턱에 못 미쳐 추가 지출로 늘어나는 공제가 없습니다.";
+        } else {
+            $("sim-note").textContent = won(amt) + "을 더 쓸 때 공제가 가장 많이 늘어나는 결제수단은 " + best + "입니다(+" + Math.round(bestDelta).toLocaleString("ko-KR") + "원).";
+        }
+
+        window.__lastResult = r;
+    }
+
+    window.cardCore = cardCore;
+    window.cardAdd = cardAdd;
+    window.cardNeed = cardNeed;
+    window.cardLimits = cardLimits;
+
+    var ids = ["salary", "children", "rate", "credit", "debit", "market", "transit", "culture", "simAmount"];
+    for (var i = 0; i < ids.length; i++) {
+        var el = $(ids[i]);
+        if (el) {
+            el.addEventListener("input", render);
+            el.addEventListener("change", render);
+        }
+    }
+    render();
+})();
+</script>
+</body>
+</html>
