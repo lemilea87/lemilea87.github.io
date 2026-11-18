@@ -258,7 +258,7 @@
         <article class="mt-10 prose-en bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8">
             <h2>The fee is two numbers, and only one of them scales</h2>
             <p>A card processor charges <strong>a percentage of the sale plus a fixed amount per successful charge</strong>. Stripe's US domestic online card rate is <strong>2.9% + $0.30</strong>; PayPal's Checkout button is <strong>3.49% + $0.49</strong>. On a $100 sale Stripe takes $3.20 and PayPal takes $3.98. The gap looks small until you multiply it by a thousand orders, and it behaves completely differently at a $5 price point: the fixed fee alone is 6% of a $5 sale on Stripe and 9.8% on PayPal.</p>
-            <p>That is why the advertised rate is not the rate you pay. The <strong>effective rate</strong> is total fee divided by the sale. At 2.9% + $0.30, a $5 charge carries a 32.9% effective rate and a $500 charge carries 2.96%. Low-ticket businesses — digital downloads, coffee, in-app tips — feel the fixed fee far more than the percentage.</p>
+            <p>That is why the advertised rate is not the rate you pay. The <strong>effective rate</strong> is total fee divided by the sale. At 2.9% + $0.30, a $1 charge carries a 32.9% effective rate, a $5 charge 8.9%, and a $500 charge 2.96%. Low-ticket businesses — digital downloads, coffee, in-app tips — feel the fixed fee far more than the percentage.</p>
 
             <h3>What adds to the baseline</h3>
             <ul>
@@ -294,7 +294,7 @@
                 </details>
                 <details class="faq">
                     <summary>Why is my effective rate higher than the advertised rate?</summary>
-                    <div class="a">Because the fixed fee does not scale. On a $5 charge, $0.30 is 6% of the sale on its own, so 2.9% + $0.30 becomes 32.9% effective. Raise the average order value or move small tickets to a cheaper rail.</div>
+                    <div class="a">Because the fixed fee does not scale. On a $1 charge, $0.30 is 30% of the sale on its own, so 2.9% + $0.30 becomes 32.9% effective; on a $5 charge it is 8.9%. Raise the average order value or move small tickets to a cheaper rail.</div>
                 </details>
                 <details class="faq">
                     <summary>Are fees charged on sales tax and shipping?</summary>
